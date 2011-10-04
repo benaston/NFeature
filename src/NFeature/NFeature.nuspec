@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>http://www.gnu.org/licenses/lgpl.txt</licenseUrl>
+    <projectUrl>https://github.com/benaston/NFeature</projectUrl>
+    <iconUrl>https://secure.gravatar.com/avatar/2a43432a33175c6bbe896da22dd6f6ee?s=140</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <copyright>Copyright 2011</copyright>
+    <tags>feature,feature-configuration-wall,feature-wall,configuration</tags>
+  </metadata>
+</package>

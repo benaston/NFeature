@@ -1,0 +1,27 @@
+# VS Bits
+[Oo]bj
+[bB]in
+*.suo
+Publish.xml
+
+# ReSharper
+_ReSharper.*
+*.user
+
+# Runtime/Misc Junk :)
+*.log*
+.sass-cache
+.orig
+
+# SASS-Generated Files
+
+
+# Project Build Output
+
+#Mac and vim files
+*.swp
+.DS_Store
+Thumbs.db
+
+#Misc
+TestResult.xml
