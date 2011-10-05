@@ -1,5 +1,5 @@
 ﻿ // ReSharper disable InconsistentNaming
-namespace NFeature.Test.Fast
+namespace NFeature.Test.Slow
 {
     using System;
     using System.Linq;
@@ -84,7 +84,8 @@ namespace NFeature.Test.Fast
         {
             var s = ConfigurationManager<FeatureConfigurationSection<TestFeatureList>>.Section();
             var f = s.FeatureSettings;
-            Assert.That(f.Count == 4);
+            
+            Assert.That(f.Count == 5);
         }
 
         [Test]

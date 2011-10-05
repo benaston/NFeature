@@ -5,5 +5,6 @@
         Disabled = 1,
         Enabled,
         Previewable,
+        Established
     }
 }

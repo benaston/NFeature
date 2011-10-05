@@ -1,5 +1,5 @@
 ﻿// ReSharper disable InconsistentNaming
-namespace NFeature.Test.Fast
+namespace NFeature.Test.Slow
 {
     using System.Linq;
     using NUnit.Framework;
@@ -9,7 +9,17 @@ namespace NFeature.Test.Fast
     public class WebConfigFeatureSettingRepositoryTests
     {
         [Test]
-        public void GetFeatureSettings_WhenInvoked_FeatureSettingsWithNoSpecifiedDomainAreAvailableToAllDomains()
+        public void GetFeatureSettings_WhenInvoked_FeatureSettingsAreMarkedAsBeingEstablishedCorrectly()
+        {
+            var r = new WebConfigFeatureSettingRepository<TestFeatureList>();
+            var settings = r.GetFeatureSettings();
+
+            Assert.That(
+                settings.Where(i => i.Feature == TestFeatureList.TestFeature5).First().FeatureState == FeatureState.Established );
+        }
+
+        [Test]
+        public void GetFeatureSettings_WhenInvoked_FeatureSettingsWithNoSpecifiedTenantAreAvailableToAllTenant()
         {
             var r = new WebConfigFeatureSettingRepository<TestFeatureList>();
             var settings = r.GetFeatureSettings();
@@ -20,7 +30,7 @@ namespace NFeature.Test.Fast
         }
 
         [Test]
-        public void GetFeatureSettings_WhenInvoked_FeatureSettingsWithSpecifiedDomainsAreAvailabelToThoseDomainsOnly()
+        public void GetFeatureSettings_WhenInvoked_FeatureSettingsWithSpecifiedTenantsAreAvailableToThoseTenantsOnly()
         {
             var r = new WebConfigFeatureSettingRepository<TestFeatureList>();
             var settings = r.GetFeatureSettings();
@@ -38,7 +48,7 @@ namespace NFeature.Test.Fast
             var r = new WebConfigFeatureSettingRepository<TestFeatureList>();
             var settings = r.GetFeatureSettings();
 
-            Assert.That(settings.Count() == 4);
+            Assert.That(settings.Count() == 5);
         }
     }
 }

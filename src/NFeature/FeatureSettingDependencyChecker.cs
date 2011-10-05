@@ -46,7 +46,7 @@
                 try
                 {
                     var dependencyClosedOver = dependency;
-                    var dependencySetting = allFeatureSettings.First(s => s.Feature.Equals(dependencyClosedOver)); //was ==
+                    var dependencySetting = allFeatureSettings.First(s => s.Feature.Equals(dependencyClosedOver));
                     if (
                         !AreDependenciesMetForTenant(dependencySetting,
                                                      allFeatureSettings,

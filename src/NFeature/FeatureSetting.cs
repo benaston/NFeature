@@ -68,9 +68,9 @@
             }
             set
             {
-                if (value.Length != 1 && value[0] != Tenant.All)
+                if (value.Length > 0)
                 {
-                    Ensure.That < FeatureConfigurationException<TFeatureEnumeration>>(!IsRequiredByFeatureSubsystem,
+                    Ensure.That <FeatureConfigurationException<TFeatureEnumeration>>(!IsRequiredByFeatureSubsystem,
                                                                string.Format(
                                                                    "Supported tenants may not be specified for features marked 'IsRequiredByFeatureSubsystem'. Feature: '{0}'.",
                                                                    Feature));

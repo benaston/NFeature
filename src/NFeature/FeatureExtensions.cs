@@ -28,8 +28,8 @@
                 where TFeatureEnumeration : struct
         {
             Ensure.That<ArgumentNullException>(featureManifest.IsNotNull(), "featureManifest not supplied.")
-                .And<FeatureNotAvailableException<TFeatureEnumeration>>(feature.IsAvailable(featureManifest),
-                                                   "Specified feature is unavailable.");
+                .And<FeatureNotAvailableException>(feature.IsAvailable(featureManifest),
+                                                   string.Format("Specified feature '{0}' is unavailable.", Enum.GetName(typeof(TFeatureEnumeration), feature)));
 
             try
             {

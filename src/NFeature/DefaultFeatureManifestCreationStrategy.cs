@@ -10,15 +10,16 @@
     ///   This provides an example manifest creation
     ///   strategy, and is replaceable (being a strategy).
     /// </summary>
-    public class DefaultFeatureManifestCreationStrategy<TFeatureEnumeration> : IFeatureManifestCreationStrategy<TFeatureEnumeration>
-        where TFeatureEnumeration :struct
+    public class DefaultFeatureManifestCreationStrategy<TFeatureEnumeration> :
+        IFeatureManifestCreationStrategy<TFeatureEnumeration>
+        where TFeatureEnumeration : struct
     {
         public const string FeaturePreviewCookieName = "FeaturePreviewCookie";
 
         private readonly IFeatureSettingService<TFeatureEnumeration> _featureSettingService;
         private readonly IFeatureSettingRepository<TFeatureEnumeration> _featureSettingsRepository;
-        private readonly ITenancyContext _tenancyContext;
         private readonly HttpContextBase _httpContext;
+        private readonly ITenancyContext _tenancyContext;
 
         public DefaultFeatureManifestCreationStrategy(
             IFeatureSettingService<TFeatureEnumeration> featureSettingService,
@@ -44,10 +45,11 @@
                                                    : FeatureVisibilityMode.Normal;
 
                 var isAvailable = _featureSettingService.AllDependenciesAreSatisfiedForTheFeatureSetting(setting,
-                                                                                                         featureConfigurationMode, _tenancyContext);
+                                                                                                         featureConfigurationMode,
+                                                                                                         _tenancyContext);
 
                 manifest.Add(setting.Feature,
-                             new FeatureDescriptor<TFeatureEnumeration>
+                             new FeatureDescriptor<TFeatureEnumeration>(setting.Feature)
                                  {
                                      Dependencies = setting.Dependencies,
                                      IsAvailable = isAvailable,

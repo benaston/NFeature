@@ -3,16 +3,8 @@
     using System;
     using NHelpfulException;
 
-    public class FeatureNotAvailableException<TFeatureEnumeration> : HelpfulException
-        where TFeatureEnumeration : struct
+    public class FeatureNotAvailableException: HelpfulException
     {
-        public FeatureNotAvailableException(TFeatureEnumeration feature)
-            : base(
-                string.Format("Feature \"{0}\" is not available.", Enum.GetName(typeof (TFeatureEnumeration), feature))) {}
-
-        public FeatureNotAvailableException(TFeatureEnumeration feature, Exception innerException)
-            : base(
-                string.Format("Feature \"{0}\" is not available.", Enum.GetName(typeof (TFeatureEnumeration), feature)),
-                innerException:innerException) { }
+        public FeatureNotAvailableException(string problemDescription, string[] resolutionSuggestions = default(string[]), Exception innerException = default(Exception)) : base(problemDescription, resolutionSuggestions, innerException) {}
     }
 }

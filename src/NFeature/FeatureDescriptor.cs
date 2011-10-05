@@ -8,7 +8,29 @@
     public class FeatureDescriptor<TFeatureEnumeration> : IFeatureDescriptor<TFeatureEnumeration>
         where TFeatureEnumeration : struct
     {
-        public bool IsAvailable { get; set; }
+        public FeatureDescriptor(TFeatureEnumeration feature)
+        {
+            Feature = feature;
+        }
+
+        public TFeatureEnumeration Feature { get; set; }
+
+        public bool IsEstablished{ get; set; }
+
+        private bool _isAvailable;
+        public bool IsAvailable
+        {
+            get
+            {
+                if (IsEstablished)
+                {
+                    throw new AvailabilityCheckOnEstablishedFeatureException<TFeatureEnumeration>(Feature);
+                }
+
+                return _isAvailable; 
+            }
+            set { _isAvailable = value; }
+        }
 
         public IList<TFeatureEnumeration> Dependencies { get; set; }
 

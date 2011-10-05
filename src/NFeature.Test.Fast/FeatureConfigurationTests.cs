@@ -5,13 +5,13 @@ namespace NFeature.Test.Fast
     using NUnit.Framework;
 
     [TestFixture]
-    [Category("Slow")]
+    [Category("Fast")]
     public class FeatureConfigurationTests
     {
         [Test]
         public void IsEnabledInFeatureManifest_ReturnsTrue_WhenFeatureIsAvailable()
         {
-            var m = new FeatureManifest<TestFeatureList> { { TestFeatureList.TestFeature1, new FeatureDescriptor<TestFeatureList> { IsAvailable = true, } } };
+            var m = new FeatureManifest<TestFeatureList> { { TestFeatureList.TestFeature1, new FeatureDescriptor<TestFeatureList>(TestFeatureList.TestFeature1) { IsAvailable = true, } } };
 
             Assert.That(TestFeatureList.TestFeature1.IsAvailable(m));
         }
