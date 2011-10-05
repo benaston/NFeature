@@ -24,7 +24,7 @@
             {
                 if (IsEstablished)
                 {
-                    throw new AvailabilityCheckOnEstablishedFeatureException<TFeatureEnumeration>(Feature);
+                    throw new EstablishedFeatureAvailabilityCheckException<TFeatureEnumeration>(Feature);
                 }
 
                 return _isAvailable; 

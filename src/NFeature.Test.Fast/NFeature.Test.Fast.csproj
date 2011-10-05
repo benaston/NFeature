@@ -83,7 +83,7 @@
     <Compile Include="TestFeatureList.cs" />
     <Compile Include="FeatureConfigurationTests.cs" />
     <Compile Include="FeatureExtensionsTests.cs" />
-    <Compile Include="FeatureSettingDependencyCheckerTests.cs" />
+    <Compile Include="FeatureSettingAvailabilityCheckerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

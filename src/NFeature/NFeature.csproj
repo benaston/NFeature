@@ -76,6 +76,7 @@
     <Compile Include="ConfigurationSectionBase.cs" />
     <Compile Include="DatabaseFeatureSettingRepository.cs" />
     <Compile Include="DefaultFeatureManifestCreationStrategy.cs" />
+    <Compile Include="EstablishedFeatureDependencyException.cs" />
     <Compile Include="FeatureConfigurationElement.cs" />
     <Compile Include="FeatureConfigurationException.cs" />
     <Compile Include="FeatureSettingNames.cs" />
@@ -90,7 +91,7 @@
     <Compile Include="FeatureNotConfiguredException.cs" />
     <Compile Include="FeatureSetting.cs" />
     <Compile Include="FeatureSettingConfigurationCollection.cs" />
-    <Compile Include="FeatureSettingDependencyChecker.cs" />
+    <Compile Include="FeatureSettingAvailabilityChecker.cs" />
     <Compile Include="FeatureSettingExtensions.cs" />
     <Compile Include="FeatureSettingService.cs" />
     <Compile Include="FeatureState.cs" />
@@ -99,7 +100,7 @@
     <Compile Include="IFeatureManifest.cs" />
     <Compile Include="IFeatureManifestCreationStrategy.cs" />
     <Compile Include="IFeatureManifestService.cs" />
-    <Compile Include="IFeatureSettingDependencyChecker.cs" />
+    <Compile Include="IFeatureSettingAvailabilityChecker.cs" />
     <Compile Include="IFeatureSettingRepository.cs" />
     <Compile Include="IFeatureSettingService.cs" />
     <Compile Include="ITenancyContext.cs" />

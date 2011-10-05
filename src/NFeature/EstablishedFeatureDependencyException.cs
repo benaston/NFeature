@@ -2,19 +2,18 @@
 {
     using NHelpfulException;
 
-    public class EstablishedFeatureAvailabilityCheckException<TFeature> : HelpfulException
+    public class EstablishedFeatureDependencyException<TFeature> : HelpfulException
         where TFeature : struct
     {
         private const string DefaultProblemDescription =
-            @"Feature '{0}' is established and may not be queried for availability.";
+            @"Dependencies of established features must be established themselves. Established feature '{0}' depends upon non-established feature '{1}'.";
 
         private static readonly string[] ResolutionSuggestions = new[]
                                                                      {
                                                                          "Check feature configuration.",
-                                                                         "Remove availability check."
                                                                      };
 
-        public EstablishedFeatureAvailabilityCheckException(TFeature f)
-            : base(string.Format(DefaultProblemDescription, f), ResolutionSuggestions, null) {}
+        public EstablishedFeatureDependencyException(TFeature feature, TFeature dependency)
+            : base(string.Format(DefaultProblemDescription, feature, dependency), ResolutionSuggestions, null) {}
     }
 }

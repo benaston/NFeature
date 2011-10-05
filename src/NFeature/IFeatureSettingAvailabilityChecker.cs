@@ -3,10 +3,10 @@
     using System;
     using System.Collections.Generic;
 
-    public interface IFeatureSettingDependencyChecker<TFeatureEnumeration>
+    public interface IFeatureSettingAvailabilityChecker<TFeatureEnumeration>
         where TFeatureEnumeration : struct
     {
-        bool AreDependenciesMetForTenant(FeatureSetting<TFeatureEnumeration> featureSettingToCheck,
+        bool CheckAvailability(FeatureSetting<TFeatureEnumeration> featureSettingToCheck,
                                          FeatureSetting<TFeatureEnumeration>[] allFeatureSettings,
                                          FeatureVisibilityMode inPreviewMode,
                                          Tenant tenant,

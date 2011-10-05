@@ -7,12 +7,42 @@ namespace NFeature.Test.Fast
 
     [TestFixture]
     [Category("Fast")]
-    public class FeatureSettingDependencyCheckerTests
+    public class FeatureSettingAvailabilityCheckerTests
     {
         [Test]
-        public void DependenciesAreMet_ADependsOnBAndAAndBStartDatesAreInPast_DependenciesAreMet()
+        public void CheckAvailability_AIsEstablishedBIsNot_CheckAvailabilityThrowsException()
         {
-            var dependencyChecker = new FeatureSettingDependencyChecker<TestFeatureList>();
+            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
+            var allFeatureSettings = new[]
+                                         {
+                                             new FeatureSetting<TestFeatureList> //A
+                                                 {
+                                                     Feature = TestFeatureList.TestFeature3,
+                                                     Dependencies =
+                                                         new[] {TestFeatureList.TestFeature1},
+                                                     FeatureState = FeatureState.Established,
+                                                     StartDtg = 1.Day().Ago(),
+                                                 },
+                                             new FeatureSetting<TestFeatureList> //B
+                                                 {
+                                                     Feature = TestFeatureList.TestFeature1,
+                                                     Dependencies = new TestFeatureList[0],
+                                                     FeatureState = FeatureState.Enabled,
+                                                     StartDtg = 1.Day().Ago(),
+                                                 },
+                                         };
+            var featureSetting = allFeatureSettings[0];
+
+            Assert.Throws<EstablishedFeatureDependencyException<TestFeatureList>>(() => dependencyChecker.CheckAvailability(featureSetting,
+                                                                      allFeatureSettings,
+                                                                      FeatureVisibilityMode.Normal, Tenant.All,
+                                                                      DateTime.Now));
+        }
+
+        [Test]
+        public void CheckAvailability_ADependsOnBAndAAndBStartDatesAreInPast_CheckAvailability()
+        {
+            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -31,9 +61,9 @@ namespace NFeature.Test.Fast
                                                      StartDtg = 1.Day().Ago(),
                                                  },
                                          };
-            var furnFeatureSetting = allFeatureSettings[0];
+            var featureSetting = allFeatureSettings[0];
 
-            Assert.That(dependencyChecker.AreDependenciesMetForTenant(furnFeatureSetting,
+            Assert.That(dependencyChecker.CheckAvailability(featureSetting,
                                                                       allFeatureSettings,
                                                                       FeatureVisibilityMode.Normal, Tenant.All,
                                                                       DateTime.Now));
@@ -41,9 +71,9 @@ namespace NFeature.Test.Fast
 
         [Test]
         public void
-            DependenciesAreMet_ADependsOnBAndAStartDateIsInFuture_DependenciesAreNotMet_BecauseAIsNotYetAvailable()
+            CheckAvailability_ADependsOnBAndAStartDateIsInFuture_DependenciesAreNotMet_BecauseAIsNotYetAvailable()
         {
-            var dependencyChecker = new FeatureSettingDependencyChecker<TestFeatureList>();
+            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -61,18 +91,18 @@ namespace NFeature.Test.Fast
                                                      FeatureState = FeatureState.Enabled,
                                                  },
                                          };
-            var furnFeatureSetting = allFeatureSettings[0];
+            var featureSetting = allFeatureSettings[0];
 
-            Assert.That(!dependencyChecker.AreDependenciesMetForTenant(furnFeatureSetting,
+            Assert.That(!dependencyChecker.CheckAvailability(featureSetting,
                                                                        allFeatureSettings,
                                                                        FeatureVisibilityMode.Normal, Tenant.All,
                                                                        DateTime.Now));
         }
 
         [Test]
-        public void DependenciesAreMet_ADependsOnBAndBDependsOnA_CircularDependencyExceptionIsThrown()
+        public void CheckAvailability_ADependsOnBAndBDependsOnA_CircularDependencyExceptionIsThrown()
         {
-            var dependencyChecker = new FeatureSettingDependencyChecker<TestFeatureList>();
+            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -88,19 +118,19 @@ namespace NFeature.Test.Fast
                                                      FeatureState = FeatureState.Enabled,
                                                  },
                                          };
-            var furnFeatureSetting = allFeatureSettings[0];
+            var featureSetting = allFeatureSettings[0];
 
             Assert.Throws<CircularFeatureSettingDependencyException>(
-                () => dependencyChecker.AreDependenciesMetForTenant(furnFeatureSetting,
+                () => dependencyChecker.CheckAvailability(featureSetting,
                                                                     allFeatureSettings,
                                                                     FeatureVisibilityMode.Normal, Tenant.All,
                                                                     DateTime.Now));
         }
 
         [Test]
-        public void DependenciesAreMet_ADependsOnBAndBDependsOnCAndAIsNotEnabled_DependenciesAreNotMet()
+        public void CheckAvailability_ADependsOnBAndBDependsOnCAndAIsNotEnabled_DependenciesAreNotMet()
         {
-            var dependencyChecker = new FeatureSettingDependencyChecker<TestFeatureList>();
+            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -122,18 +152,18 @@ namespace NFeature.Test.Fast
                                                      FeatureState = FeatureState.Enabled,
                                                  },
                                          };
-            var furnFeatureSetting = allFeatureSettings[0];
+            var featureSetting = allFeatureSettings[0];
 
-            Assert.That(!dependencyChecker.AreDependenciesMetForTenant(furnFeatureSetting,
+            Assert.That(!dependencyChecker.CheckAvailability(featureSetting,
                                                                        allFeatureSettings,
                                                                        FeatureVisibilityMode.Normal, Tenant.All,
                                                                        DateTime.Now));
         }
 
         [Test]
-        public void DependenciesAreMet_ADependsOnBAndBDependsOnCAndAllEnabled_DependenciesAreMet()
+        public void CheckAvailability_ADependsOnBAndBDependsOnCAndAllEnabled_CheckAvailability()
         {
-            var dependencyChecker = new FeatureSettingDependencyChecker<TestFeatureList>();
+            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -155,18 +185,18 @@ namespace NFeature.Test.Fast
                                                      FeatureState = FeatureState.Enabled,
                                                  },
                                          };
-            var furnFeatureSetting = allFeatureSettings[0];
+            var featureSetting = allFeatureSettings[0];
 
-            Assert.That(dependencyChecker.AreDependenciesMetForTenant(furnFeatureSetting,
+            Assert.That(dependencyChecker.CheckAvailability(featureSetting,
                                                                       allFeatureSettings,
                                                                       FeatureVisibilityMode.Normal, Tenant.All,
                                                                       DateTime.Now));
         }
 
         [Test]
-        public void DependenciesAreMet_ADependsOnBAndBDependsOnCAndBAndCAreNotEnabled_DependenciesAreNotMet()
+        public void CheckAvailability_ADependsOnBAndBDependsOnCAndBAndCAreNotEnabled_DependenciesAreNotMet()
         {
-            var dependencyChecker = new FeatureSettingDependencyChecker<TestFeatureList>();
+            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -188,18 +218,18 @@ namespace NFeature.Test.Fast
                                                      FeatureState = FeatureState.Disabled,
                                                  },
                                          };
-            var furnFeatureSetting = allFeatureSettings[0];
+            var featureSetting = allFeatureSettings[0];
 
-            Assert.That(!dependencyChecker.AreDependenciesMetForTenant(furnFeatureSetting,
+            Assert.That(!dependencyChecker.CheckAvailability(featureSetting,
                                                                        allFeatureSettings,
                                                                        FeatureVisibilityMode.Normal, Tenant.All,
                                                                        DateTime.Now));
         }
 
         [Test]
-        public void DependenciesAreMet_ADependsOnBAndBDependsOnCAndBIsNotEnabled_DependenciesAreNotMet()
+        public void CheckAvailability_ADependsOnBAndBDependsOnCAndBIsNotEnabled_DependenciesAreNotMet()
         {
-            var dependencyChecker = new FeatureSettingDependencyChecker<TestFeatureList>();
+            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -221,18 +251,18 @@ namespace NFeature.Test.Fast
                                                      FeatureState = FeatureState.Enabled,
                                                  },
                                          };
-            var furnFeatureSetting = allFeatureSettings[0];
+            var featureSetting = allFeatureSettings[0];
 
-            Assert.That(!dependencyChecker.AreDependenciesMetForTenant(furnFeatureSetting,
+            Assert.That(!dependencyChecker.CheckAvailability(featureSetting,
                                                                        allFeatureSettings,
                                                                        FeatureVisibilityMode.Normal, Tenant.All,
                                                                        DateTime.Now));
         }
 
         [Test]
-        public void DependenciesAreMet_ADependsOnBAndBDependsOnCAndCIsNotEnabled_DependenciesAreNotMet()
+        public void CheckAvailability_ADependsOnBAndBDependsOnCAndCIsNotEnabled_DependenciesAreNotMet()
         {
-            var dependencyChecker = new FeatureSettingDependencyChecker<TestFeatureList>();
+            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -254,9 +284,9 @@ namespace NFeature.Test.Fast
                                                      FeatureState = FeatureState.Disabled,
                                                  },
                                          };
-            var furnFeatureSetting = allFeatureSettings[0];
+            var featureSetting = allFeatureSettings[0];
 
-            Assert.That(!dependencyChecker.AreDependenciesMetForTenant(furnFeatureSetting,
+            Assert.That(!dependencyChecker.CheckAvailability(featureSetting,
                                                                        allFeatureSettings,
                                                                        FeatureVisibilityMode.Normal, Tenant.All,
                                                                        DateTime.Now));
@@ -264,10 +294,10 @@ namespace NFeature.Test.Fast
 
         [Test]
         public void
-            DependenciesAreMet_ADependsOnBAndBIsPreviewableAndModeIsNormal_DependenciesAreNotMet_BecauseModeShouldBePreview
+            CheckAvailability_ADependsOnBAndBIsPreviewableAndModeIsNormal_DependenciesAreNotMet_BecauseModeShouldBePreview
             ()
         {
-            var dependencyChecker = new FeatureSettingDependencyChecker<TestFeatureList>();
+            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -284,9 +314,9 @@ namespace NFeature.Test.Fast
                                                      FeatureState = FeatureState.Previewable,
                                                  },
                                          };
-            var furnFeatureSetting = allFeatureSettings[0];
+            var featureSetting = allFeatureSettings[0];
 
-            Assert.That(!dependencyChecker.AreDependenciesMetForTenant(furnFeatureSetting,
+            Assert.That(!dependencyChecker.CheckAvailability(featureSetting,
                                                                        allFeatureSettings,
                                                                        FeatureVisibilityMode.Normal, Tenant.All,
                                                                        DateTime.Now));
@@ -294,9 +324,9 @@ namespace NFeature.Test.Fast
 
         [Test]
         public void
-            DependenciesAreMet_ADependsOnBAndBStartDateIsInFuture_DependenciesAreNotMet_BecauseBIsNotYetAvailable()
+            CheckAvailability_ADependsOnBAndBStartDateIsInFuture_DependenciesAreNotMet_BecauseBIsNotYetAvailable()
         {
-            var dependencyChecker = new FeatureSettingDependencyChecker<TestFeatureList>();
+            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -314,18 +344,18 @@ namespace NFeature.Test.Fast
                                                      StartDtg = 1.Day().Hence(),
                                                  },
                                          };
-            var furnFeatureSetting = allFeatureSettings[0];
+            var featureSetting = allFeatureSettings[0];
 
-            Assert.That(!dependencyChecker.AreDependenciesMetForTenant(furnFeatureSetting,
+            Assert.That(!dependencyChecker.CheckAvailability(featureSetting,
                                                                        allFeatureSettings,
                                                                        FeatureVisibilityMode.Normal, Tenant.All,
                                                                        DateTime.Now));
         }
 
         [Test]
-        public void DependenciesAreMet_ADependsOnBAndBStartDateIsInPast_DependenciesAreMet()
+        public void CheckAvailability_ADependsOnBAndBStartDateIsInPast_CheckAvailability()
         {
-            var dependencyChecker = new FeatureSettingDependencyChecker<TestFeatureList>();
+            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -343,18 +373,18 @@ namespace NFeature.Test.Fast
                                                      StartDtg = 1.Day().Ago(),
                                                  },
                                          };
-            var furnFeatureSetting = allFeatureSettings[0];
+            var featureSetting = allFeatureSettings[0];
 
-            Assert.That(dependencyChecker.AreDependenciesMetForTenant(furnFeatureSetting,
+            Assert.That(dependencyChecker.CheckAvailability(featureSetting,
                                                                       allFeatureSettings,
                                                                       FeatureVisibilityMode.Normal, Tenant.All,
                                                                       DateTime.Now));
         }
 
         [Test]
-        public void DependenciesAreMet_ADependsOnBAndBothEnabled_DependenciesAreMet()
+        public void CheckAvailability_ADependsOnBAndBothEnabled_CheckAvailability()
         {
-            var dependencyChecker = new FeatureSettingDependencyChecker<TestFeatureList>();
+            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -370,19 +400,19 @@ namespace NFeature.Test.Fast
                                                      FeatureState = FeatureState.Enabled,
                                                  },
                                          };
-            var furnFeatureSetting = allFeatureSettings[0];
+            var featureSetting = allFeatureSettings[0];
 
-            Assert.That(dependencyChecker.AreDependenciesMetForTenant(furnFeatureSetting,
+            Assert.That(dependencyChecker.CheckAvailability(featureSetting,
                                                                       allFeatureSettings,
                                                                       FeatureVisibilityMode.Normal, Tenant.All,
                                                                       DateTime.Now));
         }
 
         [Test]
-        public void DependenciesAreMet_ADependsOnBAndDAndBDependsOnCAndAllAreEnabled_DependenciesAreMet()
+        public void CheckAvailability_ADependsOnBAndDAndBDependsOnCAndAllAreEnabled_CheckAvailability()
             //a single feature can have multiple dependencies
         {
-            var dependencyChecker = new FeatureSettingDependencyChecker<TestFeatureList>();
+            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -414,9 +444,9 @@ namespace NFeature.Test.Fast
                                                      FeatureState = FeatureState.Enabled,
                                                  },
                                          };
-            var furnFeatureSetting = allFeatureSettings[0];
+            var featureSetting = allFeatureSettings[0];
 
-            Assert.That(dependencyChecker.AreDependenciesMetForTenant(furnFeatureSetting,
+            Assert.That(dependencyChecker.CheckAvailability(featureSetting,
                                                                       allFeatureSettings,
                                                                       FeatureVisibilityMode.Normal, Tenant.All,
                                                                       DateTime.Now));

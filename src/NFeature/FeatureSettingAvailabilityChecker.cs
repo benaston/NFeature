@@ -14,21 +14,23 @@
     ///   list then we realise that resolution of a feature's
     ///   dependency graph depends on resolution of it's graph 
     ///   and hence we cannot complete, and we throw an exception.
-    ///   NOTE 2: BA; required due to recursive invocation.
+    ///   NOTE 2: BA; the dependencies of established features must 
+    ///   themselves all be established.
+    ///   NOTE 3: BA; required due to recursive invocation.
     /// </remarks>
-    public class FeatureSettingDependencyChecker<TFeatureEnumeration> : IFeatureSettingDependencyChecker<TFeatureEnumeration>
+    public class FeatureSettingAvailabilityChecker<TFeatureEnumeration> : IFeatureSettingAvailabilityChecker<TFeatureEnumeration>
         where TFeatureEnumeration : struct
     {
         /// <summary>
         ///   Responsible for checking whether the dependencies 
         ///   for a feature are met.
         /// </summary>
-        public bool AreDependenciesMetForTenant(FeatureSetting<TFeatureEnumeration> featureSettingToCheck,
-                                                FeatureSetting<TFeatureEnumeration>[] allFeatureSettings,
-                                                FeatureVisibilityMode featureConfigurationMode,
-                                                Tenant tenant,
-                                                DateTime currentDtg,
-                                                List<FeatureSetting<TFeatureEnumeration>> featuresCurrentlyUnderAnalysis = null)
+        public bool CheckAvailability(FeatureSetting<TFeatureEnumeration> featureSettingToCheck,
+                                      FeatureSetting<TFeatureEnumeration>[] allFeatureSettings,
+                                      FeatureVisibilityMode featureConfigurationMode,
+                                      Tenant tenant,
+                                      DateTime currentDtg,
+                                      List<FeatureSetting<TFeatureEnumeration>> featuresCurrentlyUnderAnalysis = null)
         {
             Ensure.That<ArgumentNullException>(featureSettingToCheck.IsNotNull(), "featureSetting not supplied.")
                 .And<ArgumentNullException>(allFeatureSettings.IsNotNull(), "allFeatureSettings not supplied.");
@@ -47,13 +49,19 @@
                 {
                     var dependencyClosedOver = dependency;
                     var dependencySetting = allFeatureSettings.First(s => s.Feature.Equals(dependencyClosedOver));
-                    if (
-                        !AreDependenciesMetForTenant(dependencySetting,
-                                                     allFeatureSettings,
-                                                     featureConfigurationMode,
-                                                     tenant,
-                                                     currentDtg,
-                                                     featuresCurrentlyUnderAnalysis))
+
+                    if(featureSettingToCheck.FeatureState == FeatureState.Established 
+                        && dependencySetting.FeatureState != FeatureState.Established) //see note 2
+                    {
+                        throw new EstablishedFeatureDependencyException<TFeatureEnumeration>(featureSettingToCheck.Feature, dependencyClosedOver);
+                    }
+
+                    if (!CheckAvailability(dependencySetting,
+                                           allFeatureSettings,
+                                           featureConfigurationMode,
+                                           tenant,
+                                           currentDtg,
+                                           featuresCurrentlyUnderAnalysis))
                     {
                         return false;
                     }
@@ -64,7 +72,7 @@
                 }
             }
 
-            featuresCurrentlyUnderAnalysis.Remove(featureSettingToCheck); //see note 2
+            featuresCurrentlyUnderAnalysis.Remove(featureSettingToCheck); //see note 3
 
             return featureSettingToCheck.IsAvailable(featureConfigurationMode, tenant, currentDtg);
         }

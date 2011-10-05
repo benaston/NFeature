@@ -14,8 +14,10 @@
             return f.FeatureState == FeatureState.Enabled;
         }
 
-        public static bool IsAvailable<TFeatureEnumeration>(this FeatureSetting<TFeatureEnumeration> f, FeatureVisibilityMode m, Tenant tenant,
-                                       DateTime currentDtg)
+        public static bool IsAvailable<TFeatureEnumeration>(this FeatureSetting<TFeatureEnumeration> f, 
+                                                            FeatureVisibilityMode m, 
+                                                            Tenant tenant,
+                                                            DateTime currentDtg)
             where TFeatureEnumeration : struct
         {
             return (f.SupportedTenants.Contains(Tenant.All) || f.SupportedTenants.Contains(tenant)) &&

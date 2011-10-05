@@ -3,11 +3,11 @@
     public class FeatureSettingService<TFeatureEnumeration> : IFeatureSettingService<TFeatureEnumeration>
         where TFeatureEnumeration : struct
     {
-        private readonly IFeatureSettingDependencyChecker<TFeatureEnumeration> _featureSettingDependencyChecker;
+        private readonly IFeatureSettingAvailabilityChecker<TFeatureEnumeration> _featureSettingDependencyChecker;
         private readonly IFeatureSettingRepository<TFeatureEnumeration> _featureSettingRepository;
         private readonly IApplicationClock _systemDtg;
 
-        public FeatureSettingService(IFeatureSettingDependencyChecker<TFeatureEnumeration> featureSettingDependencyChecker,
+        public FeatureSettingService(IFeatureSettingAvailabilityChecker<TFeatureEnumeration> featureSettingDependencyChecker,
                                      IFeatureSettingRepository<TFeatureEnumeration> featureSettingRepository,
                                      IApplicationClock systemDtg)
         {
@@ -20,7 +20,7 @@
                                                                     FeatureVisibilityMode featureConfigurationMode,
                                                                     ITenancyContext tenancyContext)
         {
-            return _featureSettingDependencyChecker.AreDependenciesMetForTenant(f,
+            return _featureSettingDependencyChecker.CheckAvailability(f,
                                                                                 _featureSettingRepository.
                                                                                     GetFeatureSettings(),
                                                                                 featureConfigurationMode,

@@ -33,7 +33,7 @@ namespace NFeature.Test.Fast
                                                             }
                                                     });
 
-            var fsSvc = new FeatureSettingService<TestFeatureList>(new FeatureSettingDependencyChecker<TestFeatureList>(), fsRepo.Object, new ApplicationClock());
+            var fsSvc = new FeatureSettingService<TestFeatureList>(new FeatureSettingAvailabilityChecker<TestFeatureList>(), fsRepo.Object, new ApplicationClock());
 
             var request = new Mock<HttpRequestBase>();
             request.Setup(
@@ -82,7 +82,7 @@ namespace NFeature.Test.Fast
                                                             }
                                                     });
 
-            var fsSvc = new FeatureSettingService<TestFeatureList>(new FeatureSettingDependencyChecker<TestFeatureList>(), fsRepo.Object, new ApplicationClock());
+            var fsSvc = new FeatureSettingService<TestFeatureList>(new FeatureSettingAvailabilityChecker<TestFeatureList>(), fsRepo.Object, new ApplicationClock());
 
             var request = new Mock<HttpRequestBase>();
             request.Setup(
@@ -131,7 +131,7 @@ namespace NFeature.Test.Fast
                                                             }
                                                     });
 
-            var fsSvc = new FeatureSettingService<TestFeatureList>(new FeatureSettingDependencyChecker<TestFeatureList>(), fsRepo.Object, new ApplicationClock());
+            var fsSvc = new FeatureSettingService<TestFeatureList>(new FeatureSettingAvailabilityChecker<TestFeatureList>(), fsRepo.Object, new ApplicationClock());
 
             var request = new Mock<HttpRequestBase>();
             request.Setup(
@@ -222,7 +222,7 @@ namespace NFeature.Test.Fast
                                                             }
                                                     });
 
-            var fsSvc = new FeatureSettingService<TestFeatureList>(new FeatureSettingDependencyChecker<TestFeatureList>(), fsRepo.Object, new ApplicationClock());
+            var fsSvc = new FeatureSettingService<TestFeatureList>(new FeatureSettingAvailabilityChecker<TestFeatureList>(), fsRepo.Object, new ApplicationClock());
 
             var request = new Mock<HttpRequestBase>();
             request.Setup(
@@ -353,7 +353,7 @@ namespace NFeature.Test.Fast
                                                             },
                                                     });
 
-            var fsSvc = new FeatureSettingService<TestFeatureList>(new FeatureSettingDependencyChecker<TestFeatureList>(), fsRepo.Object, new ApplicationClock());
+            var fsSvc = new FeatureSettingService<TestFeatureList>(new FeatureSettingAvailabilityChecker<TestFeatureList>(), fsRepo.Object, new ApplicationClock());
 
             var request = new Mock<HttpRequestBase>();
             request.Setup(
@@ -402,7 +402,7 @@ namespace NFeature.Test.Fast
                                                             }
                                                     });
 
-            var fsSvc = new FeatureSettingService<TestFeatureList>(new FeatureSettingDependencyChecker<TestFeatureList>(), fsRepo.Object, new ApplicationClock());
+            var fsSvc = new FeatureSettingService<TestFeatureList>(new FeatureSettingAvailabilityChecker<TestFeatureList>(), fsRepo.Object, new ApplicationClock());
 
             var request = new Mock<HttpRequestBase>();
             request.Setup(

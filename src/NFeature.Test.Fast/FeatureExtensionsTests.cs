@@ -34,7 +34,7 @@ namespace NFeature.Test.Fast
 
             //act / assert
             Assert.Throws
-                <AvailabilityCheckOnEstablishedFeatureException<TestFeatureList>>
+                <EstablishedFeatureAvailabilityCheckException<TestFeatureList>>
                 (() => TestFeatureList.TestFeature1.IsAvailable(featureManifest));
         }
 
