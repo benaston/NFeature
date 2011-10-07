@@ -86,7 +86,7 @@ In your configuration:
 
 ```
 
-**6. Optionally mark your feature as ```Established``` to indicate that it is now integral to your application.**
+**6. Optionally mark your feature as ```Established``` to indicate that it is now integral to your application**
 
 ```XML
 
