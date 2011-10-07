@@ -86,7 +86,18 @@ In your configuration:
 
 ```
 
-**6. Bask in the win**
+**6. Optionally mark your feature as 'Established' to indicate that it is now integral to your application.**
+
+```XML
+
+	
+        <features>
+		<add name="MyFeature" state="Established" />
+	</features>
+
+```
+
+**7. Bask in the win**
 
 How to build and/or run the tests:
 --------
