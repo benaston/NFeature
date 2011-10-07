@@ -91,7 +91,7 @@ In your configuration:
 ```XML
 
 	
-        <features>
+	<features>
 		<add name="MyFeature" state="Established" />
 	</features>
 
