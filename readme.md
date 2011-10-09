@@ -5,6 +5,10 @@ A simple feature configuration system.
 
 Feature configuration walls enable you to integrate your code earlier, which brings lots of goodness (such as helping to avoid branch merge problems.)
 
+TODO:
+--------
+Consider how to link feature availability to arbitrary pieces of logic - e.g. site load.
+
 How to use:
 --------
 **1. Define some features**
