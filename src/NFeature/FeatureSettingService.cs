@@ -9,11 +9,11 @@
 
         public FeatureSettingService(IFeatureSettingAvailabilityChecker<TFeatureEnumeration> featureSettingDependencyChecker,
                                      IFeatureSettingRepository<TFeatureEnumeration> featureSettingRepository,
-                                     IApplicationClock systemDtg)
+                                     IApplicationClock systemDtg = null)
         {
             _featureSettingDependencyChecker = featureSettingDependencyChecker;
             _featureSettingRepository = featureSettingRepository;
-            _systemDtg = systemDtg;
+            _systemDtg = systemDtg ?? new ApplicationClock();
         }
 
         public bool AllDependenciesAreSatisfiedForTheFeatureSetting(FeatureSetting<TFeatureEnumeration> f,
