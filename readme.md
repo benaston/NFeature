@@ -44,17 +44,19 @@ In your configuration:
 
 **2. Take care of feature manifest initialization**
 
+Note that the availability checker can contain arbitrary logic. You might take advantage of this to disable certain features when the load on a website gets to a certain level.
+
 ```C#
 
 	
-	//NOTE: I suggest hiding this all away in the IOC 
-	//container in real life, but it is laid-bare here for clarity
-	var c = new FeatureSettingAvailabilityChecker<Feature>();
-	var r = new WebConfigFeatureSettingRepository<Feature>();
-	var s = new FeatureSettingService<Feature>(c, r);
-	var manifestCreationStrategy = new DefaultFeatureManifestCreationStrategy<Feature>(s, r, new HttpContextWrapper(HttpContext.Current), new TenancyContext());
+	//NOTE: I suggest hiding this all away in the IOC 	
+	var availabilityChecker = new FeatureSettingAvailabilityChecker<Feature, TArgs>(MyAvailabilityCheckingMethod);
+	var featureSettingRepo = new AppConfigFeatureSettingRepository<Feature>();
+	var featureSettingService = new FeatureSettingService<Feature, TArgs>(availabilityChecker, featureSettingRepo);
+	var manifestCreationStrategy = new CookieBasedPreviewManifestCreationStrategy<Feature>(featureSettingService, featureSettingRepo, new HttpContextWrapper(HttpContext.Current), new TenancyContext(), new DefaultApplicationClock());
 	var featureManifestService = new FeatureManifestService<Feature>(manifestCreationStrategy);
 	var featureManifest = featureManifestService.GetManifest();
+
 
 ```
 
