@@ -49,7 +49,7 @@ Note that the availability checker is injected with a method that can contain ar
 ```C#
 
 	
-	//NOTE: I suggest hiding this all away in the IOC 	
+	//NOTE: I suggest hiding this all away in the IOC container configuration	
 	var availabilityChecker = new FeatureSettingAvailabilityChecker<Feature, TArgs>(MyAvailabilityCheckingMethod);
 	var featureSettingRepo = new AppConfigFeatureSettingRepository<Feature>();
 	var featureSettingService = new FeatureSettingService<Feature, TArgs>(availabilityChecker, featureSettingRepo);
