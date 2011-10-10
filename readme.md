@@ -44,7 +44,7 @@ In your configuration:
 
 **2. Take care of feature manifest initialization**
 
-Note that the availability checker can contain arbitrary logic. You might take advantage of this to disable certain features when the load on a website gets to a certain level.
+Note that the availability checker is injected with a method that can contain arbitrary logic. You might take advantage of this to disable certain features when the load on a website is above normal.
 
 ```C#
 
