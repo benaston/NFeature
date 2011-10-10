@@ -70,12 +70,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AvailabilityCheckOnEstablishedFeatureException.cs" />
+    <Compile Include="EstablishedFeatureAvailabilityCheckException.cs" />
     <Compile Include="CircularFeatureSettingDependencyException.cs" />
     <Compile Include="ConfigurationManager.cs" />
     <Compile Include="ConfigurationSectionBase.cs" />
     <Compile Include="DatabaseFeatureSettingRepository.cs" />
-    <Compile Include="DefaultFeatureManifestCreationStrategy.cs" />
+    <Compile Include="CookieBasedPreviewManifestCreationStrategy.cs" />
     <Compile Include="EstablishedFeatureDependencyException.cs" />
     <Compile Include="FeatureConfigurationElement.cs" />
     <Compile Include="FeatureConfigurationException.cs" />
@@ -108,7 +108,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringToEnGBDateTimeConverter.cs" />
     <Compile Include="Tenant.cs" />
-    <Compile Include="WebConfigFeatureSettingRepository.cs" />
+    <Compile Include="AppConfigFeatureSettingRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

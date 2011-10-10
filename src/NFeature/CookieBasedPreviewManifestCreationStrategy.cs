@@ -16,12 +16,12 @@
         where TFeatureEnumeration : struct
     {
         public const string FeaturePreviewCookieName = "FeaturePreviewCookie";
+        private readonly IApplicationClock _clock;
 
         private readonly IFeatureSettingService<TFeatureEnumeration, TArgs> _featureSettingService;
         private readonly IFeatureSettingRepository<TFeatureEnumeration> _featureSettingsRepository;
         private readonly HttpContextBase _httpContext;
         private readonly ITenancyContext _tenancyContext;
-        private readonly IApplicationClock _clock;
 
         public CookieBasedPreviewManifestCreationStrategy(
             IFeatureSettingService<TFeatureEnumeration, TArgs> featureSettingService,
@@ -45,12 +45,13 @@
             foreach (var setting in featureSettings)
             {
                 var featureVisibilityMode = _httpContext.Request.Cookies[FeaturePreviewCookieName].IsNotNull()
-                                                   ? FeatureVisibilityMode.Preview
-                                                   : FeatureVisibilityMode.Normal;
+                                                ? FeatureVisibilityMode.Preview
+                                                : FeatureVisibilityMode.Normal;
 
                 var isAvailable = _featureSettingService
-                    .AllDependenciesAreSatisfiedForTheFeatureSetting(setting, new TArgs(featureVisibilityMode, _tenancyContext.CurrentTenant, _clock.Now));
-                                                                                                         
+                    .AllDependenciesAreSatisfiedForTheFeatureSetting(setting,
+                                                                     new TArgs(featureVisibilityMode,
+                                                                               _tenancyContext.CurrentTenant, _clock.Now));
 
                 manifest.Add(setting.Feature,
                              new FeatureDescriptor<TFeatureEnumeration>(setting.Feature)

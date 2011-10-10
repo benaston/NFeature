@@ -12,8 +12,7 @@
         ///   Determines whether the dependencies are 
         ///   satisfied for the specified feature setting.
         /// </summary>
-        bool AllDependenciesAreSatisfiedForTheFeatureSetting(FeatureSetting<TFeatureEnumeration> f, TAvailabilityCheckArgs availabilityCheckArgs);
-                                                             //FeatureVisibilityMode featureConfigurationMode,
-                                                             //ITenancyContext tenancyContext);
+        bool AllDependenciesAreSatisfiedForTheFeatureSetting(FeatureSetting<TFeatureEnumeration> f,
+                                                             TAvailabilityCheckArgs availabilityCheckArgs);
     }
 }

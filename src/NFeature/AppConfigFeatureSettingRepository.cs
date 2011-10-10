@@ -4,9 +4,9 @@
     using System.Linq;
 
     /// <summary>
-    ///   Responsible for retrieving FeatureSettings from a web.config file.
+    ///   Responsible for retrieving FeatureSettings from a web.config/app.config file.
     /// </summary>
-    public class WebConfigFeatureSettingRepository<TFeatureEnumeration> : IFeatureSettingRepository<TFeatureEnumeration>
+    public class AppConfigFeatureSettingRepository<TFeatureEnumeration> : IFeatureSettingRepository<TFeatureEnumeration>
         where TFeatureEnumeration :struct
     {
         public FeatureSetting<TFeatureEnumeration>[] GetFeatureSettings()

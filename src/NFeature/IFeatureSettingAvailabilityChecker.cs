@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public interface IFeatureSettingAvailabilityChecker<TFeatureEnumeration, TAvailabilityCheckArgs>
+    public interface IFeatureSettingAvailabilityChecker<TFeatureEnumeration, in TAvailabilityCheckArgs>
         where TFeatureEnumeration : struct
     {
         bool RecursivelyCheckAvailability(FeatureSetting<TFeatureEnumeration> featureSettingToCheck,

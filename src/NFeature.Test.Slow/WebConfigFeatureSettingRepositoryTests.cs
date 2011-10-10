@@ -11,7 +11,7 @@ namespace NFeature.Test.Slow
         [Test]
         public void GetFeatureSettings_WhenInvoked_FeatureSettingsAreMarkedAsBeingEstablishedCorrectly()
         {
-            var r = new WebConfigFeatureSettingRepository<TestFeatureList>();
+            var r = new AppConfigFeatureSettingRepository<TestFeatureList>();
             var settings = r.GetFeatureSettings();
 
             Assert.That(
@@ -21,7 +21,7 @@ namespace NFeature.Test.Slow
         [Test]
         public void GetFeatureSettings_WhenInvoked_FeatureSettingsWithNoSpecifiedTenantAreAvailableToAllTenant()
         {
-            var r = new WebConfigFeatureSettingRepository<TestFeatureList>();
+            var r = new AppConfigFeatureSettingRepository<TestFeatureList>();
             var settings = r.GetFeatureSettings();
 
             Assert.That(
@@ -32,7 +32,7 @@ namespace NFeature.Test.Slow
         [Test]
         public void GetFeatureSettings_WhenInvoked_FeatureSettingsWithSpecifiedTenantsAreAvailableToThoseTenantsOnly()
         {
-            var r = new WebConfigFeatureSettingRepository<TestFeatureList>();
+            var r = new AppConfigFeatureSettingRepository<TestFeatureList>();
             var settings = r.GetFeatureSettings();
 
             Assert.That(
@@ -45,7 +45,7 @@ namespace NFeature.Test.Slow
         [Test]
         public void GetFeatureSettings_WhenInvoked_ReturnsAllCorrectNumberOfFeatureSettings()
         {
-            var r = new WebConfigFeatureSettingRepository<TestFeatureList>();
+            var r = new AppConfigFeatureSettingRepository<TestFeatureList>();
             var settings = r.GetFeatureSettings();
 
             Assert.That(settings.Count() == 5);

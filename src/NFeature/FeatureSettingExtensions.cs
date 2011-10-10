@@ -3,9 +3,6 @@
     using System;
     using System.Linq;
 
-    /// <summary>
-    ///   NOTE: BA; This could be modified to use the strategy pattern.
-    /// </summary>
     public static class FeatureSettingExtensions
     {
         public static bool IsEnabled<TFeatureEnumeration>(this FeatureSetting<TFeatureEnumeration> f)
