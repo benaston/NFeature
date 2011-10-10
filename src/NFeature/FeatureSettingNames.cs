@@ -2,16 +2,9 @@
 {
     public static class FeatureSettingNames
     {
-        public enum ExampleFeature
+        public enum TestFeature1
         {
             ExampleSettingName,
-        }
-
-        public enum ApplicationClock
-        {
-            OffsetTimeSpanCultureIdentifier,
-            OffsetTimeSpanFormat,
-            OffsetQueryStringFieldName,
         }
     }
 }

@@ -24,7 +24,7 @@ namespace NFeature.Test.Fast
                                                           new Dictionary<string, string>
                                                               {
                                                                   {
-                                                                      "JustGivingEmailRecipientEmailAddress",
+                                                                      "ExampleSettingName",
                                                                       desiredSettingValue
                                                                       }
                                                               }
@@ -64,7 +64,7 @@ namespace NFeature.Test.Fast
 
             //assert
             Assert.Throws<FeatureNotAvailableException>(() => TestFeatureList.TestFeature1.Setting(
-                    FeatureSettingNames.CharitySelfSignUpEmail.JustGivingEmailRecipientEmailAddress, featureManifest));
+                    FeatureSettingNames.TestFeature1.ExampleSettingName, featureManifest));
         }
 
         [Test]
@@ -83,7 +83,7 @@ namespace NFeature.Test.Fast
                                                           new Dictionary<string, string>
                                                               {
                                                                   {
-                                                                      "JustGivingEmailRecipientEmailAddress",
+                                                                      "ExampleSettingName",
                                                                       desiredSettingValue
                                                                       }
                                                               }
@@ -94,7 +94,7 @@ namespace NFeature.Test.Fast
             //act
             var actualSettingValue =
                 TestFeatureList.TestFeature5.Setting(
-                    FeatureSettingNames.CharitySelfSignUpEmail.JustGivingEmailRecipientEmailAddress, featureManifest);
+                    FeatureSettingNames.TestFeature1.ExampleSettingName, featureManifest);
 
             //assert
             Assert.That(actualSettingValue == desiredSettingValue);

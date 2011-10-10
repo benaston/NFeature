@@ -92,7 +92,7 @@
         ///   Provides a default implementation of the availability check function.
         ///   Can of course be substituted for by your own function.
         /// </summary>
-        public static bool DefaultAvailabilityCheckFunctionImplementation<TFeatureEnumeration2>(
+        public static bool DefaultAvailabilityCheckFunction<TFeatureEnumeration2>(
             FeatureSetting<TFeatureEnumeration2> s,
             Tuple<FeatureVisibilityMode, Tenant, DateTime> args)
             where TFeatureEnumeration2 : struct
