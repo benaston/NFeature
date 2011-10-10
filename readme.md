@@ -51,14 +51,14 @@ In your configuration:
 	//container in real life, but it is laid-bare here for clarity
 	var c = new FeatureSettingAvailabilityChecker<Feature>();
 	var r = new WebConfigFeatureSettingRepository<Feature>();
-        var s = new FeatureSettingService<Feature>(c, r);
-        var manifestCreationStrategy = new DefaultFeatureManifestCreationStrategy<Feature>(s, r, new HttpContextWrapper(HttpContext.Current), new TenancyContext());
-        var featureManifestService = new FeatureManifestService<Feature>(manifestCreationStrategy);
-        var featureManifest = featureManifestService.GetManifest();
+	var s = new FeatureSettingService<Feature>(c, r);
+	var manifestCreationStrategy = new DefaultFeatureManifestCreationStrategy<Feature>(s, r, new HttpContextWrapper(HttpContext.Current), new TenancyContext());
+	var featureManifestService = new FeatureManifestService<Feature>(manifestCreationStrategy);
+	var featureManifest = featureManifestService.GetManifest();
 
 ```
 
-**2. Add code that is conditional on feature availability**
+**3. Add code that is conditional on feature availability**
 	
 ```C#
 
@@ -70,7 +70,7 @@ In your configuration:
 	
 ```
 
-**3. Configure feature dependencies**
+**4. Configure feature dependencies**
 
 ```XML
 
@@ -81,7 +81,7 @@ In your configuration:
 
 ```
 
-**4. Optionally configure feature settings using Json (neatly side-stepping the Microsoft XML configuration functionality)**
+**5. Optionally configure feature settings using Json (neatly side-stepping the Microsoft XML configuration functionality)**
 	
 ```XML
 
@@ -93,7 +93,7 @@ In your configuration:
 
 ```
 
-**5. Optionally specify dates for feature availability**
+**6. Optionally specify dates for feature availability**
 
 ```XML
 
@@ -106,7 +106,7 @@ In your configuration:
 
 ```
 
-**6. Optionally mark your feature as ```Established``` to indicate that it is now integral to your application**
+**7. Optionally mark your feature as ```Established``` to indicate that it is now integral to your application**
 
 ```XML
 
@@ -117,7 +117,7 @@ In your configuration:
 
 ```
 
-**7. Bask in the win**
+**8. Bask in the win**
 
 How to build and/or run the tests:
 --------
