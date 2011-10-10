@@ -5,6 +5,10 @@ A simple feature configuration system.
 
 Feature configuration walls enable you to integrate your code earlier, which brings lots of goodness (such as helping to avoid branch merge problems.)
 
+TODO:
+--------
+Consider how to link feature availability to arbitrary pieces of logic - e.g. site load.
+
 How to use:
 --------
 **1. Define some features**
@@ -14,12 +18,12 @@ In your code:
 ```C#
 
 	
-    public enum Features
+	public enum Feature
 	{
 		MyFeature,
 		MyOtherFeature,
 		MyOtherOtherFeature,
-    }
+	}
 
 ```
 
@@ -38,7 +42,23 @@ In your configuration:
 	
 ```
 
-**2. Add code that is conditional on feature availability**
+**2. Take care of feature manifest initialization**
+
+```C#
+
+	
+	//NOTE: I suggest hiding this all away in the IOC 
+	//container in real life, but it is laid-bare here for clarity
+	var c = new FeatureSettingAvailabilityChecker<Feature>();
+	var r = new WebConfigFeatureSettingRepository<Feature>();
+	var s = new FeatureSettingService<Feature>(c, r);
+	var manifestCreationStrategy = new DefaultFeatureManifestCreationStrategy<Feature>(s, r, new HttpContextWrapper(HttpContext.Current), new TenancyContext());
+	var featureManifestService = new FeatureManifestService<Feature>(manifestCreationStrategy);
+	var featureManifest = featureManifestService.GetManifest();
+
+```
+
+**3. Add code that is conditional on feature availability**
 	
 ```C#
 
@@ -50,7 +70,7 @@ In your configuration:
 	
 ```
 
-**3. Configure feature dependencies**
+**4. Configure feature dependencies**
 
 ```XML
 
@@ -61,7 +81,7 @@ In your configuration:
 
 ```
 
-**4. Optionally configure feature settings using Json (neatly side-stepping the Microsoft XML configuration functionality)**
+**5. Optionally configure feature settings using Json (neatly side-stepping the Microsoft XML configuration functionality)**
 	
 ```XML
 
@@ -73,7 +93,7 @@ In your configuration:
 
 ```
 
-**5. Optionally specify dates for feature availability**
+**6. Optionally specify dates for feature availability**
 
 ```XML
 
@@ -86,7 +106,18 @@ In your configuration:
 
 ```
 
-**6. Bask in the win**
+**7. Optionally mark your feature as ```Established``` to indicate that it is now integral to your application**
+
+```XML
+
+	
+	<features>
+		<add name="MyFeature" state="Established" />
+	</features>
+
+```
+
+**8. Bask in the win**
 
 How to build and/or run the tests:
 --------
