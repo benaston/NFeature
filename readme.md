@@ -18,12 +18,12 @@ In your code:
 ```C#
 
 	
-    public enum Features
+	public enum Feature
 	{
 		MyFeature,
 		MyOtherFeature,
 		MyOtherOtherFeature,
-    }
+	}
 
 ```
 
