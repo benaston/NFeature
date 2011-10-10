@@ -42,6 +42,22 @@ In your configuration:
 	
 ```
 
+**2. Take care of feature manifest initialization**
+
+```C#
+
+	
+	//NOTE: I suggest hiding this all away in the IOC 
+	//container in real life, but it is laid-bare here for clarity
+	var c = new FeatureSettingAvailabilityChecker<Feature>();
+	var r = new WebConfigFeatureSettingRepository<Feature>();
+        var s = new FeatureSettingService<Feature>(c, r);
+        var manifestCreationStrategy = new DefaultFeatureManifestCreationStrategy<Feature>(s, r, new HttpContextWrapper(HttpContext.Current), new TenancyContext());
+        var featureManifestService = new FeatureManifestService<Feature>(manifestCreationStrategy);
+        var featureManifest = featureManifestService.GetManifest();
+
+```
+
 **2. Add code that is conditional on feature availability**
 	
 ```C#
