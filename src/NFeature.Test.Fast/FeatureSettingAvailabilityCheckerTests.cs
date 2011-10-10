@@ -10,39 +10,8 @@ namespace NFeature.Test.Fast
     public class FeatureSettingAvailabilityCheckerTests
     {
         [Test]
-        public void CheckAvailability_AIsEstablishedBIsNot_CheckAvailabilityThrowsException()
-        {
-            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
-            var allFeatureSettings = new[]
-                                         {
-                                             new FeatureSetting<TestFeatureList> //A
-                                                 {
-                                                     Feature = TestFeatureList.TestFeature3,
-                                                     Dependencies =
-                                                         new[] {TestFeatureList.TestFeature1},
-                                                     FeatureState = FeatureState.Established,
-                                                     StartDtg = 1.Day().Ago(),
-                                                 },
-                                             new FeatureSetting<TestFeatureList> //B
-                                                 {
-                                                     Feature = TestFeatureList.TestFeature1,
-                                                     Dependencies = new TestFeatureList[0],
-                                                     FeatureState = FeatureState.Enabled,
-                                                     StartDtg = 1.Day().Ago(),
-                                                 },
-                                         };
-            var featureSetting = allFeatureSettings[0];
-
-            Assert.Throws<EstablishedFeatureDependencyException<TestFeatureList>>(() => dependencyChecker.CheckAvailability(featureSetting,
-                                                                      allFeatureSettings,
-                                                                      FeatureVisibilityMode.Normal, Tenant.All,
-                                                                      DateTime.Now));
-        }
-
-        [Test]
         public void CheckAvailability_ADependsOnBAndAAndBStartDatesAreInPast_CheckAvailability()
         {
-            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -63,17 +32,15 @@ namespace NFeature.Test.Fast
                                          };
             var featureSetting = allFeatureSettings[0];
 
-            Assert.That(dependencyChecker.CheckAvailability(featureSetting,
-                                                                      allFeatureSettings,
-                                                                      FeatureVisibilityMode.Normal, Tenant.All,
-                                                                      DateTime.Now));
+            Assert.That(_dependencyChecker.RecursivelyCheckAvailability(featureSetting,
+                                                                       allFeatureSettings,
+                                                                       new Tuple<FeatureVisibilityMode, Tenant, DateTime>(FeatureVisibilityMode.Normal, Tenant.All, DateTime.Now)));
         }
 
         [Test]
         public void
             CheckAvailability_ADependsOnBAndAStartDateIsInFuture_DependenciesAreNotMet_BecauseAIsNotYetAvailable()
         {
-            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -93,16 +60,14 @@ namespace NFeature.Test.Fast
                                          };
             var featureSetting = allFeatureSettings[0];
 
-            Assert.That(!dependencyChecker.CheckAvailability(featureSetting,
-                                                                       allFeatureSettings,
-                                                                       FeatureVisibilityMode.Normal, Tenant.All,
-                                                                       DateTime.Now));
+            Assert.That(!_dependencyChecker.RecursivelyCheckAvailability(featureSetting,
+                                                                        allFeatureSettings,
+                                                                        new Tuple<FeatureVisibilityMode, Tenant, DateTime>(FeatureVisibilityMode.Normal, Tenant.All, DateTime.Now)));
         }
 
         [Test]
         public void CheckAvailability_ADependsOnBAndBDependsOnA_CircularDependencyExceptionIsThrown()
         {
-            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -121,16 +86,14 @@ namespace NFeature.Test.Fast
             var featureSetting = allFeatureSettings[0];
 
             Assert.Throws<CircularFeatureSettingDependencyException>(
-                () => dependencyChecker.CheckAvailability(featureSetting,
-                                                                    allFeatureSettings,
-                                                                    FeatureVisibilityMode.Normal, Tenant.All,
-                                                                    DateTime.Now));
+                () => _dependencyChecker.RecursivelyCheckAvailability(featureSetting,
+                                                                     allFeatureSettings,
+                                                                     new Tuple<FeatureVisibilityMode, Tenant, DateTime>(FeatureVisibilityMode.Normal, Tenant.All, DateTime.Now)));
         }
 
         [Test]
         public void CheckAvailability_ADependsOnBAndBDependsOnCAndAIsNotEnabled_DependenciesAreNotMet()
         {
-            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -154,16 +117,14 @@ namespace NFeature.Test.Fast
                                          };
             var featureSetting = allFeatureSettings[0];
 
-            Assert.That(!dependencyChecker.CheckAvailability(featureSetting,
-                                                                       allFeatureSettings,
-                                                                       FeatureVisibilityMode.Normal, Tenant.All,
-                                                                       DateTime.Now));
+            Assert.That(!_dependencyChecker.RecursivelyCheckAvailability(featureSetting,
+                                                                        allFeatureSettings,
+                                                                        new Tuple<FeatureVisibilityMode, Tenant, DateTime>(FeatureVisibilityMode.Normal, Tenant.All, DateTime.Now)));
         }
 
         [Test]
         public void CheckAvailability_ADependsOnBAndBDependsOnCAndAllEnabled_CheckAvailability()
         {
-            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -187,16 +148,14 @@ namespace NFeature.Test.Fast
                                          };
             var featureSetting = allFeatureSettings[0];
 
-            Assert.That(dependencyChecker.CheckAvailability(featureSetting,
-                                                                      allFeatureSettings,
-                                                                      FeatureVisibilityMode.Normal, Tenant.All,
-                                                                      DateTime.Now));
+            Assert.That(_dependencyChecker.RecursivelyCheckAvailability(featureSetting,
+                                                                       allFeatureSettings,
+                                                                       new Tuple<FeatureVisibilityMode, Tenant, DateTime>(FeatureVisibilityMode.Normal, Tenant.All, DateTime.Now)));
         }
 
         [Test]
         public void CheckAvailability_ADependsOnBAndBDependsOnCAndBAndCAreNotEnabled_DependenciesAreNotMet()
         {
-            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -220,16 +179,14 @@ namespace NFeature.Test.Fast
                                          };
             var featureSetting = allFeatureSettings[0];
 
-            Assert.That(!dependencyChecker.CheckAvailability(featureSetting,
-                                                                       allFeatureSettings,
-                                                                       FeatureVisibilityMode.Normal, Tenant.All,
-                                                                       DateTime.Now));
+            Assert.That(!_dependencyChecker.RecursivelyCheckAvailability(featureSetting,
+                                                                        allFeatureSettings,
+                                                                        new Tuple<FeatureVisibilityMode, Tenant, DateTime>(FeatureVisibilityMode.Normal, Tenant.All, DateTime.Now)));
         }
 
         [Test]
         public void CheckAvailability_ADependsOnBAndBDependsOnCAndBIsNotEnabled_DependenciesAreNotMet()
         {
-            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -253,16 +210,14 @@ namespace NFeature.Test.Fast
                                          };
             var featureSetting = allFeatureSettings[0];
 
-            Assert.That(!dependencyChecker.CheckAvailability(featureSetting,
-                                                                       allFeatureSettings,
-                                                                       FeatureVisibilityMode.Normal, Tenant.All,
-                                                                       DateTime.Now));
+            Assert.That(!_dependencyChecker.RecursivelyCheckAvailability(featureSetting,
+                                                                        allFeatureSettings,
+                                                                        new Tuple<FeatureVisibilityMode, Tenant, DateTime>(FeatureVisibilityMode.Normal, Tenant.All, DateTime.Now)));
         }
 
         [Test]
         public void CheckAvailability_ADependsOnBAndBDependsOnCAndCIsNotEnabled_DependenciesAreNotMet()
         {
-            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -286,10 +241,9 @@ namespace NFeature.Test.Fast
                                          };
             var featureSetting = allFeatureSettings[0];
 
-            Assert.That(!dependencyChecker.CheckAvailability(featureSetting,
-                                                                       allFeatureSettings,
-                                                                       FeatureVisibilityMode.Normal, Tenant.All,
-                                                                       DateTime.Now));
+            Assert.That(!_dependencyChecker.RecursivelyCheckAvailability(featureSetting,
+                                                                        allFeatureSettings,
+                                                                        new Tuple<FeatureVisibilityMode, Tenant, DateTime>(FeatureVisibilityMode.Normal, Tenant.All, DateTime.Now)));
         }
 
         [Test]
@@ -297,7 +251,6 @@ namespace NFeature.Test.Fast
             CheckAvailability_ADependsOnBAndBIsPreviewableAndModeIsNormal_DependenciesAreNotMet_BecauseModeShouldBePreview
             ()
         {
-            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -316,17 +269,15 @@ namespace NFeature.Test.Fast
                                          };
             var featureSetting = allFeatureSettings[0];
 
-            Assert.That(!dependencyChecker.CheckAvailability(featureSetting,
-                                                                       allFeatureSettings,
-                                                                       FeatureVisibilityMode.Normal, Tenant.All,
-                                                                       DateTime.Now));
+            Assert.That(!_dependencyChecker.RecursivelyCheckAvailability(featureSetting,
+                                                                        allFeatureSettings,
+                                                                        new Tuple<FeatureVisibilityMode, Tenant, DateTime>(FeatureVisibilityMode.Normal, Tenant.All, DateTime.Now)));
         }
 
         [Test]
         public void
             CheckAvailability_ADependsOnBAndBStartDateIsInFuture_DependenciesAreNotMet_BecauseBIsNotYetAvailable()
         {
-            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -346,16 +297,14 @@ namespace NFeature.Test.Fast
                                          };
             var featureSetting = allFeatureSettings[0];
 
-            Assert.That(!dependencyChecker.CheckAvailability(featureSetting,
-                                                                       allFeatureSettings,
-                                                                       FeatureVisibilityMode.Normal, Tenant.All,
-                                                                       DateTime.Now));
+            Assert.That(!_dependencyChecker.RecursivelyCheckAvailability(featureSetting,
+                                                                        allFeatureSettings,
+                                                                        new Tuple<FeatureVisibilityMode, Tenant, DateTime>(FeatureVisibilityMode.Normal, Tenant.All, DateTime.Now)));
         }
 
         [Test]
         public void CheckAvailability_ADependsOnBAndBStartDateIsInPast_CheckAvailability()
         {
-            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -375,16 +324,14 @@ namespace NFeature.Test.Fast
                                          };
             var featureSetting = allFeatureSettings[0];
 
-            Assert.That(dependencyChecker.CheckAvailability(featureSetting,
-                                                                      allFeatureSettings,
-                                                                      FeatureVisibilityMode.Normal, Tenant.All,
-                                                                      DateTime.Now));
+            Assert.That(_dependencyChecker.RecursivelyCheckAvailability(featureSetting,
+                                                                       allFeatureSettings,
+                                                                       new Tuple<FeatureVisibilityMode, Tenant, DateTime>(FeatureVisibilityMode.Normal, Tenant.All, DateTime.Now)));
         }
 
         [Test]
         public void CheckAvailability_ADependsOnBAndBothEnabled_CheckAvailability()
         {
-            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -402,17 +349,15 @@ namespace NFeature.Test.Fast
                                          };
             var featureSetting = allFeatureSettings[0];
 
-            Assert.That(dependencyChecker.CheckAvailability(featureSetting,
-                                                                      allFeatureSettings,
-                                                                      FeatureVisibilityMode.Normal, Tenant.All,
-                                                                      DateTime.Now));
+            Assert.That(_dependencyChecker.RecursivelyCheckAvailability(featureSetting,
+                                                                       allFeatureSettings,
+                                                                       new Tuple<FeatureVisibilityMode, Tenant, DateTime>(FeatureVisibilityMode.Normal, Tenant.All, DateTime.Now)));
         }
 
         [Test]
         public void CheckAvailability_ADependsOnBAndDAndBDependsOnCAndAllAreEnabled_CheckAvailability()
             //a single feature can have multiple dependencies
         {
-            var dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList>();
             var allFeatureSettings = new[]
                                          {
                                              new FeatureSetting<TestFeatureList> //A
@@ -421,7 +366,8 @@ namespace NFeature.Test.Fast
                                                      Dependencies =
                                                          new[]
                                                              {
-                                                                 TestFeatureList.TestFeature1, TestFeatureList.TestFeature2
+                                                                 TestFeatureList.TestFeature1,
+                                                                 TestFeatureList.TestFeature2
                                                              },
                                                      FeatureState = FeatureState.Enabled,
                                                  },
@@ -446,11 +392,45 @@ namespace NFeature.Test.Fast
                                          };
             var featureSetting = allFeatureSettings[0];
 
-            Assert.That(dependencyChecker.CheckAvailability(featureSetting,
-                                                                      allFeatureSettings,
-                                                                      FeatureVisibilityMode.Normal, Tenant.All,
-                                                                      DateTime.Now));
+            Assert.That(_dependencyChecker.RecursivelyCheckAvailability(featureSetting,
+                                                                       allFeatureSettings,
+                                                                       new Tuple<FeatureVisibilityMode, Tenant, DateTime>(FeatureVisibilityMode.Normal, Tenant.All, DateTime.Now)));
         }
+
+        [Test]
+        public void CheckAvailability_AIsEstablishedBIsNot_CheckAvailabilityThrowsException()
+        {
+            
+            var allFeatureSettings = new[]
+                                         {
+                                             new FeatureSetting<TestFeatureList> //A
+                                                 {
+                                                     Feature = TestFeatureList.TestFeature3,
+                                                     Dependencies =
+                                                         new[] {TestFeatureList.TestFeature1},
+                                                     FeatureState = FeatureState.Established,
+                                                     StartDtg = 1.Day().Ago(),
+                                                 },
+                                             new FeatureSetting<TestFeatureList> //B
+                                                 {
+                                                     Feature = TestFeatureList.TestFeature1,
+                                                     Dependencies = new TestFeatureList[0],
+                                                     FeatureState = FeatureState.Enabled,
+                                                     StartDtg = 1.Day().Ago(),
+                                                 },
+                                         };
+            var featureSetting = allFeatureSettings[0];
+
+            Assert.Throws<EstablishedFeatureDependencyException<TestFeatureList>>(
+                () => _dependencyChecker.RecursivelyCheckAvailability(featureSetting,
+                                                                     allFeatureSettings,
+                                                                     new Tuple<FeatureVisibilityMode, Tenant, DateTime>(FeatureVisibilityMode.Normal, Tenant.All, DateTime.Now)
+                                                                     ));
+        }
+
+        private readonly FeatureSettingAvailabilityChecker<TestFeatureList, Tuple<FeatureVisibilityMode, Tenant, DateTime>> _dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList,
+                                                                          Tuple<FeatureVisibilityMode, Tenant, DateTime>>
+                                        ((s, args) => s.IsAvailable(args.Item1, args.Item2, args.Item3));
     }
 }
 

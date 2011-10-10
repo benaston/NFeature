@@ -1,31 +1,30 @@
 ﻿namespace NFeature
 {
-    public class FeatureSettingService<TFeatureEnumeration> : IFeatureSettingService<TFeatureEnumeration>
+    public class FeatureSettingService<TFeatureEnumeration, TAvailabilityCheckArgs> : IFeatureSettingService<TFeatureEnumeration, TAvailabilityCheckArgs>
         where TFeatureEnumeration : struct
     {
-        private readonly IFeatureSettingAvailabilityChecker<TFeatureEnumeration> _featureSettingDependencyChecker;
+        private readonly IFeatureSettingAvailabilityChecker<TFeatureEnumeration, TAvailabilityCheckArgs> _featureSettingDependencyChecker;
         private readonly IFeatureSettingRepository<TFeatureEnumeration> _featureSettingRepository;
-        private readonly IApplicationClock _systemDtg;
+        //private readonly TAvailabilityCheckArgs _availabilityCheckArgs;
+        //private readonly IApplicationClock _systemDtg;
 
-        public FeatureSettingService(IFeatureSettingAvailabilityChecker<TFeatureEnumeration> featureSettingDependencyChecker,
-                                     IFeatureSettingRepository<TFeatureEnumeration> featureSettingRepository,
-                                     IApplicationClock systemDtg = null)
+        public FeatureSettingService(IFeatureSettingAvailabilityChecker<TFeatureEnumeration, TAvailabilityCheckArgs> featureSettingDependencyChecker,
+                                     IFeatureSettingRepository<TFeatureEnumeration> featureSettingRepository)
+                                     //TAvailabilityCheckArgs availabilityCheckArgs)
         {
             _featureSettingDependencyChecker = featureSettingDependencyChecker;
             _featureSettingRepository = featureSettingRepository;
-            _systemDtg = systemDtg ?? new ApplicationClock();
+            //_availabilityCheckArgs = availabilityCheckArgs;
+            //_systemDtg = systemDtg ?? new ApplicationClock();
         }
 
-        public bool AllDependenciesAreSatisfiedForTheFeatureSetting(FeatureSetting<TFeatureEnumeration> f,
-                                                                    FeatureVisibilityMode featureConfigurationMode,
-                                                                    ITenancyContext tenancyContext)
+        public bool AllDependenciesAreSatisfiedForTheFeatureSetting(FeatureSetting<TFeatureEnumeration> f, TAvailabilityCheckArgs availabilityCheckArgs)
+                                                                    //FeatureVisibilityMode featureConfigurationMode,
+                                                                    //ITenancyContext tenancyContext)
         {
-            return _featureSettingDependencyChecker.CheckAvailability(f,
-                                                                                _featureSettingRepository.
-                                                                                    GetFeatureSettings(),
-                                                                                featureConfigurationMode,
-                                                                                tenancyContext.CurrentTenant,
-                                                                                _systemDtg.Now);
+            return _featureSettingDependencyChecker.RecursivelyCheckAvailability(f,
+                                                                      _featureSettingRepository.GetFeatureSettings(),
+                                                                      availabilityCheckArgs);
         }
     }
 }

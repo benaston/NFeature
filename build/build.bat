@@ -4,7 +4,7 @@ cd /d %0\..
 
 setlocal enabledelayedexpansion
 set solutionAndMainProjectName=NFeature
-set msBuildLocation=C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe
+set msBuildLocation=%windir%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe
 
 title !solutionAndMainProjectName!
 

@@ -4,7 +4,7 @@
 
     public interface IApplicationClock { DateTime Now {get;}}
 
-    public class ApplicationClock : IApplicationClock {
+    public class DefaultApplicationClock : IApplicationClock {
         public DateTime Now
         {
             get { return DateTime.Now; }
