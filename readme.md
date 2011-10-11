@@ -5,6 +5,7 @@ A simple feature configuration system.
 
 Feature configuration walls enable you to integrate your code earlier, which brings lots of goodness (such as helping to avoid branch merge problems.)
 
+**NOTE: this is pre-release quality software. There will be bugs/inaccuracies in the documentation. If you find an issue, please help me by letting me know at '''ben@bj.ma'''.**
 
 How to use:
 --------
