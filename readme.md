@@ -50,7 +50,8 @@ Note that the availability checker is injected with a method that can contain ar
 	var availabilityChecker = new FeatureSettingAvailabilityChecker<Feature, TArgs>(MyAvailabilityCheckingMethod);
 	var featureSettingRepo = new AppConfigFeatureSettingRepository<Feature>();
 	var featureSettingService = new FeatureSettingService<Feature, TArgs>(availabilityChecker, featureSettingRepo);
-	var manifestCreationStrategy = new CookieBasedPreviewManifestCreationStrategy<Feature>(featureSettingService, featureSettingRepo, new HttpContextWrapper(HttpContext.Current), new TenancyContext(), new DefaultApplicationClock());
+	//NOTE: args here is an instance of TArgs, used to supply information to the availability checker
+	var manifestCreationStrategy = new CookieBasedPreviewManifestCreationStrategy<Feature>(featureSettingService, featureSettingRepo, args);
 	var featureManifestService = new FeatureManifestService<Feature>(manifestCreationStrategy);
 	var featureManifest = featureManifestService.GetManifest();
 
