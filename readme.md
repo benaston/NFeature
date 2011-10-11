@@ -89,7 +89,7 @@ Note that the availability checker is injected with a method that can contain ar
 	
 	<features>
 		<add name="MyFeature" settings="{ mySetting:'mySettingValue', 
-						   	               myOtherSetting:'myOtherSettingValue' }" />
+						   	                myOtherSetting:'myOtherSettingValue' }" />
 	</features>
 
 ```
