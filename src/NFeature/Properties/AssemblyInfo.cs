@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("NFeature")]
 [assembly:
     AssemblyDescription(
-        "Simple feature configuration and availability-control for .NET. Please note this is an Alpha release.")]
+        "Simple feature configuration and availability-control for .NET. Please note this is NOT production-ready code. Please help me to improve the quality of NFeature by reporting issues to ben@bj.ma.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Ben Aston")]
 [assembly: AssemblyProduct("NFeature")]
