@@ -121,7 +121,10 @@ Note that the availability checker is injected with a method that can contain ar
 
 ```
 
-**8. Bask in the win**
+**8. ...**
+
+**9. Profit!**
+
 
 How to build and/or run the tests:
 --------
