@@ -46,6 +46,9 @@ Note that the availability checker is injected with a method that can contain ar
 
 ```C#
 
+	using TArgs = string; //or whatever type you need to supply to your manifest creation strategy (a tuple/whatever)
+	
+	//...
 	
 	//NOTE: I suggest hiding this all away in the IOC container configuration	
 	var availabilityChecker = new FeatureSettingAvailabilityChecker<Feature, TArgs>(MyAvailabilityCheckingMethod);
