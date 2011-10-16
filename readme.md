@@ -110,7 +110,7 @@ For a working example of this see the integration test named ```FeatureEnumExten
 	
 	<features>
 		<add name="MyFeature" settings="{ mySetting:'mySettingValue', 
-				   	                myOtherSetting:'myOtherSettingValue' }" />
+				   	                      myOtherSetting:'myOtherSettingValue' }" />
 	</features>
 
 ```
