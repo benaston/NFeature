@@ -64,12 +64,12 @@ Two concrete implementations of ```IFeatureManifestCreationStrategy``` are provi
 
 **3. Take care of feature manifest initialization**
 
-For a working example implementation see the integration test named ```FeatureEnumExtensionsTests``` in the ```NFeature.Test.Slow``` project, within the main solution.
+For a working example of this see the integration test named ```FeatureEnumExtensionsTests``` in the ```NFeature.Test.Slow``` project, within the main solution.
 
 ```C#
 
 
-	//NOTE: I suggest hiding this ugly initialiation logic away in the IOC container configuration	
+	//NOTE: I suggest hiding this ugly initialization logic away in the IOC container configuration	
 	var featureSettingRepo = new AppConfigFeatureSettingRepository<Feature, Tenant>();
 	var availabilityChecker = new FeatureSettingAvailabilityChecker<Feature, Tenant>(fn); //from step 2      
 	var featureSettingService = new FeatureSettingService<Feature, Tenant, EmptyArgs>(availabilityChecker, featureSettingRepo);
