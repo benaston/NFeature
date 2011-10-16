@@ -69,13 +69,13 @@ For a working example implementation see the integration test named ```FeatureEn
 ```C#
 
 
-	//NOTE: I suggest hiding this all away in the IOC container configuration	
+	//NOTE: I suggest hiding this ugly initialiation logic away in the IOC container configuration	
 	var featureSettingRepo = new AppConfigFeatureSettingRepository<Feature, Tenant>();
 	var availabilityChecker = new FeatureSettingAvailabilityChecker<Feature, Tenant>(fn); //from step 2      
-        var featureSettingService = new FeatureSettingService<Feature, Tenant, EmptyArgs>(availabilityChecker, featureSettingRepo);
-        var manifestCreationStrategy = new ManifestCreationStrategyDefault(featureSettingRepo, featureSettingService); //we use the default for this example
-        var featureManifestService = new FeatureManifestService<Feature>(manifestCreationStrategy);
-        _featureManifest = featureManifestService.GetManifest();	
+	var featureSettingService = new FeatureSettingService<Feature, Tenant, EmptyArgs>(availabilityChecker, featureSettingRepo);
+	var manifestCreationStrategy = new ManifestCreationStrategyDefault(featureSettingRepo, featureSettingService); //we use the default for this example
+	var featureManifestService = new FeatureManifestService<Feature>(manifestCreationStrategy);
+	var featureManifest = featureManifestService.GetManifest();	
 
 
 ```
