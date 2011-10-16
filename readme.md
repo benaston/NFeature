@@ -34,7 +34,7 @@ In your code:
 
 In your configuration:
 
-Please note that the logic to determine whether a feature is available is specified in the ```IFeatureManifestCreationStrategy``` instance you inject into the ```FeatureManifestService``` and (optionally, depending on your implementation of the aforementioned strategy) by the availability checking function you inject into the ```FeatureSettingAvailabilityChecker```. Two concrete implementations of ```IFeatureManifestCreationStrategy``` are provided of-the-box - ```ManifestCreationStrategyDefault``` and ```ManifestCreationStrategyConsideringStateCookieTenantAndTime```. A single default availability checker function is provided out of the box ```DefaultFunctions.AvailabilityCheckFunction```, which may be used when the tenant, feature state, feature visibility mode and system time are known.
+Please note that the logic to determine whether a feature is available is specified in the ```IFeatureManifestCreationStrategy``` instance you inject into the ```FeatureManifestService``` and (optionally, depending on your implementation of the aforementioned strategy) by the availability-checking-function you inject into the ```FeatureSettingAvailabilityChecker```. Two concrete implementations of ```IFeatureManifestCreationStrategy``` are provided of-the-box - ```ManifestCreationStrategyDefault``` and ```ManifestCreationStrategyConsideringStateCookieTenantAndTime```. A single default availability checker function is provided out of the box ```DefaultFunctions.AvailabilityCheckFunction```, which may be used when the tenant, feature state, feature visibility mode and system time are known.
 
 ```XML
 
