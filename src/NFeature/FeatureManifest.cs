@@ -5,7 +5,7 @@
     /// <summary>
     ///   See notes on iface.
     /// </summary>
-    public class FeatureManifest<TFeatureEnumeration> :
-        Dictionary<TFeatureEnumeration, IFeatureDescriptor<TFeatureEnumeration>>, IFeatureManifest<TFeatureEnumeration>
-        where TFeatureEnumeration : struct {}
+    public class FeatureManifest<TFeatureEnum> :
+        Dictionary<TFeatureEnum, IFeatureDescriptor<TFeatureEnum>>, IFeatureManifest<TFeatureEnum>
+        where TFeatureEnum : struct {}
 }

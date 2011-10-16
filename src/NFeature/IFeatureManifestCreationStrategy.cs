@@ -6,9 +6,40 @@
     ///   These strategies might for example, take into account 
     ///   cookie configuration, domain configuration and user role.
     /// </summary>
-    public interface IFeatureManifestCreationStrategy<TFeatureEnumeration>
-        where TFeatureEnumeration : struct 
+    /// <example>
+    /// Suggested implementation is to inject the 
+    /// FeatureSettingService and FeatureSetttingRepository
+    /// via the constructor along with whatever other services you need
+    /// to determine availability.
+    /// </example>
+    /// <code>
+    /// <![CDATA[
+    /// public IFeatureManifest<TestFeatureList> CreateFeatureManifest()
+    /// {
+    ///     var featureSettings = _featureSettingRepository.GetFeatureSettings();
+    ///     var manifest = new FeatureManifest<TestFeatureList>();
+    ///
+    ///     foreach (var setting in featureSettings)
+    ///     {
+    ///         var isAvailable = _featureSettingService
+    ///             .AllDependenciesAreSatisfiedForTheFeatureSetting(setting, new EmptyArgs());
+    ///
+    ///         manifest.Add(setting.Feature,
+    ///                      new FeatureDescriptor<TestFeatureList>(setting.Feature)
+    ///                      {
+    ///                          Dependencies = setting.Dependencies,
+    ///                          IsAvailable = isAvailable,
+    ///                          Settings = setting.Settings,
+    ///                      });
+    ///     }
+    ///
+    ///     return manifest;
+    ///  }
+    /// ]]>
+    /// </code>
+    public interface IFeatureManifestCreationStrategy<TFeatureEnum>
+        where TFeatureEnum : struct 
     {
-        IFeatureManifest<TFeatureEnumeration> CreateFeatureManifest();
+        IFeatureManifest<TFeatureEnum> CreateFeatureManifest();
     }
 }

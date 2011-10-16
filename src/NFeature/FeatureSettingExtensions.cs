@@ -5,29 +5,30 @@
 
     public static class FeatureSettingExtensions
     {
-        public static bool IsEnabled<TFeatureEnumeration>(this FeatureSetting<TFeatureEnumeration> f)
-            where TFeatureEnumeration : struct
-        {
-            return f.FeatureState == FeatureState.Enabled;
-        }
+        //public static bool IsEnabled<TFeatureEnum>(this FeatureSetting<TFeatureEnum> f)
+        //    where TFeatureEnum : struct
+        //{
+        //    return f.FeatureState == FeatureState.Enabled;
+        //}
 
-        public static bool IsAvailable<TFeatureEnumeration>(this FeatureSetting<TFeatureEnumeration> f, 
+        public static bool IsAvailable<TFeatureEnum, TTenantEnum>(this FeatureSetting<TFeatureEnum, TTenantEnum> f, 
                                                             FeatureVisibilityMode m, 
-                                                            Tenant tenant,
+                                                            TTenantEnum tenant,
                                                             DateTime currentDtg)
-            where TFeatureEnumeration : struct
+            where TFeatureEnum : struct
+            where TTenantEnum : struct
         {
-            return (f.SupportedTenants.Contains(Tenant.All) || f.SupportedTenants.Contains(tenant)) &&
+            return (f.SupportedTenants.Contains((TTenantEnum)Enum.ToObject(typeof(TTenantEnum), 0)) || f.SupportedTenants.Contains(tenant)) &&
                    (f.FeatureState == FeatureState.Enabled ||
                     (f.FeatureState == FeatureState.Previewable && m == FeatureVisibilityMode.Preview)) &&
                    f.StartDtg <= currentDtg &&
                    f.EndDtg > currentDtg;
         }
 
-        public static bool IsPreviewable<TFeatureEnumeration>(this FeatureSetting<TFeatureEnumeration> f)
-            where TFeatureEnumeration : struct
-        {
-            return f.FeatureState == FeatureState.Previewable;
-        }
+        //public static bool IsPreviewable<TFeatureEnum>(this FeatureSetting<TFeatureEnum> f)
+        //    where TFeatureEnum : struct
+        //{
+        //    return f.FeatureState == FeatureState.Previewable;
+        //}
     }
 }

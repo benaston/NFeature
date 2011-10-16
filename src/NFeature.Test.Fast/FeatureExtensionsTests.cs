@@ -2,6 +2,7 @@
 namespace NFeature.Test.Fast
 {
     using System.Collections.Generic;
+    using Exceptions;
     using NUnit.Framework;
 
     [TestFixture]
@@ -9,15 +10,15 @@ namespace NFeature.Test.Fast
     public class FeatureExtensionsTests
     {
         [Test]
-        public void IsAvailable_WhenInvokedAgainstAnEstablishedFeature_ThrowsAnException()
+        public void IsAvailable_WhenInvokedAgainstAnEstablishedFeature_ThrowsAnException_BecauseEstablishedFeaturesCannotBeAnythingOtherThanEnabled()
         {
             //arrange
             const string desiredSettingValue = "test@example.com";
-            var featureManifest = new FeatureManifest<TestFeatureList>
+            var featureManifest = new FeatureManifest<Feature>
                                       {
                                           {
-                                              TestFeatureList.TestFeature1,
-                                              new FeatureDescriptor<TestFeatureList>(TestFeatureList.TestFeature1)
+                                              Feature.TestFeatureA,
+                                              new FeatureDescriptor<Feature>(Feature.TestFeatureA)
                                                   {
                                                       IsEstablished = true,
                                                       Settings =
@@ -34,19 +35,19 @@ namespace NFeature.Test.Fast
 
             //act / assert
             Assert.Throws
-                <EstablishedFeatureAvailabilityCheckException<TestFeatureList>>
-                (() => TestFeatureList.TestFeature1.IsAvailable(featureManifest));
+                <EstablishedFeatureAvailabilityCheckException<Feature>>
+                (() => Feature.TestFeatureA.IsAvailable(featureManifest));
         }
 
         [Test]
         public void Setting_WhenInvokedAgainstFeatureNotAvailable_ThrowsException()
         {
             //arrange
-            var featureManifest = new FeatureManifest<TestFeatureList>
+            var featureManifest = new FeatureManifest<Feature>
                                       {
                                           {
-                                              TestFeatureList.TestFeature1,
-                                              new FeatureDescriptor<TestFeatureList>(TestFeatureList.TestFeature1)
+                                              Feature.TestFeatureA,
+                                              new FeatureDescriptor<Feature>(Feature.TestFeatureA)
                                                   {
                                                       IsAvailable = false,
                                                       Settings =
@@ -63,7 +64,7 @@ namespace NFeature.Test.Fast
 
 
             //assert
-            Assert.Throws<FeatureNotAvailableException>(() => TestFeatureList.TestFeature1.Setting(
+            Assert.Throws<FeatureNotAvailableException>(() => Feature.TestFeatureA.Setting(
                     FeatureSettingNames.TestFeature1.ExampleSettingName, featureManifest));
         }
 
@@ -72,11 +73,11 @@ namespace NFeature.Test.Fast
         {
             //arrange
             const string desiredSettingValue = "test@example.com";
-            var featureManifest = new FeatureManifest<TestFeatureList>
+            var featureManifest = new FeatureManifest<Feature>
                                       {
                                           {
-                                              TestFeatureList.TestFeature5,
-                                              new FeatureDescriptor<TestFeatureList>(TestFeatureList.TestFeature5)
+                                              Feature.TestFeatureE,
+                                              new FeatureDescriptor<Feature>(Feature.TestFeatureE)
                                                   {
                                                       IsAvailable = true,
                                                       Settings =
@@ -93,7 +94,7 @@ namespace NFeature.Test.Fast
 
             //act
             var actualSettingValue =
-                TestFeatureList.TestFeature5.Setting(
+                Feature.TestFeatureE.Setting(
                     FeatureSettingNames.TestFeature1.ExampleSettingName, featureManifest);
 
             //assert

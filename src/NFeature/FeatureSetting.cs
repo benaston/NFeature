@@ -2,28 +2,24 @@
 {
     using System;
     using System.Collections.Generic;
+    using Exceptions;
     using NSure;
 
     /// <summary>
     ///   Corresponds to persisted feature information.
     /// </summary>
-    public class FeatureSetting<TFeatureEnumeration>
-        where TFeatureEnumeration :struct 
+    public class FeatureSetting<TFeatureEnum, TTenantEnum>
+        where TFeatureEnum : struct
+        where TTenantEnum : struct
     {
-        private TFeatureEnumeration[] _dependencies;
-
-        /// <summary>
-        ///   NOTE 1: BA; if a value is not supplied for this field in the web.config,
-        ///   the default value is DateTime.Min so we set this to the more appropriate 
-        ///   DateTime.Max here (we are dealing with the *end*-date).
-        /// </summary>
+        private TFeatureEnum[] _dependencies;
         private DateTime _endDtg;
-
         private FeatureState _featureState;
         private IDictionary<string, string> _settings;
         private DateTime _startDtg;
-        private Tenant[] _supportedTenants;
-        public TFeatureEnumeration Feature { get; set; }
+        private TTenantEnum[] _supportedTenants;
+
+        public TFeatureEnum Feature { get; set; }
 
         public FeatureState FeatureState
         {
@@ -32,48 +28,48 @@
             {
                 if (value != FeatureState.Enabled)
                 {
-                    Ensure.That <FeatureConfigurationException<TFeatureEnumeration>>(!IsRequiredByFeatureSubsystem,
-                                                               string.Format(
-                                                                   "Feature state must be 'Enabled' (or simply not specified) for features marked 'IsRequiredByFeatureSubsystem'. Feature: '{0}'.",
-                                                                   Feature));
+                    Ensure.That<FeatureConfigurationException<TFeatureEnum>>(!IsRequiredByFeatureSubsystem,
+                                                                                    string.Format(
+                                                                                        "Feature state must be 'Enabled' (or simply not specified) for features marked 'IsRequiredByFeatureSubsystem'. Feature: '{0}'.",
+                                                                                        Feature));
                 }
                 _featureState = value;
             }
         }
 
-        public TFeatureEnumeration[] Dependencies
+        public TFeatureEnum[] Dependencies
         {
-            get { return _dependencies ?? new TFeatureEnumeration[0]; }
+            get { return _dependencies ?? new TFeatureEnum[0]; }
             set
             {
                 if (value.Length > 0)
                 {
-                    Ensure.That < FeatureConfigurationException<TFeatureEnumeration>>(!IsRequiredByFeatureSubsystem,
-                                                               string.Format(
-                                                                   "Dependencies may not be specified for features marked 'IsRequiredByFeatureSubsystem'. Feature: '{0}'.",
-                                                                   Feature));
+                    Ensure.That<FeatureConfigurationException<TFeatureEnum>>(!IsRequiredByFeatureSubsystem,
+                                                                                    string.Format(
+                                                                                        "Dependencies may not be specified for features marked 'IsRequiredByFeatureSubsystem'. Feature: '{0}'.",
+                                                                                        Feature));
                 }
 
                 _dependencies = value;
             }
         }
 
-        public Tenant[] SupportedTenants
+        public TTenantEnum[] SupportedTenants
         {
             get
             {
                 return (_supportedTenants == null || _supportedTenants.Length == 0)
-                           ? new[] {Tenant.All}
+                           ? new[] { (TTenantEnum)Enum.ToObject(typeof(TTenantEnum), 0) }
                            : _supportedTenants;
             }
             set
             {
                 if (value.Length > 0)
                 {
-                    Ensure.That <FeatureConfigurationException<TFeatureEnumeration>>(!IsRequiredByFeatureSubsystem,
-                                                               string.Format(
-                                                                   "Supported tenants may not be specified for features marked 'IsRequiredByFeatureSubsystem'. Feature: '{0}'.",
-                                                                   Feature));
+                    Ensure.That<FeatureConfigurationException<TFeatureEnum>>(!IsRequiredByFeatureSubsystem,
+                                                                                    string.Format(
+                                                                                        "Supported tenants may not be specified for features marked 'IsRequiredByFeatureSubsystem'. Feature: '{0}'.",
+                                                                                        Feature));
                 }
                 _supportedTenants = value;
             }
@@ -92,10 +88,10 @@
             {
                 if (value != DateTime.MinValue)
                 {
-                    Ensure.That < FeatureConfigurationException<TFeatureEnumeration>>(!IsRequiredByFeatureSubsystem,
-                                                               string.Format(
-                                                                   "Feature start date may not be specified for features marked 'IsRequiredByFeatureSubsystem'. Feature: '{0}'.",
-                                                                   Feature));
+                    Ensure.That<FeatureConfigurationException<TFeatureEnum>>(!IsRequiredByFeatureSubsystem,
+                                                                                    string.Format(
+                                                                                        "Feature start date may not be specified for features marked 'IsRequiredByFeatureSubsystem'. Feature: '{0}'.",
+                                                                                        Feature));
                 }
 
                 if (_endDtg != DateTime.MinValue)
@@ -108,6 +104,11 @@
             }
         }
 
+        /// <summary>
+        ///   NOTE 1: BA; if a value is not supplied for this field,
+        ///   the default value is DateTime.Min so we set this to the more appropriate 
+        ///   DateTime.Max here (we are dealing with the *end*-date).
+        /// </summary>
         public DateTime EndDtg
         {
             get { return _endDtg == DateTime.MinValue ? DateTime.MaxValue : _endDtg; } //see note 1
@@ -115,10 +116,10 @@
             {
                 if (value != DateTime.MinValue)
                 {
-                    Ensure.That < FeatureConfigurationException<TFeatureEnumeration>>(!IsRequiredByFeatureSubsystem,
-                                                               string.Format(
-                                                                   "Feature end date may not be specified for features marked 'IsRequiredByFeatureSubsystem'. Feature: '{0}'.",
-                                                                   Feature));
+                    Ensure.That<FeatureConfigurationException<TFeatureEnum>>(!IsRequiredByFeatureSubsystem,
+                                                                                    string.Format(
+                                                                                        "Feature end date may not be specified for features marked 'IsRequiredByFeatureSubsystem'. Feature: '{0}'.",
+                                                                                        Feature));
 
                     if (_startDtg != DateTime.MinValue)
                     {

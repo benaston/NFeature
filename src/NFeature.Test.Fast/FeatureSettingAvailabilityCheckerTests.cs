@@ -2,6 +2,7 @@
 namespace NFeature.Test.Fast
 {
     using System;
+    using Exceptions;
     using NBasicExtensionMethod;
     using NUnit.Framework;
 
@@ -10,22 +11,22 @@ namespace NFeature.Test.Fast
     public class FeatureSettingAvailabilityCheckerTests
     {
         [Test]
-        public void CheckAvailability_ADependsOnBAndAAndBStartDatesAreInPast_CheckAvailability()
+        public void RecursivelyCheckAvailability_ADependsOnBAndAAndBStartDatesAreInPast_ReturnTrue()
         {
             var allFeatureSettings = new[]
                                          {
-                                             new FeatureSetting<TestFeatureList> //A
+                                             new FeatureSetting<Feature, Tenant>
                                                  {
-                                                     Feature = TestFeatureList.TestFeature3,
+                                                     Feature = Feature.TestFeatureA,
                                                      Dependencies =
-                                                         new[] {TestFeatureList.TestFeature1},
+                                                         new[] {Feature.TestFeatureB},
                                                      FeatureState = FeatureState.Enabled,
                                                      StartDtg = 1.Day().Ago(),
                                                  },
-                                             new FeatureSetting<TestFeatureList> //B
+                                             new FeatureSetting<Feature, Tenant>
                                                  {
-                                                     Feature = TestFeatureList.TestFeature1,
-                                                     Dependencies = new TestFeatureList[0],
+                                                     Feature = Feature.TestFeatureB,
+                                                     Dependencies = new Feature[0],
                                                      FeatureState = FeatureState.Enabled,
                                                      StartDtg = 1.Day().Ago(),
                                                  },
@@ -43,18 +44,18 @@ namespace NFeature.Test.Fast
         {
             var allFeatureSettings = new[]
                                          {
-                                             new FeatureSetting<TestFeatureList> //A
+                                             new FeatureSetting<Feature, Tenant> //A
                                                  {
-                                                     Feature = TestFeatureList.TestFeature3,
+                                                     Feature = Feature.TestFeatureC,
                                                      Dependencies =
-                                                         new[] {TestFeatureList.TestFeature1},
+                                                         new[] {Feature.TestFeatureA},
                                                      FeatureState = FeatureState.Enabled,
                                                      StartDtg = 1.Day().Hence(),
                                                  },
-                                             new FeatureSetting<TestFeatureList> //B
+                                             new FeatureSetting<Feature, Tenant> //B
                                                  {
-                                                     Feature = TestFeatureList.TestFeature1,
-                                                     Dependencies = new TestFeatureList[0],
+                                                     Feature = Feature.TestFeatureA,
+                                                     Dependencies = new Feature[0],
                                                      FeatureState = FeatureState.Enabled,
                                                  },
                                          };
@@ -70,16 +71,16 @@ namespace NFeature.Test.Fast
         {
             var allFeatureSettings = new[]
                                          {
-                                             new FeatureSetting<TestFeatureList> //A
+                                             new FeatureSetting<Feature, Tenant> //A
                                                  {
-                                                     Feature = TestFeatureList.TestFeature3,
-                                                     Dependencies = new[] {TestFeatureList.TestFeature1},
+                                                     Feature = Feature.TestFeatureC,
+                                                     Dependencies = new[] {Feature.TestFeatureA},
                                                      FeatureState = FeatureState.Enabled,
                                                  },
-                                             new FeatureSetting<TestFeatureList> //B
+                                             new FeatureSetting<Feature, Tenant> //B
                                                  {
-                                                     Feature = TestFeatureList.TestFeature1,
-                                                     Dependencies = new[] {TestFeatureList.TestFeature3},
+                                                     Feature = Feature.TestFeatureA,
+                                                     Dependencies = new[] {Feature.TestFeatureC},
                                                      FeatureState = FeatureState.Enabled,
                                                  },
                                          };
@@ -96,22 +97,22 @@ namespace NFeature.Test.Fast
         {
             var allFeatureSettings = new[]
                                          {
-                                             new FeatureSetting<TestFeatureList> //A
+                                             new FeatureSetting<Feature, Tenant> //A
                                                  {
-                                                     Feature = TestFeatureList.TestFeature3,
-                                                     Dependencies = new[] {TestFeatureList.TestFeature1},
+                                                     Feature = Feature.TestFeatureC,
+                                                     Dependencies = new[] {Feature.TestFeatureA},
                                                      FeatureState = FeatureState.Disabled,
                                                  },
-                                             new FeatureSetting<TestFeatureList> //B
+                                             new FeatureSetting<Feature, Tenant> //B
                                                  {
-                                                     Feature = TestFeatureList.TestFeature1,
-                                                     Dependencies = new[] {TestFeatureList.TestFeature4},
+                                                     Feature = Feature.TestFeatureA,
+                                                     Dependencies = new[] {Feature.TestFeatureD},
                                                      FeatureState = FeatureState.Enabled,
                                                  },
-                                             new FeatureSetting<TestFeatureList> //C
+                                             new FeatureSetting<Feature, Tenant> //C
                                                  {
-                                                     Feature = TestFeatureList.TestFeature4,
-                                                     Dependencies = new TestFeatureList[0],
+                                                     Feature = Feature.TestFeatureD,
+                                                     Dependencies = new Feature[0],
                                                      FeatureState = FeatureState.Enabled,
                                                  },
                                          };
@@ -127,22 +128,22 @@ namespace NFeature.Test.Fast
         {
             var allFeatureSettings = new[]
                                          {
-                                             new FeatureSetting<TestFeatureList> //A
+                                             new FeatureSetting<Feature, Tenant> //A
                                                  {
-                                                     Feature = TestFeatureList.TestFeature3,
-                                                     Dependencies = new[] {TestFeatureList.TestFeature1},
+                                                     Feature = Feature.TestFeatureC,
+                                                     Dependencies = new[] {Feature.TestFeatureA},
                                                      FeatureState = FeatureState.Enabled,
                                                  },
-                                             new FeatureSetting<TestFeatureList> //B
+                                             new FeatureSetting<Feature, Tenant> //B
                                                  {
-                                                     Feature = TestFeatureList.TestFeature1,
-                                                     Dependencies = new[] {TestFeatureList.TestFeature4},
+                                                     Feature = Feature.TestFeatureA,
+                                                     Dependencies = new[] {Feature.TestFeatureD},
                                                      FeatureState = FeatureState.Enabled,
                                                  },
-                                             new FeatureSetting<TestFeatureList> //C
+                                             new FeatureSetting<Feature, Tenant> //C
                                                  {
-                                                     Feature = TestFeatureList.TestFeature4,
-                                                     Dependencies = new TestFeatureList[0],
+                                                     Feature = Feature.TestFeatureD,
+                                                     Dependencies = new Feature[0],
                                                      FeatureState = FeatureState.Enabled,
                                                  },
                                          };
@@ -158,22 +159,22 @@ namespace NFeature.Test.Fast
         {
             var allFeatureSettings = new[]
                                          {
-                                             new FeatureSetting<TestFeatureList> //A
+                                             new FeatureSetting<Feature, Tenant> //A
                                                  {
-                                                     Feature = TestFeatureList.TestFeature3,
-                                                     Dependencies = new[] {TestFeatureList.TestFeature1},
+                                                     Feature = Feature.TestFeatureC,
+                                                     Dependencies = new[] {Feature.TestFeatureA},
                                                      FeatureState = FeatureState.Enabled
                                                  },
-                                             new FeatureSetting<TestFeatureList> //B
+                                             new FeatureSetting<Feature, Tenant> //B
                                                  {
-                                                     Feature = TestFeatureList.TestFeature1,
-                                                     Dependencies = new[] {TestFeatureList.TestFeature4},
+                                                     Feature = Feature.TestFeatureA,
+                                                     Dependencies = new[] {Feature.TestFeatureD},
                                                      FeatureState = FeatureState.Disabled,
                                                  },
-                                             new FeatureSetting<TestFeatureList> //C
+                                             new FeatureSetting<Feature, Tenant> //C
                                                  {
-                                                     Feature = TestFeatureList.TestFeature4,
-                                                     Dependencies = new TestFeatureList[0],
+                                                     Feature = Feature.TestFeatureD,
+                                                     Dependencies = new Feature[0],
                                                      FeatureState = FeatureState.Disabled,
                                                  },
                                          };
@@ -189,22 +190,22 @@ namespace NFeature.Test.Fast
         {
             var allFeatureSettings = new[]
                                          {
-                                             new FeatureSetting<TestFeatureList> //A
+                                             new FeatureSetting<Feature, Tenant> //A
                                                  {
-                                                     Feature = TestFeatureList.TestFeature3,
-                                                     Dependencies = new[] {TestFeatureList.TestFeature1},
+                                                     Feature = Feature.TestFeatureC,
+                                                     Dependencies = new[] {Feature.TestFeatureA},
                                                      FeatureState = FeatureState.Enabled,
                                                  },
-                                             new FeatureSetting<TestFeatureList> //B
+                                             new FeatureSetting<Feature, Tenant> //B
                                                  {
-                                                     Feature = TestFeatureList.TestFeature1,
-                                                     Dependencies = new[] {TestFeatureList.TestFeature4},
+                                                     Feature = Feature.TestFeatureA,
+                                                     Dependencies = new[] {Feature.TestFeatureD},
                                                      FeatureState = FeatureState.Disabled,
                                                  },
-                                             new FeatureSetting<TestFeatureList> //C
+                                             new FeatureSetting<Feature, Tenant> //C
                                                  {
-                                                     Feature = TestFeatureList.TestFeature4,
-                                                     Dependencies = new TestFeatureList[0],
+                                                     Feature = Feature.TestFeatureD,
+                                                     Dependencies = new Feature[0],
                                                      FeatureState = FeatureState.Enabled,
                                                  },
                                          };
@@ -220,22 +221,22 @@ namespace NFeature.Test.Fast
         {
             var allFeatureSettings = new[]
                                          {
-                                             new FeatureSetting<TestFeatureList> //A
+                                             new FeatureSetting<Feature, Tenant> //A
                                                  {
-                                                     Feature = TestFeatureList.TestFeature3,
-                                                     Dependencies = new[] {TestFeatureList.TestFeature1},
+                                                     Feature = Feature.TestFeatureC,
+                                                     Dependencies = new[] {Feature.TestFeatureA},
                                                      FeatureState = FeatureState.Enabled,
                                                  },
-                                             new FeatureSetting<TestFeatureList> //B
+                                             new FeatureSetting<Feature, Tenant> //B
                                                  {
-                                                     Feature = TestFeatureList.TestFeature1,
-                                                     Dependencies = new[] {TestFeatureList.TestFeature4},
+                                                     Feature = Feature.TestFeatureA,
+                                                     Dependencies = new[] {Feature.TestFeatureD},
                                                      FeatureState = FeatureState.Enabled,
                                                  },
-                                             new FeatureSetting<TestFeatureList> //C
+                                             new FeatureSetting<Feature, Tenant> //C
                                                  {
-                                                     Feature = TestFeatureList.TestFeature4,
-                                                     Dependencies = new TestFeatureList[0],
+                                                     Feature = Feature.TestFeatureD,
+                                                     Dependencies = new Feature[0],
                                                      FeatureState = FeatureState.Disabled,
                                                  },
                                          };
@@ -253,17 +254,17 @@ namespace NFeature.Test.Fast
         {
             var allFeatureSettings = new[]
                                          {
-                                             new FeatureSetting<TestFeatureList> //A
+                                             new FeatureSetting<Feature, Tenant> //A
                                                  {
-                                                     Feature = TestFeatureList.TestFeature3,
+                                                     Feature = Feature.TestFeatureC,
                                                      Dependencies =
-                                                         new[] {TestFeatureList.TestFeature1},
+                                                         new[] {Feature.TestFeatureA},
                                                      FeatureState = FeatureState.Enabled,
                                                  },
-                                             new FeatureSetting<TestFeatureList> //B
+                                             new FeatureSetting<Feature, Tenant> //B
                                                  {
-                                                     Feature = TestFeatureList.TestFeature1,
-                                                     Dependencies = new TestFeatureList[0],
+                                                     Feature = Feature.TestFeatureA,
+                                                     Dependencies = new Feature[0],
                                                      FeatureState = FeatureState.Previewable,
                                                  },
                                          };
@@ -280,17 +281,17 @@ namespace NFeature.Test.Fast
         {
             var allFeatureSettings = new[]
                                          {
-                                             new FeatureSetting<TestFeatureList> //A
+                                             new FeatureSetting<Feature, Tenant> //A
                                                  {
-                                                     Feature = TestFeatureList.TestFeature3,
+                                                     Feature = Feature.TestFeatureC,
                                                      Dependencies =
-                                                         new[] {TestFeatureList.TestFeature1},
+                                                         new[] {Feature.TestFeatureA},
                                                      FeatureState = FeatureState.Enabled,
                                                  },
-                                             new FeatureSetting<TestFeatureList> //B
+                                             new FeatureSetting<Feature, Tenant> //B
                                                  {
-                                                     Feature = TestFeatureList.TestFeature1,
-                                                     Dependencies = new TestFeatureList[0],
+                                                     Feature = Feature.TestFeatureA,
+                                                     Dependencies = new Feature[0],
                                                      FeatureState = FeatureState.Enabled,
                                                      StartDtg = 1.Day().Hence(),
                                                  },
@@ -307,17 +308,17 @@ namespace NFeature.Test.Fast
         {
             var allFeatureSettings = new[]
                                          {
-                                             new FeatureSetting<TestFeatureList> //A
+                                             new FeatureSetting<Feature, Tenant> //A
                                                  {
-                                                     Feature = TestFeatureList.TestFeature3,
+                                                     Feature = Feature.TestFeatureC,
                                                      Dependencies =
-                                                         new[] {TestFeatureList.TestFeature1},
+                                                         new[] {Feature.TestFeatureA},
                                                      FeatureState = FeatureState.Enabled,
                                                  },
-                                             new FeatureSetting<TestFeatureList> //B
+                                             new FeatureSetting<Feature, Tenant> //B
                                                  {
-                                                     Feature = TestFeatureList.TestFeature1,
-                                                     Dependencies = new TestFeatureList[0],
+                                                     Feature = Feature.TestFeatureA,
+                                                     Dependencies = new Feature[0],
                                                      FeatureState = FeatureState.Enabled,
                                                      StartDtg = 1.Day().Ago(),
                                                  },
@@ -334,16 +335,16 @@ namespace NFeature.Test.Fast
         {
             var allFeatureSettings = new[]
                                          {
-                                             new FeatureSetting<TestFeatureList> //A
+                                             new FeatureSetting<Feature, Tenant> //A
                                                  {
-                                                     Feature = TestFeatureList.TestFeature3,
-                                                     Dependencies = new[] {TestFeatureList.TestFeature1},
+                                                     Feature = Feature.TestFeatureC,
+                                                     Dependencies = new[] {Feature.TestFeatureA},
                                                      FeatureState = FeatureState.Enabled,
                                                  },
-                                             new FeatureSetting<TestFeatureList> //B
+                                             new FeatureSetting<Feature, Tenant> //B
                                                  {
-                                                     Feature = TestFeatureList.TestFeature1,
-                                                     Dependencies = new TestFeatureList[0],
+                                                     Feature = Feature.TestFeatureA,
+                                                     Dependencies = new Feature[0],
                                                      FeatureState = FeatureState.Enabled,
                                                  },
                                          };
@@ -360,33 +361,33 @@ namespace NFeature.Test.Fast
         {
             var allFeatureSettings = new[]
                                          {
-                                             new FeatureSetting<TestFeatureList> //A
+                                             new FeatureSetting<Feature, Tenant> //A
                                                  {
-                                                     Feature = TestFeatureList.TestFeature3,
+                                                     Feature = Feature.TestFeatureC,
                                                      Dependencies =
                                                          new[]
                                                              {
-                                                                 TestFeatureList.TestFeature1,
-                                                                 TestFeatureList.TestFeature2
+                                                                 Feature.TestFeatureA,
+                                                                 Feature.TestFeatureB
                                                              },
                                                      FeatureState = FeatureState.Enabled,
                                                  },
-                                             new FeatureSetting<TestFeatureList> //B
+                                             new FeatureSetting<Feature, Tenant> //B
                                                  {
-                                                     Feature = TestFeatureList.TestFeature1,
-                                                     Dependencies = new[] {TestFeatureList.TestFeature4},
+                                                     Feature = Feature.TestFeatureA,
+                                                     Dependencies = new[] {Feature.TestFeatureD},
                                                      FeatureState = FeatureState.Enabled,
                                                  },
-                                             new FeatureSetting<TestFeatureList> //C
+                                             new FeatureSetting<Feature, Tenant> //C
                                                  {
-                                                     Feature = TestFeatureList.TestFeature4,
-                                                     Dependencies = new TestFeatureList[0],
+                                                     Feature = Feature.TestFeatureD,
+                                                     Dependencies = new Feature[0],
                                                      FeatureState = FeatureState.Enabled,
                                                  },
-                                             new FeatureSetting<TestFeatureList> //D
+                                             new FeatureSetting<Feature, Tenant> //D
                                                  {
-                                                     Feature = TestFeatureList.TestFeature2,
-                                                     Dependencies = new TestFeatureList[0],
+                                                     Feature = Feature.TestFeatureB,
+                                                     Dependencies = new Feature[0],
                                                      FeatureState = FeatureState.Enabled,
                                                  },
                                          };
@@ -403,33 +404,33 @@ namespace NFeature.Test.Fast
             
             var allFeatureSettings = new[]
                                          {
-                                             new FeatureSetting<TestFeatureList> //A
+                                             new FeatureSetting<Feature, Tenant> //A
                                                  {
-                                                     Feature = TestFeatureList.TestFeature3,
+                                                     Feature = Feature.TestFeatureC,
                                                      Dependencies =
-                                                         new[] {TestFeatureList.TestFeature1},
+                                                         new[] {Feature.TestFeatureA},
                                                      FeatureState = FeatureState.Established,
                                                      StartDtg = 1.Day().Ago(),
                                                  },
-                                             new FeatureSetting<TestFeatureList> //B
+                                             new FeatureSetting<Feature, Tenant> //B
                                                  {
-                                                     Feature = TestFeatureList.TestFeature1,
-                                                     Dependencies = new TestFeatureList[0],
+                                                     Feature = Feature.TestFeatureA,
+                                                     Dependencies = new Feature[0],
                                                      FeatureState = FeatureState.Enabled,
                                                      StartDtg = 1.Day().Ago(),
                                                  },
                                          };
             var featureSetting = allFeatureSettings[0];
 
-            Assert.Throws<EstablishedFeatureDependencyException<TestFeatureList>>(
+            Assert.Throws<EstablishedFeatureDependencyException<Feature>>(
                 () => _dependencyChecker.RecursivelyCheckAvailability(featureSetting,
                                                                      allFeatureSettings,
                                                                      new Tuple<FeatureVisibilityMode, Tenant, DateTime>(FeatureVisibilityMode.Normal, Tenant.All, DateTime.Now)
                                                                      ));
         }
 
-        private readonly FeatureSettingAvailabilityChecker<TestFeatureList, Tuple<FeatureVisibilityMode, Tenant, DateTime>> _dependencyChecker = new FeatureSettingAvailabilityChecker<TestFeatureList,
-                                                                          Tuple<FeatureVisibilityMode, Tenant, DateTime>>
+        private readonly FeatureSettingAvailabilityChecker<Feature, Tuple<FeatureVisibilityMode, Tenant, DateTime>, Tenant> _dependencyChecker = new FeatureSettingAvailabilityChecker<Feature,
+                                                                          Tuple<FeatureVisibilityMode, Tenant, DateTime>, Tenant>
                                         ((s, args) => s.IsAvailable(args.Item1, args.Item2, args.Item3));
     }
 }

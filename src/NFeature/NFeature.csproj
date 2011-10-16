@@ -70,28 +70,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EstablishedFeatureAvailabilityCheckException.cs" />
-    <Compile Include="CircularFeatureSettingDependencyException.cs" />
+    <Compile Include="DefaultImplementations\ApplicationClockWithOffset.cs" />
+    <Compile Include="DefaultImplementations\ApplicationClockWithOffsetFactory.cs" />
+    <Compile Include="DefaultImplementations\DefaultApplicationClock.cs" />
+    <Compile Include="EmptyArgs.cs" />
+    <Compile Include="FeatureSettingAvailabilityChecker`1.cs" />
+    <Compile Include="Exceptions\EstablishedFeatureAvailabilityCheckException.cs" />
+    <Compile Include="Exceptions\CircularFeatureSettingDependencyException.cs" />
     <Compile Include="ConfigurationManager.cs" />
     <Compile Include="ConfigurationSectionBase.cs" />
-    <Compile Include="DatabaseFeatureSettingRepository.cs" />
-    <Compile Include="CookieBasedPreviewManifestCreationStrategy.cs" />
-    <Compile Include="EstablishedFeatureDependencyException.cs" />
+    <Compile Include="DefaultImplementations\DefaultManifestCreationStrategy.cs" />
+    <Compile Include="Exceptions\EstablishedFeatureDependencyException.cs" />
     <Compile Include="FeatureConfigurationElement.cs" />
-    <Compile Include="FeatureConfigurationException.cs" />
-    <Compile Include="FeatureSettingNames.cs" />
+    <Compile Include="Exceptions\FeatureConfigurationException.cs" />
     <Compile Include="FeatureVisibilityMode.cs" />
     <Compile Include="FeatureConfigurationSection.cs" />
-    <Compile Include="FeatureDependencyConfigurationException.cs" />
+    <Compile Include="Exceptions\FeatureDependencyConfigurationException.cs" />
     <Compile Include="FeatureDescriptor.cs" />
-    <Compile Include="FeatureExtensions.cs" />
+    <Compile Include="FeatureEnumExtensions.cs" />
     <Compile Include="FeatureManifest.cs" />
     <Compile Include="FeatureManifestService.cs" />
-    <Compile Include="FeatureNotAvailableException.cs" />
-    <Compile Include="FeatureNotConfiguredException.cs" />
+    <Compile Include="Exceptions\FeatureNotAvailableException.cs" />
+    <Compile Include="Exceptions\FeatureNotConfiguredException.cs" />
     <Compile Include="FeatureSetting.cs" />
     <Compile Include="FeatureSettingConfigurationCollection.cs" />
-    <Compile Include="FeatureSettingAvailabilityChecker.cs" />
+    <Compile Include="FeatureSettingAvailabilityChecker`2.cs" />
     <Compile Include="FeatureSettingExtensions.cs" />
     <Compile Include="FeatureSettingService.cs" />
     <Compile Include="FeatureState.cs" />
@@ -105,14 +108,15 @@
     <Compile Include="IFeatureSettingService.cs" />
     <Compile Include="ITenancyContext.cs" />
     <Compile Include="JsonToStringDictionaryConverter.cs" />
+    <Compile Include="DefaultImplementations\DefaultFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringToEnGBDateTimeConverter.cs" />
-    <Compile Include="Tenant.cs" />
     <Compile Include="AppConfigFeatureSettingRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

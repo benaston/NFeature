@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Exceptions;
     using NBasicExtensionMethod;
     using NSure;
     using ArgumentNullException = NHelpfulException.FrameworkExceptions.ArgumentNullException;
@@ -18,15 +19,16 @@
     ///   themselves all be established.
     ///   NOTE 3: BA; required due to recursive invocation.
     /// </remarks>
-    public class FeatureSettingAvailabilityChecker<TFeatureEnumeration, TAvailabilityCheckArgs> :
-        IFeatureSettingAvailabilityChecker<TFeatureEnumeration, TAvailabilityCheckArgs>
-        where TFeatureEnumeration : struct
+    public class FeatureSettingAvailabilityChecker<TFeatureEnum, TAvailabilityCheckArgs, TTenant> :
+        IFeatureSettingAvailabilityChecker<TFeatureEnum, TTenant, TAvailabilityCheckArgs>
+        where TFeatureEnum : struct
+        where TTenant : struct
     {
-        private readonly Func<FeatureSetting<TFeatureEnumeration>, TAvailabilityCheckArgs, bool>
+        private readonly Func<FeatureSetting<TFeatureEnum, TTenant>, TAvailabilityCheckArgs, bool>
             _availabilityCheckFunction;
 
         public FeatureSettingAvailabilityChecker(
-            Func<FeatureSetting<TFeatureEnumeration>, TAvailabilityCheckArgs, bool> availabilityCheckFunction)
+            Func<FeatureSetting<TFeatureEnum, TTenant>, TAvailabilityCheckArgs, bool> availabilityCheckFunction)
         {
             _availabilityCheckFunction = availabilityCheckFunction;
         }
@@ -36,18 +38,18 @@
         ///   for a feature are met.
         ///   TODO: review use of tuple for params for custom availability checking fucntionality.
         /// </summary>
-        public bool RecursivelyCheckAvailability(FeatureSetting<TFeatureEnumeration> featureSettingToCheck,
-                                                 FeatureSetting<TFeatureEnumeration>[] allFeatureSettings,
+        public bool RecursivelyCheckAvailability(FeatureSetting<TFeatureEnum, TTenant> featureSettingToCheck,
+                                                 FeatureSetting<TFeatureEnum, TTenant>[] allFeatureSettings,
                                                  TAvailabilityCheckArgs availabilityCheckArgs =
                                                      default(TAvailabilityCheckArgs),
-                                                 List<FeatureSetting<TFeatureEnumeration>>
+                                                 List<FeatureSetting<TFeatureEnum, TTenant>>
                                                      featuresCurrentlyUnderAnalysis = null)
         {
             Ensure.That<ArgumentNullException>(featureSettingToCheck.IsNotNull(), "featureSetting not supplied.")
                 .And<ArgumentNullException>(allFeatureSettings.IsNotNull(), "allFeatureSettings not supplied.");
 
             featuresCurrentlyUnderAnalysis = featuresCurrentlyUnderAnalysis ??
-                                             new List<FeatureSetting<TFeatureEnumeration>>();
+                                             new List<FeatureSetting<TFeatureEnum, TTenant>>();
             if (featuresCurrentlyUnderAnalysis.Contains(featureSettingToCheck)) //see note 1
             {
                 throw new CircularFeatureSettingDependencyException();
@@ -65,7 +67,7 @@
                     if (featureSettingToCheck.FeatureState == FeatureState.Established
                         && dependencySetting.FeatureState != FeatureState.Established) //see note 2
                     {
-                        throw new EstablishedFeatureDependencyException<TFeatureEnumeration>(
+                        throw new EstablishedFeatureDependencyException<TFeatureEnum>(
                             featureSettingToCheck.Feature, dependencyClosedOver);
                     }
 
@@ -79,25 +81,13 @@
                 }
                 catch (InvalidOperationException e)
                 {
-                    throw new FeatureNotConfiguredException<TFeatureEnumeration>(dependency, e);
+                    throw new FeatureNotConfiguredException<TFeatureEnum>(dependency, e);
                 }
             }
 
             featuresCurrentlyUnderAnalysis.Remove(featureSettingToCheck); //see note 3
 
             return _availabilityCheckFunction(featureSettingToCheck, availabilityCheckArgs);
-        }
-
-        /// <summary>
-        ///   Provides a default implementation of the availability check function.
-        ///   Can of course be substituted for by your own function.
-        /// </summary>
-        public static bool DefaultAvailabilityCheckFunction<TFeatureEnumeration2>(
-            FeatureSetting<TFeatureEnumeration2> s,
-            Tuple<FeatureVisibilityMode, Tenant, DateTime> args)
-            where TFeatureEnumeration2 : struct
-        {
-            return s.IsAvailable(args.Item1, args.Item2, args.Item3);
         }
     }
 }

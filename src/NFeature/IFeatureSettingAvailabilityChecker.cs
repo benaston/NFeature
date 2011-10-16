@@ -2,14 +2,15 @@
 {
     using System.Collections.Generic;
 
-    public interface IFeatureSettingAvailabilityChecker<TFeatureEnumeration, in TAvailabilityCheckArgs>
-        where TFeatureEnumeration : struct
+    public interface IFeatureSettingAvailabilityChecker<TFeatureEnum, TTenant, in TAvailabilityCheckArgs>
+        where TFeatureEnum : struct
+        where TTenant : struct
     {
-        bool RecursivelyCheckAvailability(FeatureSetting<TFeatureEnumeration> featureSettingToCheck,
-                                          FeatureSetting<TFeatureEnumeration>[] allFeatureSettings,
+        bool RecursivelyCheckAvailability(FeatureSetting<TFeatureEnum, TTenant> featureSettingToCheck,
+                                          FeatureSetting<TFeatureEnum, TTenant>[] allFeatureSettings,
                                           TAvailabilityCheckArgs availabilityCheckTuple =
                                               default(TAvailabilityCheckArgs),
-                                          List<FeatureSetting<TFeatureEnumeration>> featuresCurrentlyUnderAnalysis =
+                                          List<FeatureSetting<TFeatureEnum, TTenant>> featuresCurrentlyUnderAnalysis =
                                               null);
     }
 }

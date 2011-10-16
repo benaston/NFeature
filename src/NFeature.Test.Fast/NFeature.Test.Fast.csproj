@@ -80,7 +80,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DefaultFeatureManifestCreationStrategyTests.cs" />
-    <Compile Include="TestFeatureList.cs" />
+    <Compile Include="FeatureSettingNames.cs" />
+    <Compile Include="Tenant.cs" />
+    <Compile Include="Feature.cs" />
     <Compile Include="FeatureConfigurationTests.cs" />
     <Compile Include="FeatureExtensionsTests.cs" />
     <Compile Include="FeatureSettingAvailabilityCheckerTests.cs" />

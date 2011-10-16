@@ -6,24 +6,25 @@
     /// <summary>
     ///   Responsible for retrieving FeatureSettings from a web.config/app.config file.
     /// </summary>
-    public class AppConfigFeatureSettingRepository<TFeatureEnumeration> : IFeatureSettingRepository<TFeatureEnumeration>
-        where TFeatureEnumeration :struct
+    public class AppConfigFeatureSettingRepository<TFeatureEnum, TTenantEnum> : IFeatureSettingRepository<TFeatureEnum, TTenantEnum>
+        where TFeatureEnum :struct
+        where TTenantEnum : struct
     {
-        public FeatureSetting<TFeatureEnumeration>[] GetFeatureSettings()
+        public FeatureSetting<TFeatureEnum, TTenantEnum>[] GetFeatureSettings()
         {
             var configElements =
-                ConfigurationManager < FeatureConfigurationSection<TFeatureEnumeration>>.Section().FeatureSettings.Cast
-                    < FeatureConfigurationElement<TFeatureEnumeration>>();
+                ConfigurationManager <FeatureConfigurationSection<TFeatureEnum, TTenantEnum>>.Section().FeatureSettings.Cast
+                    <FeatureConfigurationElement<TFeatureEnum, TTenantEnum>>();
 
             return
                 configElements.Select(
                     fcse =>
-                    new FeatureSetting<TFeatureEnumeration>
+                    new FeatureSetting<TFeatureEnum, TTenantEnum>
                         {
                             IsRequiredByFeatureSubsystem = fcse.IsRequiredByFeatureSubsystem,
                             //this needs to be set first because it affects validation
                             Dependencies = fcse.Dependencies,
-                            Feature = (TFeatureEnumeration)Enum.Parse(typeof(TFeatureEnumeration), fcse.Name),
+                            Feature = (TFeatureEnum)Enum.Parse(typeof(TFeatureEnum), fcse.Name),
                             FeatureState = fcse.State,
                             SupportedTenants = fcse.SupportedTenants,
                             Settings = fcse.Settings,

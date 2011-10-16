@@ -1,8 +1,8 @@
-﻿namespace NFeature
+﻿namespace NFeature.DefaultImplementations
 {
+    using System;
     using System.Web;
     using NBasicExtensionMethod;
-    using TArgs = System.Tuple<FeatureVisibilityMode, Tenant, System.DateTime>;
 
     /// <summary>
     ///   Constructs the feature manifest according to 
@@ -11,23 +11,23 @@
     ///   This provides an example manifest creation
     ///   strategy, and is replaceable (being a strategy).
     /// </summary>
-    public class CookieBasedPreviewManifestCreationStrategy<TFeatureEnumeration> :
-        IFeatureManifestCreationStrategy<TFeatureEnumeration>
-        where TFeatureEnumeration : struct
+    public class DefaultManifestCreationStrategy<TFeatureEnum, TTenantEnum> :
+        IFeatureManifestCreationStrategy<TFeatureEnum>
+        where TFeatureEnum : struct
+        where TTenantEnum : struct
     {
         public const string FeaturePreviewCookieName = "FeaturePreviewCookie";
         private readonly IApplicationClock _clock;
-
-        private readonly IFeatureSettingService<TFeatureEnumeration, TArgs> _featureSettingService;
-        private readonly IFeatureSettingRepository<TFeatureEnumeration> _featureSettingsRepository;
+        private readonly IFeatureSettingService<TFeatureEnum, TTenantEnum, Tuple<FeatureVisibilityMode, TTenantEnum, DateTime>> _featureSettingService;
+        private readonly IFeatureSettingRepository<TFeatureEnum, TTenantEnum> _featureSettingsRepository;
         private readonly HttpContextBase _httpContext;
-        private readonly ITenancyContext _tenancyContext;
+        private readonly ITenancyContext<TTenantEnum> _tenancyContext;
 
-        public CookieBasedPreviewManifestCreationStrategy(
-            IFeatureSettingService<TFeatureEnumeration, TArgs> featureSettingService,
-            IFeatureSettingRepository<TFeatureEnumeration> featureSettingsRepository,
+        public DefaultManifestCreationStrategy(
+            IFeatureSettingService<TFeatureEnum, TTenantEnum, Tuple<FeatureVisibilityMode, TTenantEnum, DateTime>> featureSettingService,
+            IFeatureSettingRepository<TFeatureEnum, TTenantEnum> featureSettingsRepository,
             HttpContextBase httpContext,
-            ITenancyContext tenancyContext,
+            ITenancyContext<TTenantEnum> tenancyContext,
             IApplicationClock clock)
         {
             _featureSettingService = featureSettingService;
@@ -37,10 +37,10 @@
             _clock = clock;
         }
 
-        public IFeatureManifest<TFeatureEnumeration> CreateFeatureManifest()
+        public IFeatureManifest<TFeatureEnum> CreateFeatureManifest()
         {
             var featureSettings = _featureSettingsRepository.GetFeatureSettings();
-            var manifest = new FeatureManifest<TFeatureEnumeration>();
+            var manifest = new FeatureManifest<TFeatureEnum>();
 
             foreach (var setting in featureSettings)
             {
@@ -50,11 +50,12 @@
 
                 var isAvailable = _featureSettingService
                     .AllDependenciesAreSatisfiedForTheFeatureSetting(setting,
-                                                                     new TArgs(featureVisibilityMode,
-                                                                               _tenancyContext.CurrentTenant, _clock.Now));
+                                                                     new Tuple<FeatureVisibilityMode, TTenantEnum, DateTime>(featureVisibilityMode,
+                                                                               _tenancyContext.CurrentTenant, 
+                                                                               _clock.Now));
 
                 manifest.Add(setting.Feature,
-                             new FeatureDescriptor<TFeatureEnumeration>(setting.Feature)
+                             new FeatureDescriptor<TFeatureEnum>(setting.Feature)
                                  {
                                      Dependencies = setting.Dependencies,
                                      IsAvailable = isAvailable,

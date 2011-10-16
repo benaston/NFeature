@@ -3,6 +3,7 @@ namespace NFeature.Test.Slow
 {
     using System.Linq;
     using NUnit.Framework;
+    using TArgs = System.Tuple<FeatureVisibilityMode, Tenant, System.DateTime>;
 
     [TestFixture]
     [Category("Slow")]
@@ -11,41 +12,42 @@ namespace NFeature.Test.Slow
         [Test]
         public void GetFeatureSettings_WhenInvoked_FeatureSettingsAreMarkedAsBeingEstablishedCorrectly()
         {
-            var r = new AppConfigFeatureSettingRepository<TestFeatureList>();
+            var r = new AppConfigFeatureSettingRepository<Feature, Tenant>();
             var settings = r.GetFeatureSettings();
 
             Assert.That(
-                settings.Where(i => i.Feature == TestFeatureList.TestFeature5).First().FeatureState == FeatureState.Established );
+                settings.Where(i => i.Feature == Feature.TestFeatureE).First().FeatureState ==
+                FeatureState.Established);
         }
 
         [Test]
         public void GetFeatureSettings_WhenInvoked_FeatureSettingsWithNoSpecifiedTenantAreAvailableToAllTenant()
         {
-            var r = new AppConfigFeatureSettingRepository<TestFeatureList>();
+            var r = new AppConfigFeatureSettingRepository<Feature, Tenant>();
             var settings = r.GetFeatureSettings();
 
             Assert.That(
-                settings.Where(i => i.Feature == TestFeatureList.TestFeature4).First().SupportedTenants.Contains(
+                settings.Where(i => i.Feature == Feature.TestFeatureD).First().SupportedTenants.Contains(
                     Tenant.All));
         }
 
         [Test]
         public void GetFeatureSettings_WhenInvoked_FeatureSettingsWithSpecifiedTenantsAreAvailableToThoseTenantsOnly()
         {
-            var r = new AppConfigFeatureSettingRepository<TestFeatureList>();
+            var r = new AppConfigFeatureSettingRepository<Feature, Tenant>();
             var settings = r.GetFeatureSettings();
 
             Assert.That(
-                settings.Where(i => i.Feature == TestFeatureList.TestFeature1).First().SupportedTenants.Length == 1);
+                settings.Where(i => i.Feature == Feature.TestFeatureA).First().SupportedTenants.Length == 1);
             Assert.That(
-                settings.Where(i => i.Feature == TestFeatureList.TestFeature1).First().SupportedTenants.Contains(
-                    Tenant.Tenant1));
+                settings.Where(i => i.Feature == Feature.TestFeatureA).First().SupportedTenants.Contains(
+                    Tenant.TenantA));
         }
 
         [Test]
         public void GetFeatureSettings_WhenInvoked_ReturnsAllCorrectNumberOfFeatureSettings()
         {
-            var r = new AppConfigFeatureSettingRepository<TestFeatureList>();
+            var r = new AppConfigFeatureSettingRepository<Feature, Tenant>();
             var settings = r.GetFeatureSettings();
 
             Assert.That(settings.Count() == 5);

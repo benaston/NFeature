@@ -7,9 +7,9 @@
     ///   NOTE 1: BA; we equate the domain ID with the tenant ID. 
     ///   Check!
     /// </summary>
-    public interface IFeatureManifestService<TFeatureEnumeration>
-        where TFeatureEnumeration : struct
+    public interface IFeatureManifestService<TFeatureEnum>
+        where TFeatureEnum : struct
     {
-        IFeatureManifest<TFeatureEnumeration> GetManifest();
+        IFeatureManifest<TFeatureEnum> GetManifest();
     }
 }

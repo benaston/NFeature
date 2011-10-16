@@ -7,7 +7,7 @@
     ///   Basically metadata for members of the 
     ///   Feature enumeration.
     /// </summary>
-    public interface IFeatureDescriptor<TFeatureEnumeration>
+    public interface IFeatureDescriptor<TFeatureEnum>
     {
         /// <summary>
         ///   Calculated by the manifest creation strategy.
@@ -16,7 +16,7 @@
         /// </summary>
         bool IsAvailable { get; set; }
 
-        IList<TFeatureEnumeration> Dependencies { get; set; }
+        IList<TFeatureEnum> Dependencies { get; set; }
 
         IDictionary<string, string> Settings { get; set; }
     }

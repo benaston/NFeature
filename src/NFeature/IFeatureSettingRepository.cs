@@ -4,9 +4,10 @@
     ///   Responsible for providing an abstraction 
     ///   for the retrieval of feature settings from a store.
     /// </summary>
-    public interface IFeatureSettingRepository<TFeatureEnumeration>
-        where TFeatureEnumeration : struct
+    public interface IFeatureSettingRepository<TFeatureEnum, TTenantEnum>
+        where TFeatureEnum : struct
+        where TTenantEnum : struct
     {
-        FeatureSetting<TFeatureEnumeration>[] GetFeatureSettings();
+        FeatureSetting<TFeatureEnum, TTenantEnum>[] GetFeatureSettings();
     }
 }

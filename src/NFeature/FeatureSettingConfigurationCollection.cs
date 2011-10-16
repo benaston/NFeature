@@ -2,17 +2,18 @@
 {
     using System.Configuration;
 
-    public class FeatureConfigurationElementCollection<TFeatureEnumeration> : ConfigurationElementCollection
-        where TFeatureEnumeration : struct
+    public class FeatureConfigurationElementCollection<TFeatureEnum, TTenant> : ConfigurationElementCollection
+        where TFeatureEnum : struct
+        where TTenant : struct
     {
         public override ConfigurationElementCollectionType CollectionType
         {
             get { return ConfigurationElementCollectionType.AddRemoveClearMap; }
         }
 
-        public FeatureConfigurationElement<TFeatureEnumeration> this[int index]
+        public FeatureConfigurationElement<TFeatureEnum, TTenant> this[int index]
         {
-            get { return (FeatureConfigurationElement<TFeatureEnumeration>) BaseGet(index); }
+            get { return (FeatureConfigurationElement<TFeatureEnum, TTenant>) BaseGet(index); }
             set
             {
                 if (BaseGet(index) != null)
@@ -23,7 +24,7 @@
             }
         }
 
-        public void Add(FeatureConfigurationElement<TFeatureEnumeration> element)
+        public void Add(FeatureConfigurationElement<TFeatureEnum, TTenant> element)
         {
             BaseAdd(element);
         }
@@ -35,15 +36,15 @@
 
         protected override ConfigurationElement CreateNewElement()
         {
-            return new FeatureConfigurationElement<TFeatureEnumeration>();
+            return new FeatureConfigurationElement<TFeatureEnum, TTenant>();
         }
 
         protected override object GetElementKey(ConfigurationElement element)
         {
-            return ((FeatureConfigurationElement<TFeatureEnumeration>) element).Name;
+            return ((FeatureConfigurationElement<TFeatureEnum, TTenant>) element).Name;
         }
 
-        public void Remove(FeatureConfigurationElement<TFeatureEnumeration> element)
+        public void Remove(FeatureConfigurationElement<TFeatureEnum, TTenant> element)
         {
             BaseRemove(element.Name);
         }

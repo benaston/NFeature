@@ -10,12 +10,13 @@
     /// <![CDATA[
     /// <add name="MyFeature"
     ///      state="Enabled"
-    ///      supportedTenants="Tenant1"
+    ///      supportedTenants="TenantA"
     ///      dependencies="MyOtherFeature" />
     /// ]]>
     /// </example>
-    public class FeatureConfigurationElement<TFeatureEnumeration> : ConfigurationElement
-        where TFeatureEnumeration : struct
+    public class FeatureConfigurationElement<TFeatureEnum, TTenantEnum> : ConfigurationElement
+        where TFeatureEnum : struct
+        where TTenantEnum : struct
     {
         [ConfigurationProperty("name", IsRequired = true)]
         public string Name
@@ -47,11 +48,12 @@
         }
 
         /// <summary>
-        ///   NOTE: BA; Defaults to 'All'.
+        ///   NOTE 1: BA; the user supplied enum type should use 
+        ///   zero as the default value.
         /// </summary>
         [TypeConverter(typeof (CommaDelimitedStringCollectionConverter))]
         [ConfigurationProperty("supportedTenants", IsRequired = false)]
-        public Tenant[] SupportedTenants
+        public TTenantEnum[] SupportedTenants
         {
             get
             {
@@ -59,24 +61,24 @@
 
                 if (tenantNames != null)
                 {
-                    return (tenantNames.Cast<string>().Select(t => (Tenant) Enum.Parse(typeof (Tenant), t))).ToArray();
+                    return (tenantNames.Cast<string>().Select(t => (TTenantEnum) Enum.Parse(typeof (TTenantEnum), t))).ToArray();
                 }
 
-                return new[] {Tenant.All};
+                return new[] { (TTenantEnum) Enum.ToObject(typeof(TTenantEnum), 0) }; //see note 1
             }
             set { this["supportedTenants"] = value; }
         }
 
         [TypeConverter(typeof (CommaDelimitedStringCollectionConverter))]
         [ConfigurationProperty("dependencies", IsRequired = false)]
-        public TFeatureEnumeration[] Dependencies
+        public TFeatureEnum[] Dependencies
         {
             get
             {
                 var dependencies = ((CommaDelimitedStringCollection) this["dependencies"]) ??
                                    new CommaDelimitedStringCollection();
 
-                return (dependencies.Cast<string>().Select(t => (TFeatureEnumeration)Enum.Parse(typeof(TFeatureEnumeration), t))).ToArray();
+                return (dependencies.Cast<string>().Select(t => (TFeatureEnum)Enum.Parse(typeof(TFeatureEnum), t))).ToArray();
             }
             set { this["dependencies"] = value; }
         }

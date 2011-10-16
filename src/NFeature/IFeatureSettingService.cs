@@ -5,14 +5,15 @@
     ///   FeatureSetting that makes more sense to be placed on a 
     ///   service type.
     /// </summary>
-    public interface IFeatureSettingService<TFeatureEnumeration, in TAvailabilityCheckArgs>
-        where TFeatureEnumeration : struct
+    public interface IFeatureSettingService<TFeatureEnum, TTenantEnum, in TAvailabilityCheckArgs>
+        where TFeatureEnum : struct
+        where TTenantEnum : struct
     {
         /// <summary>
         ///   Determines whether the dependencies are 
         ///   satisfied for the specified feature setting.
         /// </summary>
-        bool AllDependenciesAreSatisfiedForTheFeatureSetting(FeatureSetting<TFeatureEnumeration> f,
+        bool AllDependenciesAreSatisfiedForTheFeatureSetting(FeatureSetting<TFeatureEnum, TTenantEnum> f,
                                                              TAvailabilityCheckArgs availabilityCheckArgs);
     }
 }

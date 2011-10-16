@@ -3,14 +3,15 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Exceptions;
     using NBasicExtensionMethod;
     using NSure;
     using ArgumentNullException = NHelpfulException.FrameworkExceptions.ArgumentNullException;
 
-    public static class FeatureExtensions
+    public static class FeatureEnumExtensions
     {
-        public static bool IsAvailable<TFeatureEnumeration>(this TFeatureEnumeration feature, IFeatureManifest<TFeatureEnumeration> featureManifest)
-            where TFeatureEnumeration :struct
+        public static bool IsAvailable<TFeatureEnum>(this TFeatureEnum feature, IFeatureManifest<TFeatureEnum> featureManifest)
+            where TFeatureEnum :struct
         {
             Ensure.That<ArgumentNullException>(featureManifest.IsNotNull(), "featureManifest not supplied.");
 
@@ -20,16 +21,16 @@
             }
             catch (KeyNotFoundException e)
             {
-                throw new FeatureNotConfiguredException<TFeatureEnumeration>(feature, e);
+                throw new FeatureNotConfiguredException<TFeatureEnum>(feature, e);
             }
         }
 
-        public static string Setting<TFeatureEnumeration>(this TFeatureEnumeration feature, Enum settingName, IFeatureManifest<TFeatureEnumeration> featureManifest)
-                where TFeatureEnumeration : struct
+        public static string Setting<TFeatureEnum>(this TFeatureEnum feature, Enum settingName, IFeatureManifest<TFeatureEnum> featureManifest)
+                where TFeatureEnum : struct
         {
             Ensure.That<ArgumentNullException>(featureManifest.IsNotNull(), "featureManifest not supplied.")
                 .And<FeatureNotAvailableException>(feature.IsAvailable(featureManifest),
-                                                   string.Format("Specified feature '{0}' is unavailable.", Enum.GetName(typeof(TFeatureEnumeration), feature)));
+                                                   string.Format("Specified feature '{0}' is unavailable.", Enum.GetName(typeof(TFeatureEnum), feature)));
 
             try
             {
@@ -46,15 +47,16 @@
         ///   Provides a way of retrieving feature setting information without the 
         ///   FeatureManifest being pre-instantiated.
         /// </summary>
-        internal static string Setting<TFeatureEnumeration>(this TFeatureEnumeration feature, Enum settingName,
-                                       IFeatureSettingRepository<TFeatureEnumeration> featureSettingRepository)
-            where TFeatureEnumeration : struct
+        internal static string Setting<TFeatureEnum, TTenantEnum>(this TFeatureEnum feature, Enum settingName,
+                                       IFeatureSettingRepository<TFeatureEnum, TTenantEnum> featureSettingRepository)
+            where TFeatureEnum : struct
+            where TTenantEnum : struct
         {
             try
             {
                 var featureSettings = featureSettingRepository.GetFeatureSettings();
                 var featureSetting = featureSettings.Where(s => s.Feature.Equals(feature)).First(); //was ==
-                Ensure.That <FeatureConfigurationException<TFeatureEnumeration>>(featureSetting.IsRequiredByFeatureSubsystem,
+                Ensure.That <FeatureConfigurationException<TFeatureEnum>>(featureSetting.IsRequiredByFeatureSubsystem,
                                                            "Specified feature not marked as being required by the feature subsystem.");
 
                 return featureSetting.Settings[Enum.GetName(settingName.GetType(), settingName)];

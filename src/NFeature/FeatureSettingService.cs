@@ -1,22 +1,23 @@
 ﻿namespace NFeature
 {
-    public class FeatureSettingService<TFeatureEnumeration, TAvailabilityCheckArgs> : IFeatureSettingService<TFeatureEnumeration, TAvailabilityCheckArgs>
-        where TFeatureEnumeration : struct
+    public class FeatureSettingService<TFeatureEnum, TTenantEnum, TAvailabilityCheckArgs> : IFeatureSettingService<TFeatureEnum, TTenantEnum, TAvailabilityCheckArgs>
+        where TFeatureEnum : struct
+        where TTenantEnum : struct
     {
-        private readonly IFeatureSettingAvailabilityChecker<TFeatureEnumeration, TAvailabilityCheckArgs> _featureSettingDependencyChecker;
-        private readonly IFeatureSettingRepository<TFeatureEnumeration> _featureSettingRepository;
+        private readonly IFeatureSettingAvailabilityChecker<TFeatureEnum, TTenantEnum, TAvailabilityCheckArgs> _featureSettingAvailabilityChecker;
+        private readonly IFeatureSettingRepository<TFeatureEnum, TTenantEnum> _featureSettingRepository;
 
-        public FeatureSettingService(IFeatureSettingAvailabilityChecker<TFeatureEnumeration, TAvailabilityCheckArgs> featureSettingDependencyChecker,
-                                     IFeatureSettingRepository<TFeatureEnumeration> featureSettingRepository)
+        public FeatureSettingService(IFeatureSettingAvailabilityChecker<TFeatureEnum, TTenantEnum, TAvailabilityCheckArgs> featureSettingAvailabilityChecker,
+                                     IFeatureSettingRepository<TFeatureEnum, TTenantEnum> featureSettingRepository)
         {
-            _featureSettingDependencyChecker = featureSettingDependencyChecker;
+            _featureSettingAvailabilityChecker = featureSettingAvailabilityChecker;
             _featureSettingRepository = featureSettingRepository;
         }
 
-        public bool AllDependenciesAreSatisfiedForTheFeatureSetting(FeatureSetting<TFeatureEnumeration> f, 
+        public bool AllDependenciesAreSatisfiedForTheFeatureSetting(FeatureSetting<TFeatureEnum, TTenantEnum> f, 
                                                                     TAvailabilityCheckArgs availabilityCheckArgs)
         {
-            return _featureSettingDependencyChecker.RecursivelyCheckAvailability(f,
+            return _featureSettingAvailabilityChecker.RecursivelyCheckAvailability(f,
                                                                       _featureSettingRepository.GetFeatureSettings(),
                                                                       availabilityCheckArgs);
         }

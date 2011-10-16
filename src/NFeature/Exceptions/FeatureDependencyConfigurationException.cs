@@ -1,4 +1,4 @@
-﻿namespace NFeature
+﻿namespace NFeature.Exceptions
 {
     using System;
     using NHelpfulException;

@@ -11,7 +11,9 @@
             var section = Section(config.SectionName);
 
             if (section == null)
+            {
                 return new T().OnMissingConfiguration() as T;
+            }
 
             return section;
         }
