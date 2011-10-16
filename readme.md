@@ -34,6 +34,8 @@ In your code:
 
 In your configuration:
 
+Please note that the logic to determine whether a feature is available is specified in the ```IFeatureManifestCreationStrategy``` instance you inject into the ```FeatureManifestService``` and (optionally, depending on your implementation of the aforementioned strategy) by the availability checking function you inject into the ```FeatureSettingAvailabilityChecker```. Two concrete implementations of ```IFeatureManifestCreationStrategy``` are provided of-the-box - ```ManifestCreationStrategyDefault``` and ```ManifestCreationStrategyConsideringStateCookieTenantAndTime```. A single default availability checker function is provided out of the box ```DefaultFunctions.AvailabilityCheckFunction```, which may be used when the tenant, feature state, feature visibility mode and system time are known.
+
 ```XML
 
 	
@@ -42,8 +44,6 @@ In your configuration:
 		<add name="MyOtherFeature" state="Previewable" /> <!-- will only be available to users who meet the feature-preview criteria* -->
 		<add name="MyOtherOtherFeature" state="Disabled" /> <!-- not available -->
 	</features>
-
-	<!-- *the default feature-preview criteria is the presence of a cookie on the client, but this is pluggable functionality -->
 	
 ```
 
