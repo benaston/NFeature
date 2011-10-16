@@ -73,13 +73,14 @@
     <Compile Include="DefaultImplementations\ApplicationClockWithOffset.cs" />
     <Compile Include="DefaultImplementations\ApplicationClockWithOffsetFactory.cs" />
     <Compile Include="DefaultImplementations\DefaultApplicationClock.cs" />
+    <Compile Include="DefaultImplementations\ManifestCreationStrategyDefault.cs" />
     <Compile Include="EmptyArgs.cs" />
     <Compile Include="FeatureSettingAvailabilityChecker`1.cs" />
     <Compile Include="Exceptions\EstablishedFeatureAvailabilityCheckException.cs" />
     <Compile Include="Exceptions\CircularFeatureSettingDependencyException.cs" />
     <Compile Include="ConfigurationManager.cs" />
     <Compile Include="ConfigurationSectionBase.cs" />
-    <Compile Include="DefaultImplementations\DefaultManifestCreationStrategy.cs" />
+    <Compile Include="DefaultImplementations\ManifestCreationStrategyConsideringStateCookieTenantAndTime.cs" />
     <Compile Include="Exceptions\EstablishedFeatureDependencyException.cs" />
     <Compile Include="FeatureConfigurationElement.cs" />
     <Compile Include="Exceptions\FeatureConfigurationException.cs" />

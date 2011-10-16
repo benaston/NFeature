@@ -39,7 +39,7 @@ namespace NFeature.Test.Fast
             request.Setup(
                 s =>
                 s.Cookies).Returns(new HttpCookieCollection
-                                       {new HttpCookie(DefaultManifestCreationStrategy<Feature, Tenant>.FeaturePreviewCookieName)});
+                                       {new HttpCookie(ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>.FeaturePreviewCookieName)});
 
             var httpContext = new Mock<HttpContextBase>();
             httpContext.Setup(
@@ -58,7 +58,7 @@ namespace NFeature.Test.Fast
 
             var m =
                 new FeatureManifestService<Feature>(
-                    new DefaultManifestCreationStrategy<Feature, Tenant>(fsSvc,
+                    new ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>(fsSvc,
                                                                fsRepo.Object,
                                                                httpContext.Object,
                                                                tenancyContext.Object, 
@@ -92,7 +92,7 @@ namespace NFeature.Test.Fast
             request.Setup(
                 s =>
                 s.Cookies).Returns(new HttpCookieCollection
-                                       {new HttpCookie(DefaultManifestCreationStrategy<Feature, Tenant>.FeaturePreviewCookieName)});
+                                       {new HttpCookie(ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>.FeaturePreviewCookieName)});
 
             var httpContext = new Mock<HttpContextBase>();
             httpContext.Setup(
@@ -109,7 +109,7 @@ namespace NFeature.Test.Fast
 
             var m =
                 new FeatureManifestService<Feature>(
-                    new DefaultManifestCreationStrategy<Feature, Tenant>(fsSvc,
+                    new ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>(fsSvc,
                                                                fsRepo.Object,
                                                                httpContext.Object,
                                                                tenancyContext.Object, 
@@ -159,7 +159,7 @@ namespace NFeature.Test.Fast
 
             var m =
                 new FeatureManifestService<Feature>(
-                    new DefaultManifestCreationStrategy<Feature, Tenant>(fsSvc,
+                    new ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>(fsSvc,
                                                                fsRepo.Object,
                                                                httpContext.Object,
                                                                tenancyContext.Object, 
@@ -236,7 +236,7 @@ namespace NFeature.Test.Fast
             request.Setup(
                 s =>
                 s.Cookies).Returns(new HttpCookieCollection
-                                       {new HttpCookie(DefaultManifestCreationStrategy<Feature, Tenant>.FeaturePreviewCookieName)});
+                                       {new HttpCookie(ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>.FeaturePreviewCookieName)});
 
             var httpContext = new Mock<HttpContextBase>();
             httpContext.Setup(
@@ -253,7 +253,7 @@ namespace NFeature.Test.Fast
 
             var m =
                 new FeatureManifestService<Feature>(
-                    new DefaultManifestCreationStrategy<Feature, Tenant>(fsSvc,
+                    new ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>(fsSvc,
                                                                fsRepo.Object,
                                                                httpContext.Object,
                                                                tenancyContext.Object, 
@@ -279,7 +279,7 @@ namespace NFeature.Test.Fast
             request.Setup(
                 s =>
                 s.Cookies).Returns(new HttpCookieCollection
-                                       {new HttpCookie(DefaultManifestCreationStrategy<Feature, Tenant>.FeaturePreviewCookieName)});
+                                       {new HttpCookie(ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>.FeaturePreviewCookieName)});
 
             var httpContext = new Mock<HttpContextBase>();
             httpContext.Setup(
@@ -293,7 +293,7 @@ namespace NFeature.Test.Fast
 
             var m =
                 new FeatureManifestService<Feature>(
-                    new DefaultManifestCreationStrategy<Feature, Tenant>(fsSvc.Object,
+                    new ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>(fsSvc.Object,
                                                                fsRepo.Object,
                                                                httpContext.Object,
                                                                tenancyContext.Object, 
@@ -326,7 +326,7 @@ namespace NFeature.Test.Fast
             request.Setup(
                 s =>
                 s.Cookies).Returns(new HttpCookieCollection
-                                       {new HttpCookie(DefaultManifestCreationStrategy<Feature, Tenant>.FeaturePreviewCookieName)});
+                                       {new HttpCookie(ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>.FeaturePreviewCookieName)});
 
             var httpContext = new Mock<HttpContextBase>();
             httpContext.Setup(
@@ -340,7 +340,7 @@ namespace NFeature.Test.Fast
 
             var m =
                 new FeatureManifestService<Feature>(
-                    new DefaultManifestCreationStrategy<Feature, Tenant>(fsSvc.Object,
+                    new ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>(fsSvc.Object,
                                                                fsRepo.Object,
                                                                httpContext.Object,
                                                                tenancyContext.Object,
@@ -369,7 +369,7 @@ namespace NFeature.Test.Fast
             request.Setup(
                 s =>
                 s.Cookies).Returns(new HttpCookieCollection
-                                       {new HttpCookie(DefaultManifestCreationStrategy<Feature, Tenant>.FeaturePreviewCookieName)});
+                                       {new HttpCookie(ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>.FeaturePreviewCookieName)});
 
             var httpContext = new Mock<HttpContextBase>();
             httpContext.Setup(
@@ -386,7 +386,7 @@ namespace NFeature.Test.Fast
 
             var manifestService =
                 new FeatureManifestService<Feature>(
-                    new DefaultManifestCreationStrategy<Feature, Tenant>(fsSvc,
+                    new ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>(fsSvc,
                                                                fsRepo.Object,
                                                                httpContext.Object,
                                                                tenancyContext.Object, 
@@ -420,7 +420,7 @@ namespace NFeature.Test.Fast
             request.Setup(
                 s =>
                 s.Cookies).Returns(new HttpCookieCollection
-                                       {new HttpCookie(DefaultManifestCreationStrategy<Feature, Tenant>.FeaturePreviewCookieName)});
+                                       {new HttpCookie(ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>.FeaturePreviewCookieName)});
 
             var httpContext = new Mock<HttpContextBase>();
             httpContext.Setup(
@@ -437,7 +437,7 @@ namespace NFeature.Test.Fast
 
             var m =
                 new FeatureManifestService<Feature>(
-                    new DefaultManifestCreationStrategy<Feature, Tenant>(fsSvc,
+                    new ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>(fsSvc,
                                                                fsRepo.Object,
                                                                httpContext.Object,
                                                                tenancyContext.Object,

@@ -11,7 +11,7 @@
     ///   This provides an example manifest creation
     ///   strategy, and is replaceable (being a strategy).
     /// </summary>
-    public class DefaultManifestCreationStrategy<TFeatureEnum, TTenantEnum> :
+    public class ManifestCreationStrategyConsideringStateCookieTenantAndTime<TFeatureEnum, TTenantEnum> :
         IFeatureManifestCreationStrategy<TFeatureEnum>
         where TFeatureEnum : struct
         where TTenantEnum : struct
@@ -23,7 +23,7 @@
         private readonly HttpContextBase _httpContext;
         private readonly ITenancyContext<TTenantEnum> _tenancyContext;
 
-        public DefaultManifestCreationStrategy(
+        public ManifestCreationStrategyConsideringStateCookieTenantAndTime(
             IFeatureSettingService<TFeatureEnum, TTenantEnum, Tuple<FeatureVisibilityMode, TTenantEnum, DateTime>> featureSettingService,
             IFeatureSettingRepository<TFeatureEnum, TTenantEnum> featureSettingsRepository,
             HttpContextBase httpContext,
