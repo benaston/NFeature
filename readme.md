@@ -9,8 +9,10 @@ Feature configuration walls enable you to integrate your code earlier, which bri
 
 How to use:
 --------
-**1. Define some features**
+**1. Define some features and a tenant**
 
+Please note that requirement to specify a tenant type may eventually be removed.	
+	
 In your code:
 
 ```C#
@@ -21,6 +23,11 @@ In your code:
 		MyFeature,
 		MyOtherFeature,
 		MyOtherOtherFeature,
+	}
+		
+	public enum Tenant
+	{
+		All, 
 	}
 
 ```
@@ -40,29 +47,38 @@ In your configuration:
 	
 ```
 
-**2. Take care of feature manifest initialization**
+**2. Define the availability checking function**
 
-Note that the availability checker is injected with a method that can contain arbitrary logic. You might, for example, take advantage of this to disable certain features when the load on a website is above normal.
 
 ```C#
 
-	using TArgs = string; //or whatever type you need to supply to your manifest creation strategy (a tuple/whatever)
-	
-	//...
-	
+
+	//Here is a function that will only return 'true' if the feature is TestFeatureA
+	//Your function might be more elaborate involving, for example, checking of site 
+	//load or user role. 
+	Func<FeatureSetting<Feature, Tenant>, EmptyArgs, bool> fn = (f, args) => f == Feature.TestFeatureA; 
+
+```
+
+**3. Take care of feature manifest initialization**
+
+For a working example implementation see the integration test named ```FeatureEnumExtensionsTests``` in the ```NFeature.Test.Slow``` project, within the main solution.
+
+```C#
+
+
 	//NOTE: I suggest hiding this all away in the IOC container configuration	
-	var availabilityChecker = new FeatureSettingAvailabilityChecker<Feature, TArgs>(MyAvailabilityCheckingMethod);
-	var featureSettingRepo = new AppConfigFeatureSettingRepository<Feature>();
-	var featureSettingService = new FeatureSettingService<Feature, TArgs>(availabilityChecker, featureSettingRepo);
-	//NOTE: args here is an instance of TArgs, used to supply information to the availability checker
-	var manifestCreationStrategy = new CookieBasedPreviewManifestCreationStrategy<Feature>(featureSettingService, featureSettingRepo, args);
-	var featureManifestService = new FeatureManifestService<Feature>(manifestCreationStrategy);
-	var featureManifest = featureManifestService.GetManifest();
+	var featureSettingRepo = new AppConfigFeatureSettingRepository<Feature, Tenant>();
+	var availabilityChecker = new FeatureSettingAvailabilityChecker<Feature, Tenant>(fn); //from step 2      
+        var featureSettingService = new FeatureSettingService<Feature, Tenant, EmptyArgs>(availabilityChecker, featureSettingRepo);
+        var manifestCreationStrategy = new ManifestCreationStrategyDefault(featureSettingRepo, featureSettingService); //we use the default for this example
+        var featureManifestService = new FeatureManifestService<Feature>(manifestCreationStrategy);
+        _featureManifest = featureManifestService.GetManifest();	
 
 
 ```
 
-**3. Add code that is conditional on feature availability**
+**4. Add code that is conditional on feature availability**
 	
 ```C#
 
@@ -74,7 +90,7 @@ Note that the availability checker is injected with a method that can contain ar
 	
 ```
 
-**4. Configure feature dependencies**
+**5. Configure any feature dependencies**
 
 ```XML
 
@@ -85,7 +101,7 @@ Note that the availability checker is injected with a method that can contain ar
 
 ```
 
-**5. Optionally configure feature settings using Json (neatly side-stepping the Microsoft XML configuration functionality)**
+**6. Optionally configure feature settings using Json (neatly side-stepping the Microsoft XML configuration functionality)**
 	
 ```XML
 
@@ -97,7 +113,7 @@ Note that the availability checker is injected with a method that can contain ar
 
 ```
 
-**6. Optionally specify dates for feature availability**
+**7. Optionally specify dates for feature availability**
 
 ```XML
 
@@ -110,7 +126,7 @@ Note that the availability checker is injected with a method that can contain ar
 
 ```
 
-**7. Optionally mark your feature as ```Established``` to indicate that it is now integral to your application**
+**8. Optionally mark your feature as ```Established``` to indicate that it is now integral to your application**
 
 ```XML
 
@@ -121,9 +137,9 @@ Note that the availability checker is injected with a method that can contain ar
 
 ```
 
-**8. ...**
+**9. ...**
 
-**9. Profit!**
+**10. Profit!**
 
 
 How to build and/or run the tests:
