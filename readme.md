@@ -151,16 +151,14 @@ How to build and/or run the tests:
 1. Type in the desired option
 1. Hit return
 
-Finally... and example of configuration of the feature manifest for registration with an IOC container:
+
+IOC Configuration
 --------
 
 ```C#
 	//...
 	_module.Bind<IFeatureSettingRepository<Feature, Tenant>>().To<AppConfigFeatureSettingRepository<Feature, Tenant>>();
-        _module.Bind<IFeatureSettingAvailabilityChecker<Feature, Tenant, EmptyArgs>>()
-        	.ToMethod(x => new FeatureSettingAvailabilityChecker<Feature,
-                                       				     EmptyArgs,
-                                       				     Tenant>((f, t) => true));
+        _module.Bind<IFeatureSettingAvailabilityChecker<Feature, Tenant, EmptyArgs>>().ToMethod(x => new FeatureSettingAvailabilityChecker<Feature, EmptyArgs, Tenant>((f, t) => true));
         _module.Bind<IFeatureSettingService<Feature, Tenant, EmptyArgs>>().To<FeatureSettingService<Feature, Tenant, EmptyArgs>>();
         _module.Bind<IFeatureManifestCreationStrategy<Feature>>().To<ManifestCreationStrategyDefault<Feature, Tenant>>();
         _module.Bind<IFeatureManifestService<Feature>>().To<FeatureManifestService<Feature>>();
