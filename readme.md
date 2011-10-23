@@ -9,9 +9,7 @@ Feature configuration walls enable you to integrate your code earlier, which bri
 
 How to use:
 --------
-**1. Define some features and a tenant**
-
-Please note that requirement to specify a tenant type may eventually be removed.	
+**1. Define some features**
 	
 In your code:
 
@@ -25,10 +23,6 @@ In your code:
 		MyOtherOtherFeature,
 	}
 		
-	public enum Tenant
-	{
-		All, 
-	}
 
 ```
 
@@ -58,7 +52,7 @@ Two concrete implementations of ```IFeatureManifestCreationStrategy``` are provi
 	//Here is a function that will only return 'true' if the feature is TestFeatureA
 	//Your function might be more elaborate involving, for example, checking of site 
 	//load or user role. 
-	Func<FeatureSetting<Feature, Tenant>, EmptyArgs, bool> fn = (f, args) => f == Feature.TestFeatureA; 
+	Func<FeatureSetting<Feature>, EmptyArgs, bool> fn = (f, args) => f == Feature.TestFeatureA; 
 
 ```
 
@@ -70,9 +64,9 @@ For a working example of this see the integration test named ```FeatureEnumExten
 
 
 	//NOTE: I suggest hiding this ugly initialization logic away in the IOC container configuration	
-	var featureSettingRepo = new AppConfigFeatureSettingRepository<Feature, Tenant>();
-	var availabilityChecker = new FeatureSettingAvailabilityChecker<Feature, Tenant>(fn); //from step 2      
-	var featureSettingService = new FeatureSettingService<Feature, Tenant, EmptyArgs>(availabilityChecker, featureSettingRepo);
+	var featureSettingRepo = new AppConfigFeatureSettingRepository<Feature>();
+	var availabilityChecker = new FeatureSettingAvailabilityChecker<Feature>(fn); //from step 2      
+	var featureSettingService = new FeatureSettingService<Feature, EmptyArgs>(availabilityChecker, featureSettingRepo);
 	var manifestCreationStrategy = new ManifestCreationStrategyDefault(featureSettingRepo, featureSettingService); //we use the default for this example
 	var featureManifestService = new FeatureManifestService<Feature>(manifestCreationStrategy);
 	var featureManifest = featureManifestService.GetManifest();	
