@@ -3,8 +3,24 @@
     using System;
     using System.Linq;
 
+    public enum DefaultTenantEnum
+    {
+        All,
+    }
+
     public static class DefaultFunctions
     {
+        public static bool AvailabilityCheckFunction<TFeatureEnum>(
+            FeatureSetting<TFeatureEnum, DefaultTenantEnum> s,
+            Tuple<FeatureVisibilityMode, DefaultTenantEnum, DateTime> args)
+            where TFeatureEnum : struct
+        {
+            return ((s.FeatureState == FeatureState.Enabled ||
+                    (s.FeatureState == FeatureState.Previewable && args.Item1 == FeatureVisibilityMode.Preview)) &&
+                     s.StartDtg <= args.Item3 &&
+                     s.EndDtg > args.Item3);
+        }
+
         /// <summary>
         ///   The default imeplementation of the availability checker.
         ///   Checks the tenancy, feature state and date/time.

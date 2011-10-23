@@ -18,7 +18,7 @@ namespace NFeature.Test.Slow
             Assert.That(
                 settings.Where(i => i.Feature == Feature.TestFeatureE).First().FeatureState ==
                 FeatureState.Established);
-        }
+        }   
 
         [Test]
         public void GetFeatureSettings_WhenInvoked_FeatureSettingsWithNoSpecifiedTenantAreAvailableToAllTenant()

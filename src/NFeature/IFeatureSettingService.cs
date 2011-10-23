@@ -1,5 +1,12 @@
 ﻿namespace NFeature
 {
+    using DefaultImplementations;
+
+    public interface IFeatureSettingService<TFeatureEnum> :
+    IFeatureSettingService<TFeatureEnum, DefaultTenantEnum, EmptyArgs>
+        where TFeatureEnum : struct
+    {}
+        
     /// <summary>
     ///   Responsible for encapsulating functionality related to 
     ///   FeatureSetting that makes more sense to be placed on a 

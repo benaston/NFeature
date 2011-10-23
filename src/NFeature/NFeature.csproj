@@ -70,12 +70,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppConfigFeatureSettingRepository`1.cs" />
+    <Compile Include="DefaultImplementations\ManifestCreationStrategyDefault`1.cs" />
+    <Compile Include="FeatureSettingAvailabilityChecker`1.cs" />
     <Compile Include="DefaultImplementations\ApplicationClockWithOffset.cs" />
     <Compile Include="DefaultImplementations\ApplicationClockWithOffsetFactory.cs" />
     <Compile Include="DefaultImplementations\DefaultApplicationClock.cs" />
-    <Compile Include="DefaultImplementations\ManifestCreationStrategyDefault.cs" />
+    <Compile Include="DefaultImplementations\ManifestCreationStrategyDefault`2.cs" />
     <Compile Include="EmptyArgs.cs" />
-    <Compile Include="FeatureSettingAvailabilityChecker`1.cs" />
+    <Compile Include="FeatureSettingAvailabilityChecker`2.cs" />
     <Compile Include="Exceptions\EstablishedFeatureAvailabilityCheckException.cs" />
     <Compile Include="Exceptions\CircularFeatureSettingDependencyException.cs" />
     <Compile Include="ConfigurationManager.cs" />
@@ -95,7 +98,7 @@
     <Compile Include="Exceptions\FeatureNotConfiguredException.cs" />
     <Compile Include="FeatureSetting.cs" />
     <Compile Include="FeatureSettingConfigurationCollection.cs" />
-    <Compile Include="FeatureSettingAvailabilityChecker`2.cs" />
+    <Compile Include="FeatureSettingAvailabilityChecker`3.cs" />
     <Compile Include="FeatureSettingExtensions.cs" />
     <Compile Include="FeatureSettingService.cs" />
     <Compile Include="FeatureState.cs" />
@@ -112,7 +115,7 @@
     <Compile Include="DefaultImplementations\DefaultFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringToEnGBDateTimeConverter.cs" />
-    <Compile Include="AppConfigFeatureSettingRepository.cs" />
+    <Compile Include="AppConfigFeatureSettingRepository`2.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,5 +1,13 @@
 ﻿namespace NFeature
 {
+    using DefaultImplementations;
+
+    public interface IFeatureSettingRepository<TFeatureEnum> : IFeatureSettingRepository<TFeatureEnum, DefaultTenantEnum>
+        where TFeatureEnum : struct
+    {
+        
+    }
+
     /// <summary>
     ///   Responsible for providing an abstraction 
     ///   for the retrieval of feature settings from a store.

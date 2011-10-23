@@ -5,12 +5,6 @@
 
     public static class FeatureSettingExtensions
     {
-        //public static bool IsEnabled<TFeatureEnum>(this FeatureSetting<TFeatureEnum> f)
-        //    where TFeatureEnum : struct
-        //{
-        //    return f.FeatureState == FeatureState.Enabled;
-        //}
-
         public static bool IsAvailable<TFeatureEnum, TTenantEnum>(this FeatureSetting<TFeatureEnum, TTenantEnum> f, 
                                                             FeatureVisibilityMode m, 
                                                             TTenantEnum tenant,
@@ -24,11 +18,5 @@
                    f.StartDtg <= currentDtg &&
                    f.EndDtg > currentDtg;
         }
-
-        //public static bool IsPreviewable<TFeatureEnum>(this FeatureSetting<TFeatureEnum> f)
-        //    where TFeatureEnum : struct
-        //{
-        //    return f.FeatureState == FeatureState.Previewable;
-        //}
     }
 }

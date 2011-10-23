@@ -1,14 +1,18 @@
-﻿namespace NFeature
-{
-    using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-    public class FeatureSettingAvailabilityChecker<TFeatureEnum, TTenantEnum> :
-        FeatureSettingAvailabilityChecker<TFeatureEnum, EmptyArgs, TTenantEnum>
+namespace NFeature
+{
+    using DefaultImplementations;
+
+    public class FeatureSettingAvailabilityChecker<TFeatureEnum> :
+        FeatureSettingAvailabilityChecker<TFeatureEnum, EmptyArgs, DefaultTenantEnum>
         where TFeatureEnum : struct
-        where TTenantEnum : struct
     {
-        public FeatureSettingAvailabilityChecker(
-            Func<FeatureSetting<TFeatureEnum, TTenantEnum>, EmptyArgs, bool> availabilityCheckFunction)
-            : base(availabilityCheckFunction) {}
+        public FeatureSettingAvailabilityChecker(Func<FeatureSetting<TFeatureEnum, DefaultTenantEnum>,
+            EmptyArgs, bool> availabilityCheckFunction)
+            : base(availabilityCheckFunction) { }
     }
 }

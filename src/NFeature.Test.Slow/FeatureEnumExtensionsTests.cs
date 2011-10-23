@@ -15,7 +15,7 @@ namespace NFeature.Test.Slow
         public void Setup()
         {
             var availabilityChecker =
-                new FeatureSettingAvailabilityChecker<Feature, Tenant>(MyAvailabilityCheckFunction);
+                new FeatureSettingAvailabilityChecker<Feature, EmptyArgs, Tenant>(MyAvailabilityCheckFunction);
             var featureSettingRepo = new AppConfigFeatureSettingRepository<Feature, Tenant>();
             var featureSettingService =
                 new FeatureSettingService<Feature, Tenant, EmptyArgs>(availabilityChecker, featureSettingRepo);
