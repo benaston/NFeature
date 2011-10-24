@@ -33,9 +33,9 @@ In your configuration: (see also footnote 1)
 
 	
     <features>
-		<add name="MyFeature" state="Enabled" /> <!-- will be available to all -->
-		<add name="MyOtherFeature" state="Previewable" /> <!-- will only be available to users who meet the feature-preview criteria* -->
-		<add name="MyOtherOtherFeature" state="Disabled" /> <!-- not available -->
+		<add name="MyFeature" state="Enabled" /> 
+		<add name="MyOtherFeature" state="Previewable" /> <!-- will only be available to users who meet the feature-preview criteria -->
+		<add name="MyOtherOtherFeature" state="Disabled" /> 
 	</features>
 	
 ```
@@ -47,8 +47,8 @@ In your configuration: (see also footnote 1)
 
 
 	//Here is a function that will only return 'true' if the feature is TestFeatureA
-	//Your function might be more elaborate involving, for example, checking of site 
-	//load or user role. 
+	//Your function might be more elaborate involving. For example: checking of site 
+	//load, user role or presence of a cookie.
 	Func<FeatureSetting<Feature>, EmptyArgs, bool> fn = (f, args) => f == Feature.TestFeatureA; 
 
 ```
@@ -83,7 +83,7 @@ For a working example of this see the integration test named ```FeatureEnumExten
 	
 ```
 
-**5. Configure any feature dependencies**
+**5. Configure feature dependencies**
 
 ```XML
 
@@ -119,7 +119,7 @@ For a working example of this see the integration test named ```FeatureEnumExten
 
 ```
 
-**8. Optionally mark your feature as ```Established``` to indicate that it is now integral to your application**
+**8. Optionally mark your feature as ```Established``` to indicate that it is now integral to your application (see footnote 2)**
 
 ```XML
 
@@ -169,3 +169,9 @@ IOC Configuration
 Please note that the logic to determine whether a feature is available is specified in the ```IFeatureManifestCreationStrategy``` instance you inject into the ```FeatureManifestService``` and (optionally, depending on your implementation of the aforementioned strategy) by the availability-checking function you inject into the ```FeatureSettingAvailabilityChecker```. 
 
 Two concrete implementations of ```IFeatureManifestCreationStrategy``` are provided of-the-box: ```ManifestCreationStrategyDefault``` and ```ManifestCreationStrategyConsideringStateCookieTenantAndTime```. A single default availability checker function is provided out of the box ```DefaultFunctions.AvailabilityCheckFunction```, which may be used when the feature state, tenant, feature visibility mode and system time are known.
+
+**Footnote 2:**
+Marking a feature as established changes the behavior of the feature in the following way:
+
+ - all dependencies must be established
+ - checking the feature's availability will throw an exception (because it is now always available by deinition)
