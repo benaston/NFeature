@@ -141,7 +141,7 @@ How to build and/or run the tests:
 1. Hit return
 
 
-IOC Configuration
+IOC Configuration Example
 --------
 
 ```C#
