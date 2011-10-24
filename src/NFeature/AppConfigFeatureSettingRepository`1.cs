@@ -2,6 +2,8 @@
 {
     using DefaultImplementations;
 
-    public class AppConfigFeatureSettingRepository2<TFeatureEnum> : AppConfigFeatureSettingRepository<TFeatureEnum, DefaultTenantEnum>
+    public class AppConfigFeatureSettingRepository<TFeatureEnum> : 
+        AppConfigFeatureSettingRepository<TFeatureEnum, DefaultTenantEnum>,
+        IFeatureSettingRepository<TFeatureEnum>
         where TFeatureEnum : struct {}
 }

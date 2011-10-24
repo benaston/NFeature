@@ -8,7 +8,8 @@ namespace NFeature
     using DefaultImplementations;
 
     public class FeatureSettingAvailabilityChecker<TFeatureEnum> :
-        FeatureSettingAvailabilityChecker<TFeatureEnum, EmptyArgs, DefaultTenantEnum>
+        FeatureSettingAvailabilityChecker<TFeatureEnum, EmptyArgs, DefaultTenantEnum>,
+        IFeatureSettingAvailabilityChecker<TFeatureEnum>
         where TFeatureEnum : struct
     {
         public FeatureSettingAvailabilityChecker(Func<FeatureSetting<TFeatureEnum, DefaultTenantEnum>,

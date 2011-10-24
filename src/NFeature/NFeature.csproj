@@ -71,6 +71,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppConfigFeatureSettingRepository`1.cs" />
+    <Compile Include="FeatureSettingService`2.cs" />
+    <Compile Include="FeatureSettingService`1.cs" />
     <Compile Include="DefaultImplementations\ManifestCreationStrategyDefault`1.cs" />
     <Compile Include="FeatureSettingAvailabilityChecker`1.cs" />
     <Compile Include="DefaultImplementations\ApplicationClockWithOffset.cs" />
@@ -100,7 +102,7 @@
     <Compile Include="FeatureSettingConfigurationCollection.cs" />
     <Compile Include="FeatureSettingAvailabilityChecker`3.cs" />
     <Compile Include="FeatureSettingExtensions.cs" />
-    <Compile Include="FeatureSettingService.cs" />
+    <Compile Include="FeatureSettingService`3.cs" />
     <Compile Include="FeatureState.cs" />
     <Compile Include="IApplicationClock.cs" />
     <Compile Include="IFeatureDescriptor.cs" />
