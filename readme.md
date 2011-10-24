@@ -117,7 +117,7 @@ For a working example of this see the integration test named ```FeatureEnumExten
 
 ```
 
-**8. Optionally mark your feature as ```Established``` to indicate that it is now integral to your application (see footnote 2)**
+**8. At some future date... optionally mark your feature as ```Established``` to indicate that it is now integral to your application and cannot be turned off (see footnote 2)**
 
 ```XML
 
