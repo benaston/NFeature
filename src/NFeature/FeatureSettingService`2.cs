@@ -1,5 +1,6 @@
 ﻿namespace NFeature
 {
+    using Configuration;
     using DefaultImplementations;
 
     public class FeatureSettingService<TFeatureEnum, TAvailabilityCheckArgs> : IFeatureSettingService<TFeatureEnum, DefaultTenantEnum, TAvailabilityCheckArgs>

@@ -2,6 +2,7 @@
 namespace NFeature.Test.Fast
 {
     using System;
+    using Configuration;
     using Exceptions;
     using NBasicExtensionMethod;
     using NUnit.Framework;

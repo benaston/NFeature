@@ -5,6 +5,7 @@ using System.Text;
 
 namespace NFeature
 {
+    using Configuration;
     using DefaultImplementations;
 
     public class FeatureSettingAvailabilityChecker<TFeatureEnum> :

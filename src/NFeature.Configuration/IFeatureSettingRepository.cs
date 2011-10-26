@@ -1,7 +1,5 @@
-﻿namespace NFeature
+﻿namespace NFeature.Configuration
 {
-    using DefaultImplementations;
-
     public interface IFeatureSettingRepository<TFeatureEnum> : IFeatureSettingRepository<TFeatureEnum, DefaultTenantEnum>
         where TFeatureEnum : struct
     {

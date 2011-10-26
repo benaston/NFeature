@@ -1,5 +1,6 @@
 ﻿namespace NFeature
 {
+    using Configuration;
     using DefaultImplementations;
 
     public interface IFeatureSettingService<TFeatureEnum> :

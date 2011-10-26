@@ -1,10 +1,11 @@
-﻿namespace NFeature
+﻿namespace NFeature.Configuration
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Configuration;
     using System.Linq;
+    using Enumerable = System.Linq.Enumerable;
 
     /// <example>
     /// <![CDATA[
@@ -61,7 +62,7 @@
 
                 if (tenantNames != null)
                 {
-                    return (tenantNames.Cast<string>().Select(t => (TTenantEnum) Enum.Parse(typeof (TTenantEnum), t))).ToArray();
+                    return Enumerable.ToArray<TTenantEnum>((tenantNames.Cast<string>().Select(t => (TTenantEnum) Enum.Parse(typeof (TTenantEnum), t))));
                 }
 
                 return new[] { (TTenantEnum) Enum.ToObject(typeof(TTenantEnum), 0) }; //see note 1
@@ -78,7 +79,7 @@
                 var dependencies = ((CommaDelimitedStringCollection) this["dependencies"]) ??
                                    new CommaDelimitedStringCollection();
 
-                return (dependencies.Cast<string>().Select(t => (TFeatureEnum)Enum.Parse(typeof(TFeatureEnum), t))).ToArray();
+                return Enumerable.ToArray<TFeatureEnum>((dependencies.Cast<string>().Select(t => (TFeatureEnum)Enum.Parse(typeof(TFeatureEnum), t))));
             }
             set { this["dependencies"] = value; }
         }

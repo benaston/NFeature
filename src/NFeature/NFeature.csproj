@@ -53,6 +53,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NFeature.Configuration">
+      <HintPath>..\packages\NFeature.Configuration.1.0.4316.42847\lib\net40\NFeature.Configuration.dll</HintPath>
+    </Reference>
     <Reference Include="NHelpfulException">
       <HintPath>..\packages\NHelpfulException.1.0.4292.35244\lib\net40\NHelpfulException.dll</HintPath>
     </Reference>
@@ -70,7 +73,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppConfigFeatureSettingRepository`1.cs" />
     <Compile Include="FeatureSettingService`2.cs" />
     <Compile Include="FeatureSettingService`1.cs" />
     <Compile Include="DefaultImplementations\ManifestCreationStrategyDefault`1.cs" />
@@ -83,14 +85,9 @@
     <Compile Include="FeatureSettingAvailabilityChecker`2.cs" />
     <Compile Include="Exceptions\EstablishedFeatureAvailabilityCheckException.cs" />
     <Compile Include="Exceptions\CircularFeatureSettingDependencyException.cs" />
-    <Compile Include="ConfigurationManager.cs" />
-    <Compile Include="ConfigurationSectionBase.cs" />
     <Compile Include="DefaultImplementations\ManifestCreationStrategyConsideringStateCookieTenantAndTime.cs" />
     <Compile Include="Exceptions\EstablishedFeatureDependencyException.cs" />
-    <Compile Include="FeatureConfigurationElement.cs" />
-    <Compile Include="Exceptions\FeatureConfigurationException.cs" />
     <Compile Include="FeatureVisibilityMode.cs" />
-    <Compile Include="FeatureConfigurationSection.cs" />
     <Compile Include="Exceptions\FeatureDependencyConfigurationException.cs" />
     <Compile Include="FeatureDescriptor.cs" />
     <Compile Include="FeatureEnumExtensions.cs" />
@@ -98,26 +95,19 @@
     <Compile Include="FeatureManifestService.cs" />
     <Compile Include="Exceptions\FeatureNotAvailableException.cs" />
     <Compile Include="Exceptions\FeatureNotConfiguredException.cs" />
-    <Compile Include="FeatureSetting.cs" />
-    <Compile Include="FeatureSettingConfigurationCollection.cs" />
     <Compile Include="FeatureSettingAvailabilityChecker`3.cs" />
     <Compile Include="FeatureSettingExtensions.cs" />
     <Compile Include="FeatureSettingService`3.cs" />
-    <Compile Include="FeatureState.cs" />
     <Compile Include="IApplicationClock.cs" />
     <Compile Include="IFeatureDescriptor.cs" />
     <Compile Include="IFeatureManifest.cs" />
     <Compile Include="IFeatureManifestCreationStrategy.cs" />
     <Compile Include="IFeatureManifestService.cs" />
     <Compile Include="IFeatureSettingAvailabilityChecker.cs" />
-    <Compile Include="IFeatureSettingRepository.cs" />
     <Compile Include="IFeatureSettingService.cs" />
     <Compile Include="ITenancyContext.cs" />
-    <Compile Include="JsonToStringDictionaryConverter.cs" />
     <Compile Include="DefaultImplementations\DefaultFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StringToEnGBDateTimeConverter.cs" />
-    <Compile Include="AppConfigFeatureSettingRepository`2.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

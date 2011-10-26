@@ -1,29 +1,26 @@
-﻿namespace NFeature
+﻿// ReSharper disable InconsistentNaming
+namespace NFeature.Configuration
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Configuration;
     using System.Globalization;
-    using Newtonsoft.Json;
 
-    public sealed class JsonToStringDictionaryConverter : ConfigurationConverterBase
+    public sealed class StringToEnGBDateTimeConverter : ConfigurationConverterBase
     {
+        private const string DefaultDateTimeFormat = "dd/MM/yyyy:HH:mm:ss";
+        // Methods
         public override object ConvertFrom(ITypeDescriptorContext ctx, CultureInfo ci, object data)
         {
-            return JsonConvert.DeserializeObject<Dictionary<string, string>>((string) data);
+            return DateTime.ParseExact((string)data, DefaultDateTimeFormat, new CultureInfo("en-GB"),
+                                       DateTimeStyles.None);
         }
 
         public override object ConvertTo(ITypeDescriptorContext ctx, CultureInfo ci, object value, Type type)
         {
-            ValidateType(value, typeof (Dictionary<string, string>));
-            var dictionary = value as Dictionary<string, string>;
-            if (dictionary != null)
-            {
-                return JsonConvert.SerializeObject(dictionary);
-            }
+            ValidateType(value, typeof (DateTime));
 
-            return null;
+            return (DateTime)value;
         }
 
         private static void ValidateType(object value, Type expected)
@@ -35,3 +32,4 @@
         }
     }
 }
+// ReSharper restore InconsistentNaming

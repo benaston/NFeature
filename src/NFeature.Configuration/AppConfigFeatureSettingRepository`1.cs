@@ -1,7 +1,5 @@
-﻿namespace NFeature
+﻿namespace NFeature.Configuration
 {
-    using DefaultImplementations;
-
     public class AppConfigFeatureSettingRepository<TFeatureEnum> : 
         AppConfigFeatureSettingRepository<TFeatureEnum, DefaultTenantEnum>,
         IFeatureSettingRepository<TFeatureEnum>

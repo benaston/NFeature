@@ -2,6 +2,7 @@
 namespace NFeature.Test.Slow
 {
     using System.Linq;
+    using Configuration;
     using NUnit.Framework;
     using TArgs = System.Tuple<FeatureVisibilityMode, Tenant, System.DateTime>;
 

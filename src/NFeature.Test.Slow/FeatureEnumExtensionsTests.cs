@@ -2,6 +2,7 @@
 namespace NFeature.Test.Slow
 {
     using System;
+    using Configuration;
     using DefaultImplementations;
     using NUnit.Framework;
 

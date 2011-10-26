@@ -1,6 +1,7 @@
 ﻿namespace NFeature
 {
     using System.Collections.Generic;
+    using Configuration;
     using DefaultImplementations;
 
     public interface IFeatureSettingAvailabilityChecker<TFeatureEnum> : IFeatureSettingAvailabilityChecker<TFeatureEnum, DefaultTenantEnum, EmptyArgs>

@@ -2,11 +2,7 @@
 {
     using System;
     using System.Linq;
-
-    public enum DefaultTenantEnum
-    {
-        All,
-    }
+    using Configuration;
 
     public static class DefaultFunctions
     {

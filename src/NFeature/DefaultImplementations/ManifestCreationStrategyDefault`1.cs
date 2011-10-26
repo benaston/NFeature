@@ -1,5 +1,7 @@
 ﻿namespace NFeature.DefaultImplementations
 {
+    using Configuration;
+
     public class ManifestCreationStrategyDefault<TFeatureEnum> :
         ManifestCreationStrategyDefault<TFeatureEnum, DefaultTenantEnum>
         where TFeatureEnum : struct

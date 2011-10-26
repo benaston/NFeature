@@ -54,6 +54,9 @@
     <Reference Include="NBasicExtensionMethod">
       <HintPath>..\packages\NBasicExtensionMethod.1.0.4292.32667\lib\net40\NBasicExtensionMethod.dll</HintPath>
     </Reference>
+    <Reference Include="NFeature.Configuration">
+      <HintPath>..\packages\NFeature.Configuration.1.0.4316.42847\lib\net40\NFeature.Configuration.dll</HintPath>
+    </Reference>
     <Reference Include="NHelpfulException">
       <HintPath>..\packages\NHelpfulException.1.0.4292.35244\lib\net40\NHelpfulException.dll</HintPath>
     </Reference>

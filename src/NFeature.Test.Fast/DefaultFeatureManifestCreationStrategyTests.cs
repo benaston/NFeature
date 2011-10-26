@@ -3,6 +3,7 @@ namespace NFeature.Test.Fast
 {
     using System;
     using System.Web;
+    using Configuration;
     using DefaultImplementations;
     using Exceptions;
     using Moq;

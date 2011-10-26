@@ -1,4 +1,4 @@
-﻿namespace NFeature
+﻿namespace NFeature.Configuration
 {
     public enum FeatureState
     {

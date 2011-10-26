@@ -1,6 +1,7 @@
 ﻿namespace NFeature
 {
     using System;
+    using Configuration;
     using DefaultImplementations;
 
     public class FeatureSettingAvailabilityChecker<TFeatureEnum, TAvailabilityCheckArgs> :

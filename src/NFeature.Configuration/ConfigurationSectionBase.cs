@@ -1,4 +1,4 @@
-﻿namespace NFeature
+﻿namespace NFeature.Configuration
 {
     using System.Configuration;
 

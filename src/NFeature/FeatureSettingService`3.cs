@@ -1,5 +1,7 @@
 ﻿namespace NFeature
 {
+    using Configuration;
+
     public class FeatureSettingService<TFeatureEnum, TTenantEnum, TAvailabilityCheckArgs> : IFeatureSettingService<TFeatureEnum, TTenantEnum, TAvailabilityCheckArgs>
         where TFeatureEnum : struct
         where TTenantEnum : struct

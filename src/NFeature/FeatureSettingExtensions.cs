@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using Configuration;
 
     public static class FeatureSettingExtensions
     {

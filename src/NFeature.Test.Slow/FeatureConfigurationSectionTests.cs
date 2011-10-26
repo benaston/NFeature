@@ -3,6 +3,7 @@ namespace NFeature.Test.Slow
 {
     using System;
     using System.Linq;
+    using Configuration;
     using NUnit.Framework;
 
     [TestFixture]
