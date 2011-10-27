@@ -22,7 +22,7 @@ namespace NFeature.Test.Fast
                                                   {
                                                       IsEstablished = true,
                                                       Settings =
-                                                          new Dictionary<string, string>
+                                                          new Dictionary<string, dynamic>
                                                               {
                                                                   {
                                                                       "ExampleSettingName",
@@ -51,7 +51,7 @@ namespace NFeature.Test.Fast
                                                   {
                                                       IsAvailable = false,
                                                       Settings =
-                                                          new Dictionary<string, string>
+                                                          new Dictionary<string, dynamic>
                                                               {
                                                                   {
                                                                       "SettingName",
@@ -80,7 +80,7 @@ namespace NFeature.Test.Fast
                                                   {
                                                       IsAvailable = true,
                                                       Settings =
-                                                          new Dictionary<string, string>
+                                                          new Dictionary<string, dynamic>
                                                               {
                                                                   {
                                                                       "ExampleSettingName",

@@ -18,6 +18,6 @@
 
         IList<TFeatureEnum> Dependencies { get; set; }
 
-        IDictionary<string, string> Settings { get; set; }
+        IDictionary<string, dynamic> Settings { get; set; }
     }
 }

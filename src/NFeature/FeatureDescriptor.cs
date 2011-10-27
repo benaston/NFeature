@@ -35,6 +35,6 @@
 
         public IList<TFeatureEnum> Dependencies { get; set; }
 
-        public IDictionary<string, string> Settings { get; set; }
+        public IDictionary<string, dynamic> Settings { get; set; }
     }
 }

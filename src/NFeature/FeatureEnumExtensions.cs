@@ -27,7 +27,7 @@
             }
         }
 
-        public static string Setting<TFeatureEnum>(this TFeatureEnum feature, Enum settingName, IFeatureManifest<TFeatureEnum> featureManifest)
+        public static dynamic Setting<TFeatureEnum>(this TFeatureEnum feature, Enum settingName, IFeatureManifest<TFeatureEnum> featureManifest)
                 where TFeatureEnum : struct
         {
             Ensure.That<ArgumentNullException>(featureManifest.IsNotNull(), "featureManifest not supplied.")

@@ -37,8 +37,15 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NFeature.Configuration">
-      <HintPath>..\packages\NFeature.Configuration.1.0.4316.42847\lib\net40\NFeature.Configuration.dll</HintPath>
+    <Reference Include="NFeature.Configuration, Version=1.0.4317.35013, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NFeature.Configuration.1.0.4317.35013\lib\net40\NFeature.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="NHelpfulException, Version=1.0.4292.35244, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHelpfulException.1.0.4292.35244\lib\net40\NHelpfulException.dll</HintPath>
+    </Reference>
+    <Reference Include="NSure, Version=1.0.4292.35410, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NSure.1.0.4292.35410\lib\net40\NSure.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
