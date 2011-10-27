@@ -53,6 +53,15 @@ namespace NFeature.Test.Slow
 
             Assert.That(settings.Count() == 5);
         }
+
+        [Test]
+        public void GetFeatureSettings_WhenInvokedWithCustomFullName_ReturnsAllCorrectFeatureSetting()
+        {
+            var r = new AppConfigFeatureSettingRepository<Feature, Tenant>();
+            var settings = r.GetFeatureSettings();
+
+            Assert.That(settings.Count() == 5);
+        }
     }
 }
 

@@ -32,6 +32,19 @@ namespace NFeature.Test.Slow
         }
 
         [Test]
+        public void Setting_WithFullName_RetrievedOK()
+        {
+            Assert.That(Feature.TestFeatureE.Setting(FeatureSettingNames.TestFeatureE.AssemblyName, _featureManifest) == "testFeatureSetting1Value");
+        }
+
+        [Test]
+        public void Setting_WithoutFullName_RetrievedOK()
+        {
+            Assert.That(Feature.TestFeatureE.Setting(FeatureSettingNames.TestFeatureE.SimpleSetting, _featureManifest) == "testFeatureSetting2Value");
+        }
+
+
+        [Test]
         public void IsAvailable_WhenTheAvailabilityCheckingFunctionReturnsFalse_ReturnsFalse()
         {
             Assert.That(!Feature.TestFeatureA.IsAvailable(_featureManifest));

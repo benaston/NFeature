@@ -62,7 +62,6 @@ namespace NFeature.Test.Fast
                                               }
                                       };
 
-
             //assert
             Assert.Throws<FeatureNotAvailableException>(() => Feature.TestFeatureA.Setting(
                     FeatureSettingNames.TestFeature1.ExampleSettingName, featureManifest));

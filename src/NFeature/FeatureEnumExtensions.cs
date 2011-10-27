@@ -36,7 +36,23 @@
 
             try
             {
-                return featureManifest[feature].Settings[Enum.GetName(settingName.GetType(), settingName)];
+                //todo: refactor
+                var enumItemName = Enum.GetName(settingName.GetType(), settingName);
+                var enumItemMember = settingName.GetType().GetField(enumItemName); 
+                string enumItemFullName = null;
+
+                if (enumItemMember != null)
+                {
+                    var attribute = (FeatureSettingAttribute) 
+                                 enumItemMember.GetCustomAttributes(typeof(FeatureSettingAttribute), false)
+                                           .FirstOrDefault();
+                    if(attribute != null)
+                    {
+                        enumItemFullName = attribute.FullName;
+                    }
+                }
+
+                return featureManifest[feature].Settings[enumItemFullName ?? enumItemName];
             }
             catch (Exception e)
             {

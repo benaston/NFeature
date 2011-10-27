@@ -64,13 +64,16 @@
   <ItemGroup>
     <Compile Include="FeatureEnumExtensionsTests.cs" />
     <Compile Include="FeatureConfigurationSectionTests.cs" />
+    <Compile Include="FeatureSettingNames.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tenant.cs" />
     <Compile Include="Feature.cs" />
     <Compile Include="WebConfigFeatureSettingRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

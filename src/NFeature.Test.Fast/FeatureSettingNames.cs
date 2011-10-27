@@ -1,4 +1,4 @@
-﻿namespace NFeature
+﻿namespace NFeature.Test.Fast
 {
     public static class FeatureSettingNames
     {

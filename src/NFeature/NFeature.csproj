@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FeatureSettingNameAttribute.cs" />
     <Compile Include="FeatureSettingService`2.cs" />
     <Compile Include="FeatureSettingService`1.cs" />
     <Compile Include="DefaultImplementations\ManifestCreationStrategyDefault`1.cs" />
