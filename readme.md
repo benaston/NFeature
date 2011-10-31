@@ -69,7 +69,20 @@ For a working example of this see the integration test named ```FeatureEnumExten
 
 ```
 
-**4. Add code that is conditional on feature availability**
+
+**4. Configure feature dependencies**
+
+```XML
+
+	
+    <features>
+		<add name="MyFeature" dependencies="MyOtherFeature,MyOtherOtherFeature" />
+	</features>
+
+```
+
+
+**5. Add code that is conditional on feature availability**
 	
 ```C#
 
@@ -81,25 +94,17 @@ For a working example of this see the integration test named ```FeatureEnumExten
 	
 ```
 
-**5. Configure feature dependencies**
 
-```XML
+**6. Optionally configure feature-specific settings using Json (neatly side-stepping the Microsoft XML configuration functionality)**
 
-	
-    <features>
-		<add name="MyFeature" dependencies="MyOtherFeature,MyOtherOtherFeature" />
-	</features>
+*NEW! IMPROVED!: now supports arrays of settings!*
 
-```
-
-**6. Optionally configure feature settings using Json (neatly side-stepping the Microsoft XML configuration functionality)**
-	
 ```XML
 
 	
 	<features>
 		<add name="MyFeature" settings="{ mySetting:'mySettingValue', 
-				   	                      myOtherSetting:'myOtherSettingValue' }" />
+				   	                      myOtherSetting:['myOtherSettingValue','myOtherOtherSettingValue'] }" />
 	</features>
 
 ```
@@ -118,6 +123,8 @@ For a working example of this see the integration test named ```FeatureEnumExten
 ```
 
 **8. At some future date... optionally mark your feature as ```Established``` to indicate that it is now integral to your application and cannot be turned off (see footnote 2)**
+
+*Any conditionals besed upon the availability of established features will now throw an exception, forcing you to remove the conditional (as is good practice).*
 
 ```XML
 
