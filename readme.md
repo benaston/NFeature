@@ -8,15 +8,14 @@ Feature configuration walls enable you to integrate your code earlier, which bri
 How to use:
 --------
 
-**0. Define some features**
-
-
-**1. Define some features**
+**0. Get it**
 
 ```shell
 	nuget install nfeature
 ```
 
+
+**1. Define some features**
 
 In your code:
 
