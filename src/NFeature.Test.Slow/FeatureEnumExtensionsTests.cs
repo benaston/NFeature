@@ -43,7 +43,6 @@ namespace NFeature.Test.Slow
             Assert.That(Feature.TestFeatureE.Setting(FeatureSettingNames.TestFeatureE.SimpleSetting, _featureManifest) == "testFeatureSetting2Value");
         }
 
-
         [Test]
         public void IsAvailable_WhenTheAvailabilityCheckingFunctionReturnsFalse_ReturnsFalse()
         {
@@ -58,7 +57,6 @@ namespace NFeature.Test.Slow
         /// </summary>
         private static bool MyAvailabilityCheckFunction(FeatureSetting<Feature, Tenant> s, EmptyArgs args)
         {
-            Func<bool> f = () => true;
             return Enum.GetName(typeof(Feature), s.Feature) == "TestFeatureE";
         }
     }

@@ -23,5 +23,4 @@ namespace NFeature.Test.Fast
         }
     }
 }
-
 // ReSharper restore InconsistentNaming

@@ -37,15 +37,16 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NFeature.Configuration, Version=1.0.4317.35013, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="NFeature.Configuration, Version=1.0.4321.41583, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NFeature.Configuration.1.0.4317.35013\lib\net40\NFeature.Configuration.dll</HintPath>
+      <HintPath>..\packages\NFeature.Configuration.1.0.4321.41583\lib\net40\NFeature.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="NHelpfulException, Version=1.0.4292.35244, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NHelpfulException.1.0.4292.35244\lib\net40\NHelpfulException.dll</HintPath>
     </Reference>
-    <Reference Include="NSure, Version=1.0.4292.35410, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NSure.1.0.4292.35410\lib\net40\NSure.dll</HintPath>
+    <Reference Include="NSure, Version=1.0.4319.27113, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NSure.1.0.4319.27113\lib\net40\NSure.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -70,12 +71,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FeatureEnumExtensionsTests.cs" />
-    <Compile Include="FeatureConfigurationSectionTests.cs" />
     <Compile Include="FeatureSettingNames.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tenant.cs" />
     <Compile Include="Feature.cs" />
-    <Compile Include="WebConfigFeatureSettingRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
