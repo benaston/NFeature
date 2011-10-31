@@ -45,8 +45,8 @@ In your configuration: (see also footnote 1)
 
 
 	//Here is a function that will only return 'true' if the feature is TestFeatureA
-	//Your function might be more elaborate involving. For example: checking of site 
-	//load, user role or presence of a cookie.
+	//Your function might be more elaborate. For example: feature availability might 
+	//depend upon site load, user role or presence of a cookie.
 	Func<FeatureSetting<Feature>, EmptyArgs, bool> fn = (f, args) => f == Feature.TestFeatureA; 
 
 ```
