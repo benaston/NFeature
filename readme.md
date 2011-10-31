@@ -7,8 +7,17 @@ Feature configuration walls enable you to integrate your code earlier, which bri
 
 How to use:
 --------
+
+**0. Define some features**
+
+
 **1. Define some features**
-	
+
+```shell
+	nuget install nfeature
+```
+
+
 In your code:
 
 ```C#
