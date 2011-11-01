@@ -70,7 +70,7 @@ In your configuration: (see also footnote 1)
 
 **3. Take care of feature manifest initialization**
 
-For a working example of this see the integration test named ```FeatureEnumExtensionsTests``` in the ```NFeature.Test.Slow``` project, within the main solution.
+*For a working example of this see the integration test named ```FeatureEnumExtensionsTests``` in the ```NFeature.Test.Slow``` project, within the main solution.*
 
 ```C#
 
@@ -112,9 +112,9 @@ For a working example of this see the integration test named ```FeatureEnumExten
 ```
 
 
-**6. Optionally configure feature-specific settings using Json (neatly side-stepping the Microsoft XML configuration functionality)**
+**6. Optionally configure feature-specific settings using Json (neatly side-stepping the need for angle brackets)**
 
-*NEW! IMPROVED!: now supports arrays of settings!*
+*Arbitrary JSON is supported through the use of ```dynamic``` objects.*
 
 ```XML
 
