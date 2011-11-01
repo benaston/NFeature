@@ -39,7 +39,6 @@ In your configuration: (see also footnote 1)
 	...
   	<configSections>
 		...
-		<!-- you need to stick the FeatureConfigurationSection in your config -->
 		<!-- note that if you are using your own tenant enum then you will have 
 		to replace "Configuration.DefaultTenantEnum,  NFeature.Configuration"
 		with your type -->
