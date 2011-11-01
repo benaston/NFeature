@@ -7,8 +7,8 @@
         where TFeatureEnum : struct
     {
         public ManifestCreationStrategyDefault(
-            IFeatureSettingRepository<TFeatureEnum, DefaultTenantEnum> featureSettingRepository,
-            IFeatureSettingService<TFeatureEnum, DefaultTenantEnum, EmptyArgs> featureSettingService)
+            IFeatureSettingRepository<TFeatureEnum> featureSettingRepository,
+            IFeatureSettingService<TFeatureEnum> featureSettingService)
             : base(featureSettingRepository, featureSettingService) {}
     }
 }

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0"?>
+<configuration>
+  <configSections>
+    <section name="features" type="NFeature.Configuration.FeatureConfigurationSection`2[[NFeature.Test.Slow.Feature, NFeature.Test.Slow],[NFeature.Configuration.DefaultTenantEnum, NFeature.Configuration]], NFeature.Configuration"/>
+  </configSections>
+  <!-- NOTE: BA; integration tests depend on these settings -->
+  <features>
+    <add name="TestFeatureA"
+         state="Enabled"
+         
+         dependencies="TestFeatureB,TestFeatureC"
+         settings="{ testFeatureSetting1:'testFeatureSetting1Value',testFeatureSetting2:'testFeatureSetting2Value' }" />
+
+    <add name="TestFeatureB"
+         state="Enabled"
+         
+         dependencies=""
+         settings="{ 'testFeatureSetting1':'testFeatureSetting1Value',testFeatureSetting2:'testFeatureSetting2Value' }" />
+
+    <add name="TestFeatureC"
+         state="Enabled"
+         
+         startDtg="23/03/1981:18:00:01"
+         dependencies="" />
+
+    <add name="TestFeatureD"
+         state="Disabled"
+         
+         dependencies=""
+         startDtg="23/03/1981:18:00:01"
+         endDtg="23/03/2081:18:00:01"/>
+
+    <add name="TestFeatureE"
+         state="Established" 
+         settings="{ 'My.Type, MyAssembly':'testFeatureSetting1Value',SimpleSetting:'testFeatureSetting2Value' }" />
+  </features>
+</configuration>

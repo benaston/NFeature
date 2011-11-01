@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FeatureEnumExtensionsWithoutTenancy.cs" />
     <Compile Include="FeatureEnumExtensionsTests.cs" />
     <Compile Include="FeatureSettingNames.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,6 +78,9 @@
     <Compile Include="Feature.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config-no-tenancy">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
