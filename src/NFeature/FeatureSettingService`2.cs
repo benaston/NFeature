@@ -6,10 +6,10 @@
     public class FeatureSettingService<TFeatureEnum, TAvailabilityCheckArgs> : IFeatureSettingService<TFeatureEnum, DefaultTenantEnum, TAvailabilityCheckArgs>
         where TFeatureEnum : struct
     {
-        private readonly IFeatureSettingAvailabilityChecker<TFeatureEnum, DefaultTenantEnum, TAvailabilityCheckArgs> _featureSettingAvailabilityChecker;
+        private readonly IFeatureSettingAvailabilityChecker<TFeatureEnum, TAvailabilityCheckArgs> _featureSettingAvailabilityChecker;
         private readonly IFeatureSettingRepository<TFeatureEnum, DefaultTenantEnum> _featureSettingRepository;
 
-        public FeatureSettingService(IFeatureSettingAvailabilityChecker<TFeatureEnum, DefaultTenantEnum, TAvailabilityCheckArgs> featureSettingAvailabilityChecker,
+        public FeatureSettingService(IFeatureSettingAvailabilityChecker<TFeatureEnum, TAvailabilityCheckArgs> featureSettingAvailabilityChecker,
                                      IFeatureSettingRepository<TFeatureEnum, DefaultTenantEnum> featureSettingRepository)
         {
             _featureSettingAvailabilityChecker = featureSettingAvailabilityChecker;
