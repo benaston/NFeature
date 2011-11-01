@@ -36,9 +36,18 @@ In your configuration: (see also footnote 1)
 
 
 ```XML
-
+	...
+  	<configSections>
+		...
+		<!-- you need to stick the FeatureConfigurationSection in your config -->
+		<!-- note that if you are using your own tenant enum then you will have 
+		to replace "Configuration.DefaultTenantEnum,  NFeature.Configuration"
+		with your type -->
+		<section name="features" type="NFeature.Configuration.FeatureConfigurationSection`2[[Test.Core.Feature, Test.Core],[NFeature.Configuration.DefaultTenantEnum,  NFeature.Configuration]], NFeature.Configuration" />
+		...
+	</configSections>
 	
-    <features>
+	<features>
 		<add name="MyFeature" state="Enabled" /> 
 		<add name="MyOtherFeature" state="Previewable" /> <!-- will only be available to users who meet the feature-preview criteria -->
 		<add name="MyOtherOtherFeature" state="Disabled" /> 
