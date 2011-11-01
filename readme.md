@@ -42,7 +42,7 @@ In your configuration: (see also footnote 1)
 		<!-- note that if you are using your own tenant enum then you will have 
 		to replace "Configuration.DefaultTenantEnum,  NFeature.Configuration"
 		with your type -->
-		<section name="features" type="NFeature.Configuration.FeatureConfigurationSection`2[[Test.Core.Feature, Test.Core],[NFeature.Configuration.DefaultTenantEnum,  NFeature.Configuration]], NFeature.Configuration" />
+		<section name="features" type="NFeature.Configuration.FeatureConfigurationSection`2[[Your.Feature.Type, Your.Feature.Type.Assembly],[NFeature.Configuration.DefaultTenantEnum,  NFeature.Configuration]], NFeature.Configuration" />
 		...
 	</configSections>
 	
