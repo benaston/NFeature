@@ -52,6 +52,7 @@ In your configuration: (see also footnote 1)
 		<add name="MyOtherFeature" state="Previewable" /> <!-- will only be available to users who meet the feature-preview criteria -->
 		<add name="MyOtherOtherFeature" state="Disabled" /> 
 	</features>
+	...
 	
 ```
 
