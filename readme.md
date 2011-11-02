@@ -36,13 +36,22 @@ In your configuration: (see also footnote 1)
 
 
 ```XML
-
+	...
+  	<configSections>
+		...
+		<!-- note that if you are using your own tenant enum then you will have 
+		to replace "Configuration.DefaultTenantEnum,  NFeature.Configuration"
+		with your type -->
+		<section name="features" type="NFeature.Configuration.FeatureConfigurationSection`2[[Your.Feature.Type, Your.Feature.Type.Assembly],[NFeature.Configuration.DefaultTenantEnum,  NFeature.Configuration]], NFeature.Configuration" />
+		...
+	</configSections>
 	
-    <features>
+	<features>
 		<add name="MyFeature" state="Enabled" /> 
 		<add name="MyOtherFeature" state="Previewable" /> <!-- will only be available to users who meet the feature-preview criteria -->
 		<add name="MyOtherOtherFeature" state="Disabled" /> 
 	</features>
+	...
 	
 ```
 
@@ -61,7 +70,7 @@ In your configuration: (see also footnote 1)
 
 **3. Take care of feature manifest initialization**
 
-For a working example of this see the integration test named ```FeatureEnumExtensionsTests``` in the ```NFeature.Test.Slow``` project, within the main solution.
+*For a working example of this see the integration test named ```FeatureEnumExtensionsTests``` in the ```NFeature.Test.Slow``` project, within the main solution.*
 
 ```C#
 
@@ -103,9 +112,9 @@ For a working example of this see the integration test named ```FeatureEnumExten
 ```
 
 
-**6. Optionally configure feature-specific settings using Json (neatly side-stepping the Microsoft XML configuration functionality)**
+**6. Optionally configure feature-specific settings using Json (neatly side-stepping the need for angle brackets)**
 
-*NEW! IMPROVED!: now supports arrays of settings!*
+*Arbitrary JSON is supported through the use of ```dynamic``` objects.*
 
 ```XML
 
@@ -132,7 +141,7 @@ For a working example of this see the integration test named ```FeatureEnumExten
 
 **8. At some future date... optionally mark your feature as ```Established``` to indicate that it is now integral to your application and cannot be turned off (see footnote 2)**
 
-*Any availability checks for ```Established``` features will throw an exception, forcing their removal (as is good practice).*
+*Any availability checks for ```Established``` features will throw an exception, forcing their removal (as is good practice.)*
 
 ```XML
 
@@ -188,6 +197,6 @@ Marking a feature as established changes the behavior of the feature in the foll
 
  - all dependencies must be established
  - checking the feature's availability will throw an exception (because it is now always available by deinition)
- - 
+
 
 **NOTE: this is pre-release quality software. There will be bugs/inaccuracies in the documentation. If you find an issue, please help me by adding an issue here on GitHub.**
