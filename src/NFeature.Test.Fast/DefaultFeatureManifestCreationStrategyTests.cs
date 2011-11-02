@@ -8,6 +8,7 @@ namespace NFeature.Test.Fast
     using Exceptions;
     using Moq;
     using NBasicExtensionMethod;
+    using NHelpfulException;
     using NUnit.Framework;
     using TArgs = System.Tuple<FeatureVisibilityMode, Tenant, System.DateTime>;
 
@@ -172,7 +173,7 @@ namespace NFeature.Test.Fast
         [Test]
         public void IsAvailable_EnabledAndCookieAvailableAndDependencySettingsOKAndEndBeforeStartDate_ThrowsException()
         {
-            Assert.Throws<Exception>(
+            Assert.Throws<HelpfulException>(
                 () =>
                 new FeatureSetting<Feature, Tenant>
                     {
@@ -201,7 +202,7 @@ namespace NFeature.Test.Fast
         [Test]
         public void IsAvailable_EnabledAndCookieAvailableAndDependencySettingsOKAndStartAfterEndDate_ThrowsException()
         {
-            Assert.Throws<Exception>(
+            Assert.Throws<HelpfulException>(
                 () =>
                 new FeatureSetting<Feature, Tenant>
                     {

@@ -53,16 +53,15 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NFeature.Configuration, Version=1.0.4321.41583, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="NFeature.Configuration, Version=1.0.4323.624, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NFeature.Configuration.1.0.4321.41583\lib\net40\NFeature.Configuration.dll</HintPath>
+      <HintPath>..\packages\NFeature.Configuration.1.0.4323.624\lib\net40\NFeature.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="NHelpfulException">
-      <HintPath>..\packages\NHelpfulException.1.0.4292.35244\lib\net40\NHelpfulException.dll</HintPath>
+      <HintPath>..\packages\NHelpfulException.1.0.4322.41274\lib\net40\NHelpfulException.dll</HintPath>
     </Reference>
-    <Reference Include="NSure, Version=1.0.4319.27113, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NSure.1.0.4319.27113\lib\net40\NSure.dll</HintPath>
+    <Reference Include="NSure">
+      <HintPath>..\packages\NSure.1.0.4322.41374\lib\net40\NSure.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
