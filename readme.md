@@ -187,6 +187,12 @@ IOC Configuration Example
 	
 ```
 
+License & Copyright
+--------
+
+This software is released under the GNU Lesser GPL. It is Copright 2011, Ben Aston. I may be contacted at ben@bj.ma.
+
+
 **Footnote 1:**
 Please note that the logic to determine whether a feature is available is specified in the ```IFeatureManifestCreationStrategy``` instance you inject into the ```FeatureManifestService``` and (optionally, depending on your implementation of the aforementioned strategy) by the availability-checking function you inject into the ```FeatureSettingAvailabilityChecker```. 
 
@@ -200,3 +206,4 @@ Marking a feature as established changes the behavior of the feature in the foll
 
 
 **NOTE: this is pre-release quality software. There will be bugs/inaccuracies in the documentation. If you find an issue, please help me by adding an issue here on GitHub.**
+
