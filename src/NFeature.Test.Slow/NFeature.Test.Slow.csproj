@@ -35,18 +35,16 @@
       <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.4.0.7\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NFeature.Configuration">
-      <HintPath>..\packages\NFeature.Configuration.1.0.4323.624\lib\net40\NFeature.Configuration.dll</HintPath>
+      <HintPath>..\packages\NFeature.Configuration.1.0.4409.2391\lib\net40\NFeature.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="NHelpfulException, Version=1.0.4322.41274, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NHelpfulException.1.0.4322.41274\lib\net40\NHelpfulException.dll</HintPath>
+    <Reference Include="NHelpfulException">
+      <HintPath>..\packages\NHelpfulException.1.0.4409.2007\lib\net40\NHelpfulException.dll</HintPath>
     </Reference>
-    <Reference Include="NSure, Version=1.0.4322.41374, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NSure.1.0.4322.41374\lib\net40\NSure.dll</HintPath>
+    <Reference Include="NSure">
+      <HintPath>..\packages\NSure.1.0.4409.2144\lib\net40\NSure.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

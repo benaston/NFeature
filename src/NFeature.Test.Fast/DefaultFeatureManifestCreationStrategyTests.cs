@@ -1,4 +1,4 @@
-// Copyright 2011, Ben Aston (ben@bj.ma.)
+// Copyright 2011, Ben Aston (ben@bj.ma).
 // 
 // This file is part of NFeature.
 // 
@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with NFeature.  If not, see <http://www.gnu.org/licenses/>.
 
-// ReSharper disable InconsistentNaming
 namespace NFeature.Test.Fast
 {
 	using System.Web;
@@ -505,4 +504,3 @@ namespace NFeature.Test.Fast
 		}
 	}
 }
-// ReSharper restore InconsistentNaming
