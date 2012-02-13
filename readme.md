@@ -197,7 +197,7 @@ Two concrete implementations of ```IFeatureManifestCreationStrategy``` are provi
 Marking a feature as established changes the behavior of the feature in the following way:
 
  - all dependencies must be established
- - checking the feature's availability will throw an exception (because it is now always available by deinition)
+ - checking the feature's availability will throw an exception (because it is now always available by definition)
 
 
 **NOTE: this is pre-release quality software. There will be bugs/inaccuracies in the documentation. If you find an issue, please help me by adding an issue here on GitHub.**
