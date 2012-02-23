@@ -38,7 +38,7 @@ In your code:
 
 In your configuration: (see also footnote 1)
 
-*NOTE: remember to replace ```Your.Feature.Type```, ```Your.Feature.Type.Assembly``` in the text below.*
+*NOTE: remember to replace ```Your.Feature.Type``` and ```Your.Feature.Type.Assembly``` in the text below.*
 
 ```XML
 	...
