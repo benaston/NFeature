@@ -66,7 +66,7 @@ In your configuration: (see also footnote 1)
 ```C#
 
 
-	//Here is a function that will only return 'true' if the feature is MyFeature
+	//Here is a function that will only return 'true' if the feature is MyFeature.
 	//Your function might be more elaborate. For example: feature availability might 
 	//depend upon site load, user role or presence of a cookie.
 	Func<FeatureSetting<Feature, DefaultTenantEnum>, EmptyArgs, bool> fn = (f, args) => f.Feature == Feature.MyFeature;
