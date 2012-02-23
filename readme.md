@@ -170,28 +170,6 @@ How to build and/or run the tests:
 1. Hit return
 
 
-IOC Configuration Example
---------
-
-```C#
-	//...
-	_module.Bind<IFeatureSettingRepository<Feature>>()
-		.To<AppConfigFeatureSettingRepository<Feature>>();
-	_module.Bind<IFeatureSettingAvailabilityChecker<Feature>>()
-		.ToMethod(x => new FeatureSettingAvailabilityChecker<Feature>((f,a) => true));
-	_module.Bind<IFeatureSettingService<Feature>>()
-		.To<FeatureSettingService<Feature>>();
-	_module.Bind<IFeatureManifestCreationStrategy<Feature>>()
-		.To<ManifestCreationStrategyDefault<Feature>>();
-	_module.Bind<IFeatureManifestService<Feature>>()
-		.To<FeatureManifestService<Feature>>();
-	_module.Bind<IFeatureManifest<Feature>>()
-		.ToMethod(x => _module.Kernel.Get<IFeatureManifestService<Feature>>().GetManifest());              
-	//...
-	
-	
-```
-
 
 **Footnote 1:**
 Please note that the logic to determine whether a feature is available is specified in the ```IFeatureManifestCreationStrategy``` instance you inject into the ```FeatureManifestService``` and (optionally, depending on your implementation of the aforementioned strategy) by the availability-checking function you inject into the ```FeatureSettingAvailabilityChecker```. 
