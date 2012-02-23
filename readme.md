@@ -9,7 +9,7 @@ How to use:
 --------
 **-1. Check the target framework of your application**
 
-It *must* be ```.NET Framework 4``` (*not* the ```Client Profile``` version - or you might get strange compilation errors).
+It *must* be ```.NET Framework 4``` (*not* the ```Client Profile``` version - or you might get strange compilation errors.)
 
 
 **0. Get it**
