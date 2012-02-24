@@ -7,6 +7,10 @@ Feature configuration walls enable you to integrate your code earlier, which bri
 
 How to use:
 --------
+**-1. Check the target framework of your application**
+
+It *must* be ```.NET Framework 4``` (*not* the ```Client Profile``` version - or you might get strange compilation errors.)
+
 
 **0. Get it**
 
@@ -34,6 +38,7 @@ In your code:
 
 In your configuration: (see also footnote 1)
 
+*NOTE: remember to replace ```Your.Feature.Type``` and ```Your.Feature.Type.Assembly``` in the text below.*
 
 ```XML
 	...
@@ -61,10 +66,10 @@ In your configuration: (see also footnote 1)
 ```C#
 
 
-	//Here is a function that will only return 'true' if the feature is TestFeatureA
+	//Here is a function that will only return 'true' if the feature is MyFeature.
 	//Your function might be more elaborate. For example: feature availability might 
 	//depend upon site load, user role or presence of a cookie.
-	Func<FeatureSetting<Feature>, EmptyArgs, bool> fn = (f, args) => f == Feature.TestFeatureA; 
+	Func<FeatureSetting<Feature, DefaultTenantEnum>, EmptyArgs, bool> fn = (f, args) => f.Feature == Feature.MyFeature;
 
 ```
 
@@ -77,17 +82,17 @@ In your configuration: (see also footnote 1)
 
 	//NOTE: I suggest hiding this ugly initialization logic away in the IOC container configuration	
 	var featureSettingRepo = new AppConfigFeatureSettingRepository<Feature>();
-	var availabilityChecker = new FeatureSettingAvailabilityChecker<Feature>(fn); //from step 2      
-	var featureSettingService = new FeatureSettingService<Feature, EmptyArgs>(availabilityChecker, featureSettingRepo);
-	var manifestCreationStrategy = new ManifestCreationStrategyDefault(featureSettingRepo, featureSettingService); //we use the default for this example
+	var availabilityChecker = new FeatureSettingAvailabilityChecker<Feature, EmptyArgs, DefaultTenantEnum>(fn); //from step 2
+	var featureSettingService = new FeatureSettingService<Feature, DefaultTenantEnum, EmptyArgs>(availabilityChecker, featureSettingRepo);
+	var manifestCreationStrategy = new NFeature.DefaultImplementations.ManifestCreationStrategyDefault<Feature, DefaultTenantEnum>(featureSettingRepo, featureSettingService); //we use the default for this example
 	var featureManifestService = new FeatureManifestService<Feature>(manifestCreationStrategy);
-	var featureManifest = featureManifestService.GetManifest();	
+	var featureManifest = featureManifestService.GetManifest();
 
 
 ```
 
 
-**4. Configure feature dependencies**
+**4. Configure feature dependencies (if there are any)**
 
 ```XML
 
@@ -165,28 +170,6 @@ How to build and/or run the tests:
 1. Hit return
 
 
-IOC Configuration Example
---------
-
-```C#
-	//...
-	_module.Bind<IFeatureSettingRepository<Feature>>()
-		.To<AppConfigFeatureSettingRepository<Feature>>();
-	_module.Bind<IFeatureSettingAvailabilityChecker<Feature>>()
-		.ToMethod(x => new FeatureSettingAvailabilityChecker<Feature>((f,a) => true));
-	_module.Bind<IFeatureSettingService<Feature>>()
-		.To<FeatureSettingService<Feature>>();
-	_module.Bind<IFeatureManifestCreationStrategy<Feature>>()
-		.To<ManifestCreationStrategyDefault<Feature>>();
-	_module.Bind<IFeatureManifestService<Feature>>()
-		.To<FeatureManifestService<Feature>>();
-	_module.Bind<IFeatureManifest<Feature>>()
-		.ToMethod(x => _module.Kernel.Get<IFeatureManifestService<Feature>>().GetManifest());              
-	//...
-	
-	
-```
-
 
 **Footnote 1:**
 Please note that the logic to determine whether a feature is available is specified in the ```IFeatureManifestCreationStrategy``` instance you inject into the ```FeatureManifestService``` and (optionally, depending on your implementation of the aforementioned strategy) by the availability-checking function you inject into the ```FeatureSettingAvailabilityChecker```. 
@@ -197,7 +180,7 @@ Two concrete implementations of ```IFeatureManifestCreationStrategy``` are provi
 Marking a feature as established changes the behavior of the feature in the following way:
 
  - all dependencies must be established
- - checking the feature's availability will throw an exception (because it is now always available by deinition)
+ - checking the feature's availability will throw an exception (because it is now always available by definition)
 
 
 **NOTE: this is pre-release quality software. There will be bugs/inaccuracies in the documentation. If you find an issue, please help me by adding an issue here on GitHub.**
