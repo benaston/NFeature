@@ -5,6 +5,19 @@ A simple feature configuration system (or feature toggle / flipper / whatever yo
 
 Feature configuration walls enable you to integrate your code earlier, which brings lots of goodness (such as helping to avoid branch merge problems.)
 
+Example of use:
+
+```C#
+
+
+	if(Feature.MyCoolFeature.IsAvailable(manifest))
+	{
+		//do some cool stuff
+	}
+
+
+```
+
 How to use:
 --------
 **-1. Check the target framework of your application**
