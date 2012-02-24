@@ -23,13 +23,13 @@ namespace NFeature
 
 	public static class FeatureSettingExtensions
 	{
-		public static bool IsAvailable<TFeatureEnum, TTenantEnum>(this FeatureSetting<TFeatureEnum, TTenantEnum> f,
-		                                                          FeatureVisibilityMode m,
-		                                                          TTenantEnum tenant,
-		                                                          DateTime currentDtg)
+		public static bool IsAvailable<TFeatureEnum, TTenantEnum>(
+			this FeatureSetting<TFeatureEnum, TTenantEnum> f,
+			FeatureVisibilityMode m,
+			TTenantEnum tenant,
+			DateTime currentDtg)
 			where TFeatureEnum : struct
-			where TTenantEnum : struct
-		{
+			where TTenantEnum : struct {
 			return (f.SupportedTenants.Contains((TTenantEnum) Enum.ToObject(typeof (TTenantEnum), 0)) ||
 			        f.SupportedTenants.Contains(tenant)) &&
 			       (f.FeatureState == FeatureState.Enabled ||

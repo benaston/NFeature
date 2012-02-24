@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("NFeature")]
 [assembly:
 	AssemblyDescription(
-		"Simple feature configuration and availability-control for .NET. Please note this is NOT production-ready code. Please help me to improve the quality of NFeature by reporting issues on GitHub at https://github.com/benaston/NFeature/issues, or emailing ben@bj.ma."
+		"Simple feature configuration and availability-control for .NET. Please help me to improve the quality of NFeature by reporting issues on GitHub at https://github.com/benaston/NFeature/issues, or emailing ben@bj.ma."
 		)]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Ben Aston")]

@@ -26,8 +26,7 @@ namespace NFeature.DefaultImplementations
 	/// </summary>
 	public class ApplicationClock : IApplicationClock
 	{
-		public DateTime Now
-		{
+		public DateTime Now {
 			get { return DateTime.Now; }
 		}
 	}

@@ -23,7 +23,10 @@ namespace NFeature.DefaultImplementations
 	using NBasicExtensionMethod;
 
 	/// <summary>
-	/// 	Constructs the feature manifest according to the tenancy context, the existence of the preview cookie and feature configuration. This provides an example manifest creation strategy, and is replaceable (being a strategy).
+	/// 	Constructs the feature manifest according to the 
+	/// 	tenancy context, the existence of the preview cookie 
+	/// 	and feature configuration. This provides an example 
+	/// 	manifest creation strategy, and is replaceable.
 	/// </summary>
 	public class ManifestCreationStrategyConsideringStateCookieTenantAndTime<TFeatureEnum,
 	                                                                         TTenantEnum> :
@@ -83,13 +86,13 @@ namespace NFeature.DefaultImplementations
 
 				manifest.Add(setting.Feature,
 				             new FeatureDescriptor<TFeatureEnum>(setting.Feature) {
-				                                                                  	Dependencies =
-				                                                                  		setting.Dependencies,
-				                                                                  	IsAvailable =
-				                                                                  		isAvailable,
-				                                                                  	Settings =
-				                                                                  		setting.Settings,
-				                                                                  });
+				             	Dependencies =
+				             	setting.Dependencies,
+				             	IsAvailable =
+				             	isAvailable,
+				             	Settings =
+				             	setting.Settings,
+				             });
 			}
 
 			return manifest;

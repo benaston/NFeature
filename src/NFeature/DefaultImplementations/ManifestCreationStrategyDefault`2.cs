@@ -49,13 +49,13 @@ namespace NFeature.DefaultImplementations
 
 				manifest.Add(setting.Feature,
 				             new FeatureDescriptor<TFeatureEnum>(setting.Feature) {
-				                                                                  	Dependencies =
-				                                                                  		setting.Dependencies,
-				                                                                  	IsAvailable =
-				                                                                  		isAvailable,
-				                                                                  	Settings =
-				                                                                  		setting.Settings,
-				                                                                  });
+				             	Dependencies =
+				             	setting.Dependencies,
+				             	IsAvailable =
+				             	isAvailable,
+				             	Settings =
+				             	setting.Settings,
+				             });
 			}
 
 			return manifest;

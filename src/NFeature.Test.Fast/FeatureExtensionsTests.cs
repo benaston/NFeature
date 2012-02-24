@@ -28,28 +28,29 @@ namespace NFeature.Test.Fast
 		[Test]
 		public void
 			IsAvailable_WhenInvokedAgainstAnEstablishedFeature_ThrowsAnException_BecauseEstablishedFeaturesCannotBeAnythingOtherThanEnabled
-			()
-		{
+			() {
 			//arrange
 			const string desiredSettingValue = "test@example.com";
-			var featureManifest = new FeatureManifest<Feature>
-			                      	{
-			                      		{
-			                      			Feature.TestFeatureA,
-			                      			new FeatureDescriptor<Feature>(Feature.TestFeatureA)
-			                      				{
-			                      					IsEstablished = true,
-			                      					Settings =
-			                      						new Dictionary<string, dynamic>
-			                      							{
-			                      								{
-			                      									"ExampleSettingName",
-			                      									desiredSettingValue
-			                      									}
-			                      							}
-			                      				}
-			                      			}
-			                      	};
+			var featureManifest = new FeatureManifest<Feature> {
+				{
+					Feature.TestFeatureA,
+					new FeatureDescriptor<Feature>(
+						Feature.TestFeatureA) {
+							IsEstablished =
+								true,
+							Settings =
+								new Dictionary
+									<string,
+										dynamic> {
+											{
+												"ExampleSettingName"
+												,
+												desiredSettingValue
+												}
+										}
+						}
+					}
+			};
 
 			//act / assert
 			Assert.Throws
@@ -58,27 +59,28 @@ namespace NFeature.Test.Fast
 		}
 
 		[Test]
-		public void Setting_WhenInvokedAgainstFeatureNotAvailable_ThrowsException()
-		{
+		public void Setting_WhenInvokedAgainstFeatureNotAvailable_ThrowsException() {
 			//arrange
-			var featureManifest = new FeatureManifest<Feature>
-			                      	{
-			                      		{
-			                      			Feature.TestFeatureA,
-			                      			new FeatureDescriptor<Feature>(Feature.TestFeatureA)
-			                      				{
-			                      					IsAvailable = false,
-			                      					Settings =
-			                      						new Dictionary<string, dynamic>
-			                      							{
-			                      								{
-			                      									"SettingName",
-			                      									"SettingValue"
-			                      									}
-			                      							}
-			                      				}
-			                      			}
-			                      	};
+			var featureManifest = new FeatureManifest<Feature> {
+				{
+					Feature.TestFeatureA,
+					new FeatureDescriptor<Feature>(
+						Feature.TestFeatureA) {
+							IsAvailable =
+								false,
+							Settings =
+								new Dictionary
+									<string,
+										dynamic> {
+											{
+												"SettingName"
+												,
+												"SettingValue"
+												}
+										}
+						}
+					}
+			};
 
 			//assert
 			Assert.Throws<FeatureNotAvailableException>(() => Feature.TestFeatureA.Setting(
@@ -86,31 +88,32 @@ namespace NFeature.Test.Fast
 		}
 
 		[Test]
-		public void Setting_WhenInvoked_ReturnsTheValueAssociatedWithThatSetting()
-		{
+		public void Setting_WhenInvoked_ReturnsTheValueAssociatedWithThatSetting() {
 			//arrange
 			const string desiredSettingValue = "test@example.com";
-			var featureManifest = new FeatureManifest<Feature>
-			                      	{
-			                      		{
-			                      			Feature.TestFeatureE,
-			                      			new FeatureDescriptor<Feature>(Feature.TestFeatureE)
-			                      				{
-			                      					IsAvailable = true,
-			                      					Settings =
-			                      						new Dictionary<string, dynamic>
-			                      							{
-			                      								{
-			                      									"ExampleSettingName",
-			                      									desiredSettingValue
-			                      									}
-			                      							}
-			                      				}
-			                      			}
-			                      	};
+			var featureManifest = new FeatureManifest<Feature> {
+				{
+					Feature.TestFeatureE,
+					new FeatureDescriptor<Feature>(
+						Feature.TestFeatureE) {
+							IsAvailable =
+								true,
+							Settings =
+								new Dictionary
+									<string,
+										dynamic> {
+											{
+												"ExampleSettingName"
+												,
+												desiredSettingValue
+												}
+										}
+						}
+					}
+			};
 
 			//act
-			var actualSettingValue =
+			dynamic actualSettingValue =
 				Feature.TestFeatureE.Setting(
 					FeatureSettingNames.TestFeature1.ExampleSettingName, featureManifest);
 

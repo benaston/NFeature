@@ -26,21 +26,23 @@ namespace NFeature
 		private readonly IFeatureSettingAvailabilityChecker<TFeatureEnum, TAvailabilityCheckArgs>
 			_featureSettingAvailabilityChecker;
 
-		private readonly IFeatureSettingRepository<TFeatureEnum, DefaultTenantEnum> _featureSettingRepository;
+		private readonly IFeatureSettingRepository<TFeatureEnum, DefaultTenantEnum>
+			_featureSettingRepository;
 
 		public FeatureSettingService(
-			IFeatureSettingAvailabilityChecker<TFeatureEnum, TAvailabilityCheckArgs> featureSettingAvailabilityChecker,
-			IFeatureSettingRepository<TFeatureEnum, DefaultTenantEnum> featureSettingRepository)
-		{
+			IFeatureSettingAvailabilityChecker<TFeatureEnum, TAvailabilityCheckArgs>
+				featureSettingAvailabilityChecker,
+			IFeatureSettingRepository<TFeatureEnum, DefaultTenantEnum> featureSettingRepository) {
 			_featureSettingAvailabilityChecker = featureSettingAvailabilityChecker;
 			_featureSettingRepository = featureSettingRepository;
 		}
 
-		public bool AllDependenciesAreSatisfiedForTheFeatureSetting(FeatureSetting<TFeatureEnum, DefaultTenantEnum> f,
-		                                                            TAvailabilityCheckArgs availabilityCheckArgs)
-		{
+		public bool AllDependenciesAreSatisfiedForTheFeatureSetting(
+			FeatureSetting<TFeatureEnum, DefaultTenantEnum> f,
+			TAvailabilityCheckArgs availabilityCheckArgs) {
 			return _featureSettingAvailabilityChecker.RecursivelyCheckAvailability(f,
-			                                                                       _featureSettingRepository.GetFeatureSettings(),
+			                                                                       _featureSettingRepository
+			                                                                       	.GetFeatureSettings(),
 			                                                                       availabilityCheckArgs);
 		}
 	}

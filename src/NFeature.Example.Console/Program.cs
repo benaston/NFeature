@@ -56,18 +56,22 @@ namespace NFeature.Example.Console
 			Func<FeatureSetting<Feature, DefaultTenantEnum>, EmptyArgs, bool> fn =
 				(f, args) =>
 				DefaultFunctions.AvailabilityCheckFunction(f,
-				                                           Tuple.Create(FeatureVisibilityMode.Normal, DefaultTenantEnum.All,
+				                                           Tuple.Create(FeatureVisibilityMode.Normal,
+				                                                        DefaultTenantEnum.All,
 				                                                        DateTime.Now));
 
 			//3. Take care of feature manifest initialization
 			//NOTE: I suggest hiding this ugly initialization logic away in the IOC container configuration	
 			var featureSettingRepo = new AppConfigFeatureSettingRepository<Feature>();
-			var availabilityChecker = new FeatureSettingAvailabilityChecker<Feature, EmptyArgs, DefaultTenantEnum>(fn);
+			var availabilityChecker =
+				new FeatureSettingAvailabilityChecker<Feature, EmptyArgs, DefaultTenantEnum>(fn);
 			//from step 2
-			var featureSettingService = new FeatureSettingService<Feature, DefaultTenantEnum, EmptyArgs>(availabilityChecker,
-			                                                                                             featureSettingRepo);
-			var manifestCreationStrategy = new ManifestCreationStrategyDefault<Feature, DefaultTenantEnum>(featureSettingRepo,
-			                                                                                               featureSettingService);
+			var featureSettingService =
+				new FeatureSettingService<Feature, DefaultTenantEnum, EmptyArgs>(availabilityChecker,
+				                                                                 featureSettingRepo);
+			var manifestCreationStrategy =
+				new ManifestCreationStrategyDefault<Feature, DefaultTenantEnum>(featureSettingRepo,
+				                                                                featureSettingService);
 			//we use the default for this example
 			var featureManifestService = new FeatureManifestService<Feature>(manifestCreationStrategy);
 			IFeatureManifest<Feature> featureManifest = featureManifestService.GetManifest();
@@ -77,14 +81,13 @@ namespace NFeature.Example.Console
 			//5. Add code that is conditional on feature availability. featureManifest ideally supplied via IOC container
 			if (Feature.MyFeature.IsAvailable(featureManifest)) {
 				Console.WriteLine("MyFeature is available.");
-			}
-			else {
+			} else {
 				throw new FeatureNotAvailableException(
 					"MyFeature is not available. This is unexpected behavior for the default implementation of NFeature.Example.Console.",
 					new[] {
-					      	"Check your app.config.", "Ensure built DLLs are up to date.",
-					      	"Ensure you have not modified this application or its configuration."
-					      });
+						"Check your app.config.", "Ensure built DLLs are up to date.",
+						"Ensure you have not modified this application or its configuration."
+					});
 			}
 
 			//6. Optionally configure feature-specific settings using JSON
@@ -93,7 +96,9 @@ namespace NFeature.Example.Console
 
 			//7. Optionally specify dates for feature availability
 
-			//8. At some future date optionally mark your feature as Established to indicate that it is now integral to your application and cannot be turned off (see footnote 2)
+			//8. At some future date optionally mark your feature as 
+			//Established to indicate that it is now integral to your 
+			//application and cannot be turned off (see footnote 2)
 
 			//9. ...
 

@@ -33,7 +33,8 @@ namespace NFeature
 		/// <summary>
 		/// 	Determines whether the dependencies are satisfied for the specified feature setting.
 		/// </summary>
-		bool AllDependenciesAreSatisfiedForTheFeatureSetting(FeatureSetting<TFeatureEnum, TTenantEnum> f,
-		                                                     TAvailabilityCheckArgs availabilityCheckArgs);
+		bool AllDependenciesAreSatisfiedForTheFeatureSetting(
+			FeatureSetting<TFeatureEnum, TTenantEnum> f,
+			TAvailabilityCheckArgs availabilityCheckArgs);
 	}
 }

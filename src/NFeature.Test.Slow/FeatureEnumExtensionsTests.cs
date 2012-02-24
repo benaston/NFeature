@@ -29,15 +29,17 @@ namespace NFeature.Test.Slow
 		#region Setup/Teardown
 
 		[SetUp]
-		public void Setup()
-		{
+		public void Setup() {
 			var availabilityChecker =
-				new FeatureSettingAvailabilityChecker<Feature, EmptyArgs, Tenant>(MyAvailabilityCheckFunction);
+				new FeatureSettingAvailabilityChecker<Feature, EmptyArgs, Tenant>(
+					MyAvailabilityCheckFunction);
 			var featureSettingRepo = new AppConfigFeatureSettingRepository<Feature, Tenant>();
 			var featureSettingService =
-				new FeatureSettingService<Feature, Tenant, EmptyArgs>(availabilityChecker, featureSettingRepo);
-			var manifestCreationStrategy = new ManifestCreationStrategyDefault<Feature, Tenant>(featureSettingRepo,
-			                                                                                    featureSettingService);
+				new FeatureSettingService<Feature, Tenant, EmptyArgs>(availabilityChecker,
+				                                                      featureSettingRepo);
+			var manifestCreationStrategy =
+				new ManifestCreationStrategyDefault<Feature, Tenant>(featureSettingRepo,
+				                                                     featureSettingService);
 			var featureManifestService = new FeatureManifestService<Feature>(manifestCreationStrategy);
 			_featureManifest = featureManifestService.GetManifest();
 		}
@@ -49,14 +51,13 @@ namespace NFeature.Test.Slow
 		/// <summary>
 		/// 	A function to test the availability checking behavior.
 		/// </summary>
-		private static bool MyAvailabilityCheckFunction(FeatureSetting<Feature, Tenant> s, EmptyArgs args)
-		{
+		private static bool MyAvailabilityCheckFunction(FeatureSetting<Feature, Tenant> s,
+		                                                EmptyArgs args) {
 			return Enum.GetName(typeof (Feature), s.Feature) == "TestFeatureE";
 		}
 
 		[Test]
-		public void IsAvailable_WhenTheAvailabilityCheckingFunctionReturnsFalse_ReturnsFalse()
-		{
+		public void IsAvailable_WhenTheAvailabilityCheckingFunctionReturnsFalse_ReturnsFalse() {
 			Assert.That(!Feature.TestFeatureA.IsAvailable(_featureManifest));
 			Assert.That(!Feature.TestFeatureB.IsAvailable(_featureManifest));
 			Assert.That(!Feature.TestFeatureC.IsAvailable(_featureManifest));
@@ -64,24 +65,25 @@ namespace NFeature.Test.Slow
 		}
 
 		[Test]
-		public void IsAvailable_WhenTheAvailabilityCheckingFunctionReturnsTrueAndDependenciesAreOK_ReturnsTrue()
-		{
+		public void
+			IsAvailable_WhenTheAvailabilityCheckingFunctionReturnsTrueAndDependenciesAreOK_ReturnsTrue() {
 			Assert.That(Feature.TestFeatureE.IsAvailable(_featureManifest));
 		}
 
 		[Test]
-		public void Setting_WithFullName_RetrievedOK()
-		{
-			Assert.That(Feature.TestFeatureE.Setting(FeatureSettingNames.TestFeatureE.AssemblyName, _featureManifest) ==
-			            "testFeatureSetting1Value");
+		public void Setting_WithFullName_RetrievedOK() {
+			Assert.That(
+				Feature.TestFeatureE.Setting(FeatureSettingNames.TestFeatureE.AssemblyName,
+				                             _featureManifest) ==
+				"testFeatureSetting1Value");
 		}
 
 		[Test]
-		public void Setting_WithoutFullName_RetrievedOK()
-		{
-			Assert.That(Feature.TestFeatureE.Setting(FeatureSettingNames.TestFeatureE.SimpleSetting, _featureManifest) ==
-			            "testFeatureSetting2Value");
+		public void Setting_WithoutFullName_RetrievedOK() {
+			Assert.That(
+				Feature.TestFeatureE.Setting(FeatureSettingNames.TestFeatureE.SimpleSetting,
+				                             _featureManifest) ==
+				"testFeatureSetting2Value");
 		}
 	}
 }
-

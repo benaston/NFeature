@@ -31,15 +31,16 @@ namespace NFeature.DefaultImplementations
 	public static class ApplicationClockWithOffsetFactory
 	{
 		public static ApplicationClockWithOffset CreateFromQueryString(string queryStringFieldName,
-		                                                               string expectedQueryStringFormat,
-		                                                               string dtgCultureIdentifier)
-		{
-			var offset = TimeSpan.Zero;
-			var queryStringOffset = HttpContext.Current.Request.QueryString[queryStringFieldName];
-			if (queryStringOffset != null)
-			{
-				offset = TimeSpan.ParseExact(queryStringOffset, expectedQueryStringFormat,
-				                             new CultureInfo(dtgCultureIdentifier), TimeSpanStyles.None);
+		                                                               string
+		                                                               	expectedQueryStringFormat,
+		                                                               string dtgCultureIdentifier) {
+			TimeSpan offset = TimeSpan.Zero;
+			string queryStringOffset = HttpContext.Current.Request.QueryString[queryStringFieldName];
+			if (queryStringOffset != null) {
+				offset = TimeSpan.ParseExact(queryStringOffset,
+				                             expectedQueryStringFormat,
+				                             new CultureInfo(dtgCultureIdentifier),
+				                             TimeSpanStyles.None);
 			}
 
 			return new ApplicationClockWithOffset(offset);

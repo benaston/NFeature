@@ -27,7 +27,16 @@ namespace NFeature
 	using ArgumentNullException = NHelpfulException.FrameworkExceptions.ArgumentNullException;
 
 	/// <remarks>
-	/// 	NOTE 1: BA; we maintain a list of features we have met and not yet resolved the dependencies for. If we come across a feature and find it in the featuresUnderAnalysis list then we realise that resolution of a feature's dependency graph depends on resolution of it's graph and hence we cannot complete, and we throw an exception. NOTE 2: BA; the dependencies of established features must themselves all be established. NOTE 3: BA; required due to recursive invocation.
+	/// 	NOTE 1: BA; we maintain a list of features we have met 
+	/// 	and not yet resolved the dependencies for. If we come 
+	/// 	across a feature and find it in the 
+	/// 	featuresUnderAnalysis list then we realise that 
+	/// 	resolution of a feature's dependency graph depends on 
+	/// 	resolution of it's graph and hence we cannot complete, 
+	/// 	and we throw an exception. 
+	/// 	NOTE 2: BA; the dependencies of established features 
+	/// 		must themselves all be established. 
+	/// 	NOTE 3: BA; required due to recursive invocation.
 	/// </remarks>
 	public class FeatureSettingAvailabilityChecker<TFeatureEnum, TAvailabilityCheckArgs, TTenant> :
 		IFeatureSettingAvailabilityChecker<TFeatureEnum, TTenant, TAvailabilityCheckArgs>
@@ -38,23 +47,28 @@ namespace NFeature
 			AvailabilityCheckFunction;
 
 		public FeatureSettingAvailabilityChecker(
-			Func<FeatureSetting<TFeatureEnum, TTenant>, TAvailabilityCheckArgs, bool> availabilityCheckFunction)
-		{
+			Func<FeatureSetting<TFeatureEnum, TTenant>, TAvailabilityCheckArgs, bool>
+				availabilityCheckFunction) {
 			AvailabilityCheckFunction = availabilityCheckFunction;
 		}
 
 		/// <summary>
-		/// 	Responsible for checking whether the dependencies for a feature are met. TODO: review use of tuple for params for custom availability checking fucntionality.
+		/// 	Responsible for checking whether the dependencies 
+		/// 	for a feature are met. TODO: review use of tuple 
+		/// 	for params for custom availability checking 
+		/// 	fucntionality.
 		/// </summary>
-		public bool RecursivelyCheckAvailability(FeatureSetting<TFeatureEnum, TTenant> featureSettingToCheck,
-		                                         FeatureSetting<TFeatureEnum, TTenant>[] allFeatureSettings,
-		                                         TAvailabilityCheckArgs availabilityCheckArgs =
-		                                         	default(TAvailabilityCheckArgs),
-		                                         List<FeatureSetting<TFeatureEnum, TTenant>>
-		                                         	featuresCurrentlyUnderAnalysis = null)
-		{
-			Ensure.That<ArgumentNullException>(featureSettingToCheck.IsNotNull(), "featureSetting not supplied.")
-				.And<ArgumentNullException>(allFeatureSettings.IsNotNull(), "allFeatureSettings not supplied.");
+		public bool RecursivelyCheckAvailability(
+			FeatureSetting<TFeatureEnum, TTenant> featureSettingToCheck,
+			FeatureSetting<TFeatureEnum, TTenant>[] allFeatureSettings,
+			TAvailabilityCheckArgs availabilityCheckArgs =
+				default(TAvailabilityCheckArgs),
+			List<FeatureSetting<TFeatureEnum, TTenant>>
+				featuresCurrentlyUnderAnalysis = null) {
+			Ensure.That<ArgumentNullException>(featureSettingToCheck.IsNotNull(),
+			                                   "featureSetting not supplied.")
+				.And<ArgumentNullException>(allFeatureSettings.IsNotNull(),
+				                            "allFeatureSettings not supplied.");
 
 			featuresCurrentlyUnderAnalysis = featuresCurrentlyUnderAnalysis ??
 			                                 new List<FeatureSetting<TFeatureEnum, TTenant>>();
@@ -65,12 +79,11 @@ namespace NFeature
 
 			featuresCurrentlyUnderAnalysis.Add(featureSettingToCheck);
 
-			foreach (var dependency in featureSettingToCheck.Dependencies)
-			{
-				try
-				{
-					var dependencyClosedOver = dependency;
-					var dependencySetting = allFeatureSettings.First(s => s.Feature.Equals(dependencyClosedOver));
+			foreach (TFeatureEnum dependency in featureSettingToCheck.Dependencies) {
+				try {
+					TFeatureEnum dependencyClosedOver = dependency;
+					FeatureSetting<TFeatureEnum, TTenant> dependencySetting =
+						allFeatureSettings.First(s => s.Feature.Equals(dependencyClosedOver));
 
 					if (featureSettingToCheck.FeatureState == FeatureState.Established
 					    && dependencySetting.FeatureState != FeatureState.Established) //see note 2
@@ -82,13 +95,10 @@ namespace NFeature
 					if (!RecursivelyCheckAvailability(dependencySetting,
 					                                  allFeatureSettings,
 					                                  availabilityCheckArgs,
-					                                  featuresCurrentlyUnderAnalysis))
-					{
+					                                  featuresCurrentlyUnderAnalysis)) {
 						return false;
 					}
-				}
-				catch (InvalidOperationException e)
-				{
+				} catch (InvalidOperationException e) {
 					throw new FeatureNotConfiguredException<TFeatureEnum>(dependency, e);
 				}
 			}

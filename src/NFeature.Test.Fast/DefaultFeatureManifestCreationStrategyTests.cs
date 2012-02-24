@@ -27,40 +27,39 @@ namespace NFeature.Test.Fast
 	using NUnit.Framework;
 	using TArgs = System.Tuple<FeatureVisibilityMode, Tenant, System.DateTime>;
 
+	/// <summary>
+	/// Please accept my apologies for the indentation of this file.
+	/// I am slowly correcting an earlier ReSharper-ism.
+	/// </summary>
 	[TestFixture]
 	[Category("Fast")]
 	public class DefaultFeatureManifestCreationStrategyTests
 	{
 		[Test]
-		public void IsAvailable_DisabledAndCookieAvailableAndDependencySettingsOK_ReturnsFalse()
-		{
+		public void IsAvailable_DisabledAndCookieAvailableAndDependencySettingsOK_ReturnsFalse() {
 			var fsRepo = new Mock<IFeatureSettingRepository<Feature, Tenant>>();
 			fsRepo.Setup(
 				s =>
-				s.GetFeatureSettings()).Returns(new[]
-				                                	{
-				                                		new FeatureSetting<Feature, Tenant>
-				                                			{
-				                                				Feature = Feature.TestFeatureA,
-				                                				FeatureState = FeatureState.Disabled,
-				                                				Dependencies = new[] {Feature.TestFeatureE}
-				                                			},
-				                                		new FeatureSetting<Feature, Tenant>
-				                                			{
-				                                				Feature = Feature.TestFeatureE,
-				                                				FeatureState = FeatureState.Previewable,
-				                                			}
-				                                	});
+				s.GetFeatureSettings()).Returns(new[] {
+					new FeatureSetting<Feature, Tenant> {
+						Feature = Feature.TestFeatureA,
+						FeatureState = FeatureState.Disabled,
+						Dependencies = new[] {Feature.TestFeatureE}
+					},
+					new FeatureSetting<Feature, Tenant> {
+						Feature = Feature.TestFeatureE,
+						FeatureState = FeatureState.Previewable,
+					}
+				});
 
 			var request = new Mock<HttpRequestBase>();
 			request.Setup(
 				s =>
-				s.Cookies).Returns(new HttpCookieCollection
-				                   	{
-				                   		new HttpCookie(
-				                   			ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>.
-				                   				FeaturePreviewCookieName)
-				                   	});
+				s.Cookies).Returns(new HttpCookieCollection {
+					new HttpCookie(
+				                   	ManifestCreationStrategyConsideringStateCookieTenantAndTime
+				                   		<Feature, Tenant>.FeaturePreviewCookieName)
+				});
 
 			var httpContext = new Mock<HttpContextBase>();
 			httpContext.Setup(
@@ -77,48 +76,45 @@ namespace NFeature.Test.Fast
 				 	(DefaultFunctions.AvailabilityCheckFunction),
 				 fsRepo.Object);
 
-			var m =
+			IFeatureManifest<Feature> m =
 				new FeatureManifestService<Feature>(
-					new ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>(fsSvc,
-					                                                                                 fsRepo.Object,
-					                                                                                 httpContext.Object,
-					                                                                                 tenancyContext.Object,
-					                                                                                 new ApplicationClock())).
+					new ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>(
+						fsSvc,
+						fsRepo.Object,
+						httpContext.Object,
+						tenancyContext.Object,
+						new ApplicationClock())).
 					GetManifest();
 
 			Assert.That(!Feature.TestFeatureA.IsAvailable(m));
 		}
 
 		[Test]
-		public void IsAvailable_EnabledAndCookieAvailableAndDependencySettingsNotOK_ReturnsFalse()
-		{
+		public void IsAvailable_EnabledAndCookieAvailableAndDependencySettingsNotOK_ReturnsFalse() {
 			var fsRepo = new Mock<IFeatureSettingRepository<Feature, Tenant>>();
 			fsRepo.Setup(
 				s =>
-				s.GetFeatureSettings()).Returns(new[]
-				                                	{
-				                                		new FeatureSetting<Feature, Tenant>
-				                                			{
-				                                				Feature = Feature.TestFeatureA,
-				                                				FeatureState = FeatureState.Enabled,
-				                                				Dependencies = new[] {Feature.TestFeatureE}
-				                                			},
-				                                		new FeatureSetting<Feature, Tenant>
-				                                			{
-				                                				Feature = Feature.TestFeatureE,
-				                                				FeatureState = FeatureState.Disabled,
-				                                			}
-				                                	});
+				s.GetFeatureSettings()).Returns(new[] {
+					new FeatureSetting<Feature, Tenant> {
+						Feature = Feature.TestFeatureA,
+						FeatureState = FeatureState.Enabled,
+						Dependencies = new[] {Feature.TestFeatureE}
+					},
+					new FeatureSetting<Feature, Tenant> {
+						Feature = Feature.TestFeatureE,
+						FeatureState = FeatureState.Disabled,
+					}
+				});
 
 			var request = new Mock<HttpRequestBase>();
 			request.Setup(
 				s =>
-				s.Cookies).Returns(new HttpCookieCollection
-				                   	{
-				                   		new HttpCookie(
-				                   			ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>.
-				                   				FeaturePreviewCookieName)
-				                   	});
+				s.Cookies).Returns(new HttpCookieCollection {
+					new HttpCookie(
+				                   	ManifestCreationStrategyConsideringStateCookieTenantAndTime
+				                   		<Feature, Tenant>.
+				                   		FeaturePreviewCookieName)
+				});
 
 			var httpContext = new Mock<HttpContextBase>();
 			httpContext.Setup(
@@ -131,41 +127,56 @@ namespace NFeature.Test.Fast
 				s.CurrentTenant).Returns(Tenant.TenantA);
 
 			var fsSvc =
-				new FeatureSettingService<Feature, Tenant, TArgs>(new FeatureSettingAvailabilityChecker<Feature, TArgs, Tenant>
-				                                                  	(DefaultFunctions.AvailabilityCheckFunction), fsRepo.Object);
+				new FeatureSettingService<Feature, Tenant, TArgs>(
+					new FeatureSettingAvailabilityChecker<Feature, TArgs, Tenant>
+						(DefaultFunctions.AvailabilityCheckFunction),
+					fsRepo.Object);
 
-			var m =
+			IFeatureManifest<Feature> m =
 				new FeatureManifestService<Feature>(
 					new ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>(fsSvc,
-					                                                                                 fsRepo.Object,
-					                                                                                 httpContext.Object,
-					                                                                                 tenancyContext.Object,
-					                                                                                 new ApplicationClock())).
+					                                                                                 fsRepo.
+					                                                                                 	Object,
+					                                                                                 httpContext
+					                                                                                 	.Object,
+					                                                                                 tenancyContext
+					                                                                                 	.Object,
+					                                                                                 new ApplicationClock
+					                                                                                 	())).
 					GetManifest();
 
 			Assert.That(!Feature.TestFeatureA.IsAvailable(m));
 		}
 
 		[Test]
-		public void IsAvailable_EnabledAndCookieAvailableAndDependencySettingsNotOK_ReturnsFalse2()
-		{
+		public void IsAvailable_EnabledAndCookieAvailableAndDependencySettingsNotOK_ReturnsFalse2() {
 			var fsRepo = new Mock<IFeatureSettingRepository<Feature, Tenant>>();
 			fsRepo.Setup(
 				s =>
-				s.GetFeatureSettings()).Returns(new[]
-				                                	{
-				                                		new FeatureSetting<Feature, Tenant>
-				                                			{
-				                                				Feature = Feature.TestFeatureA,
-				                                				FeatureState = FeatureState.Enabled,
-				                                				Dependencies = new[] {Feature.TestFeatureE}
-				                                			},
-				                                		new FeatureSetting<Feature, Tenant>
-				                                			{
-				                                				Feature = Feature.TestFeatureE,
-				                                				FeatureState = FeatureState.Previewable,
-				                                			}
-				                                	});
+				s.GetFeatureSettings()).Returns(new[] {
+					new FeatureSetting<Feature, Tenant> {
+						Feature =
+				                                	Feature.
+				                                	TestFeatureA,
+						FeatureState =
+				                                	FeatureState.
+				                                	Enabled,
+						Dependencies =
+				                                	new[] {
+				                                		Feature
+				                                	.
+				                                	TestFeatureE
+				                                	}
+					},
+					new FeatureSetting<Feature, Tenant> {
+						Feature =
+				                                	Feature.
+				                                	TestFeatureE,
+						FeatureState =
+				                                	FeatureState.
+				                                	Previewable,
+					}
+				});
 
 			var request = new Mock<HttpRequestBase>();
 			request.Setup(
@@ -183,94 +194,108 @@ namespace NFeature.Test.Fast
 				s.CurrentTenant).Returns(Tenant.TenantA);
 
 			var fsSvc =
-				new FeatureSettingService<Feature, Tenant, TArgs>(new FeatureSettingAvailabilityChecker<Feature, TArgs, Tenant>
-				                                                  	(DefaultFunctions.AvailabilityCheckFunction), fsRepo.Object);
+				new FeatureSettingService<Feature, Tenant, TArgs>(
+					new FeatureSettingAvailabilityChecker<Feature, TArgs, Tenant>
+						(DefaultFunctions.AvailabilityCheckFunction),
+					fsRepo.Object);
 
-			var m =
+			IFeatureManifest<Feature> m =
 				new FeatureManifestService<Feature>(
 					new ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>(fsSvc,
-					                                                                                 fsRepo.Object,
-					                                                                                 httpContext.Object,
-					                                                                                 tenancyContext.Object,
-					                                                                                 new ApplicationClock())).
+					                                                                                 fsRepo.
+					                                                                                 	Object,
+					                                                                                 httpContext
+					                                                                                 	.Object,
+					                                                                                 tenancyContext
+					                                                                                 	.Object,
+					                                                                                 new ApplicationClock
+					                                                                                 	())).
 					GetManifest();
 
 			Assert.That(!Feature.TestFeatureA.IsAvailable(m));
 		}
 
 		[Test]
-		public void IsAvailable_EnabledAndCookieAvailableAndDependencySettingsOKAndEndBeforeStartDate_ThrowsException()
-		{
+		public void
+			IsAvailable_EnabledAndCookieAvailableAndDependencySettingsOKAndEndBeforeStartDate_ThrowsException
+			() {
 			Assert.Throws<HelpfulException>(
 				() =>
-				new FeatureSetting<Feature, Tenant>
-					{
-						Feature = Feature.TestFeatureA,
-						FeatureState = FeatureState.Previewable,
-						StartDtg = 1.Day().Ago(),
-						EndDtg = 2.Days().Ago(),
-					});
+				new FeatureSetting<Feature, Tenant> {
+					Feature = Feature.TestFeatureA,
+					FeatureState = FeatureState.Previewable,
+					StartDtg = 1.Day().Ago(),
+					EndDtg = 2.Days().Ago(),
+				});
 		}
 
 		[Test]
 		public void
-			IsAvailable_EnabledAndCookieAvailableAndDependencySettingsOKAndStartAfterEndDate_DoesNotThrowException()
-		{
+			IsAvailable_EnabledAndCookieAvailableAndDependencySettingsOKAndStartAfterEndDate_DoesNotThrowException
+			() {
 			Assert.DoesNotThrow(
 				() =>
-				new FeatureSetting<Feature, Tenant>
-					{
-						Feature = Feature.TestFeatureA,
-						FeatureState = FeatureState.Previewable,
-						StartDtg = 1.Day().Hence(),
-						EndDtg = 2.Days().Hence(),
-					});
+				new FeatureSetting<Feature, Tenant> {
+					Feature = Feature.TestFeatureA,
+					FeatureState = FeatureState.Previewable,
+					StartDtg = 1.Day().Hence(),
+					EndDtg = 2.Days().Hence(),
+				});
 		}
 
 		[Test]
-		public void IsAvailable_EnabledAndCookieAvailableAndDependencySettingsOKAndStartAfterEndDate_ThrowsException()
-		{
+		public void
+			IsAvailable_EnabledAndCookieAvailableAndDependencySettingsOKAndStartAfterEndDate_ThrowsException
+			() {
 			Assert.Throws<HelpfulException>(
 				() =>
-				new FeatureSetting<Feature, Tenant>
-					{
-						Feature = Feature.TestFeatureA,
-						FeatureState = FeatureState.Previewable,
-						StartDtg = 2.Days().Hence(),
-						EndDtg = 1.Days().Hence(),
-					});
+				new FeatureSetting<Feature, Tenant> {
+					Feature = Feature.TestFeatureA,
+					FeatureState = FeatureState.Previewable,
+					StartDtg = 2.Days().Hence(),
+					EndDtg = 1.Days().Hence(),
+				});
 		}
 
 		[Test]
-		public void IsAvailable_EnabledAndCookieAvailableAndDependencySettingsOK_ReturnsTrue()
-		{
+		public void IsAvailable_EnabledAndCookieAvailableAndDependencySettingsOK_ReturnsTrue() {
 			var fsRepo = new Mock<IFeatureSettingRepository<Feature, Tenant>>();
 			fsRepo.Setup(
 				s =>
-				s.GetFeatureSettings()).Returns(new[]
-				                                	{
-				                                		new FeatureSetting<Feature, Tenant>
-				                                			{
-				                                				Feature = Feature.TestFeatureA,
-				                                				FeatureState = FeatureState.Enabled,
-				                                				Dependencies = new[] {Feature.TestFeatureE}
-				                                			},
-				                                		new FeatureSetting<Feature, Tenant>
-				                                			{
-				                                				Feature = Feature.TestFeatureE,
-				                                				FeatureState = FeatureState.Previewable,
-				                                			}
-				                                	});
+				s.GetFeatureSettings()).Returns(new[] {
+					new FeatureSetting<Feature, Tenant> {
+						Feature =
+				                                	Feature.
+				                                	TestFeatureA,
+						FeatureState =
+				                                	FeatureState.
+				                                	Enabled,
+						Dependencies =
+				                                	new[] {
+				                                		Feature
+				                                	.
+				                                	TestFeatureE
+				                                	}
+					},
+					new FeatureSetting<Feature, Tenant> {
+						Feature =
+				                                	Feature.
+				                                	TestFeatureE,
+						FeatureState =
+				                                	FeatureState.
+				                                	Previewable,
+					}
+				});
 
 			var request = new Mock<HttpRequestBase>();
 			request.Setup(
 				s =>
-				s.Cookies).Returns(new HttpCookieCollection
-				                   	{
-				                   		new HttpCookie(
-				                   			ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>.
-				                   				FeaturePreviewCookieName)
-				                   	});
+				s.Cookies).Returns(new HttpCookieCollection {
+					new HttpCookie(
+				                   	ManifestCreationStrategyConsideringStateCookieTenantAndTime
+				                   		<Feature, Tenant>.
+				                   		FeaturePreviewCookieName)
+				});
 
 			var httpContext = new Mock<HttpContextBase>();
 			httpContext.Setup(
@@ -283,43 +308,52 @@ namespace NFeature.Test.Fast
 				s.CurrentTenant).Returns(Tenant.TenantA);
 
 			var fsSvc =
-				new FeatureSettingService<Feature, Tenant, TArgs>(new FeatureSettingAvailabilityChecker<Feature, TArgs, Tenant>
-				                                                  	(DefaultFunctions.AvailabilityCheckFunction), fsRepo.Object);
+				new FeatureSettingService<Feature, Tenant, TArgs>(
+					new FeatureSettingAvailabilityChecker<Feature, TArgs, Tenant>
+						(DefaultFunctions.AvailabilityCheckFunction),
+					fsRepo.Object);
 
-			var m =
+			IFeatureManifest<Feature> m =
 				new FeatureManifestService<Feature>(
 					new ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>(fsSvc,
-					                                                                                 fsRepo.Object,
-					                                                                                 httpContext.Object,
-					                                                                                 tenancyContext.Object,
-					                                                                                 new ApplicationClock())).
+					                                                                                 fsRepo.
+					                                                                                 	Object,
+					                                                                                 httpContext
+					                                                                                 	.Object,
+					                                                                                 tenancyContext
+					                                                                                 	.Object,
+					                                                                                 new ApplicationClock
+					                                                                                 	())).
 					GetManifest();
 
 			Assert.That(Feature.TestFeatureA.IsAvailable(m));
 		}
 
 		[Test]
-		public void IsAvailable_NoCorrespondingFeatureSettingAndCookieAvailableAndDependenciesOk_ThrowsException()
-		{
+		public void
+			IsAvailable_NoCorrespondingFeatureSettingAndCookieAvailableAndDependenciesOk_ThrowsException
+			() {
 			var fsSvc = new Mock<IFeatureSettingService<Feature, Tenant, TArgs>>();
 			fsSvc.Setup(
 				s =>
-				s.AllDependenciesAreSatisfiedForTheFeatureSetting(It.IsAny<FeatureSetting<Feature, Tenant>>(),
-				                                                  It.IsAny<TArgs>())).Returns(true);
+				s.AllDependenciesAreSatisfiedForTheFeatureSetting(
+					It.IsAny<FeatureSetting<Feature, Tenant>>(),
+					It.IsAny<TArgs>())).Returns(true);
 			var fsRepo = new Mock<IFeatureSettingRepository<Feature, Tenant>>();
 			fsRepo.Setup(
 				s =>
-				s.GetFeatureSettings()).Returns(new FeatureSetting<Feature, Tenant>[] {}); //important bit  of the setup
+				s.GetFeatureSettings()).Returns(new FeatureSetting<Feature, Tenant>[] {});
+			//important bit  of the setup
 
 			var request = new Mock<HttpRequestBase>();
 			request.Setup(
 				s =>
-				s.Cookies).Returns(new HttpCookieCollection
-				                   	{
-				                   		new HttpCookie(
-				                   			ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>.
-				                   				FeaturePreviewCookieName)
-				                   	});
+				s.Cookies).Returns(new HttpCookieCollection {
+					new HttpCookie(
+				                   	ManifestCreationStrategyConsideringStateCookieTenantAndTime
+				                   		<Feature, Tenant>.
+				                   		FeaturePreviewCookieName)
+				});
 
 			var httpContext = new Mock<HttpContextBase>();
 			httpContext.Setup(
@@ -331,47 +365,51 @@ namespace NFeature.Test.Fast
 				s =>
 				s.CurrentTenant).Returns(Tenant.TenantA);
 
-			var m =
+			IFeatureManifest<Feature> m =
 				new FeatureManifestService<Feature>(
-					new ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>(fsSvc.Object,
-					                                                                                 fsRepo.Object,
-					                                                                                 httpContext.Object,
-					                                                                                 tenancyContext.Object,
-					                                                                                 new ApplicationClock())).
+					new ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>(
+						fsSvc.Object,
+						fsRepo.Object,
+						httpContext.Object,
+						tenancyContext.Object,
+						new ApplicationClock())).
 					GetManifest();
 
-			Assert.Throws<FeatureNotConfiguredException<Feature>>(() => Feature.TestFeatureA.IsAvailable(m));
+			Assert.Throws<FeatureNotConfiguredException<Feature>>(
+				() => Feature.TestFeatureA.IsAvailable(m));
 		}
 
 		[Test]
-		public void IsAvailable_PreviewableAndCookieAvailableAndDependenciesOk_ReturnsTrue()
-		{
+		public void IsAvailable_PreviewableAndCookieAvailableAndDependenciesOk_ReturnsTrue() {
 			var fsSvc = new Mock<IFeatureSettingService<Feature, Tenant, TArgs>>();
 			fsSvc.Setup(
 				s =>
-				s.AllDependenciesAreSatisfiedForTheFeatureSetting(It.IsAny<FeatureSetting<Feature, Tenant>>(),
-				                                                  It.IsAny<TArgs>())).Returns(true);
+				s.AllDependenciesAreSatisfiedForTheFeatureSetting(
+					It.IsAny<FeatureSetting<Feature, Tenant>>(),
+					It.IsAny<TArgs>())).Returns(true);
 			var fsRepo = new Mock<IFeatureSettingRepository<Feature, Tenant>>();
 			fsRepo.Setup(
 				s =>
-				s.GetFeatureSettings()).Returns(new[]
-				                                	{
-				                                		new FeatureSetting<Feature, Tenant>
-				                                			{
-				                                				Feature = Feature.TestFeatureA,
-				                                				FeatureState = FeatureState.Previewable,
-				                                			},
-				                                	});
+				s.GetFeatureSettings()).Returns(new[] {
+					new FeatureSetting<Feature, Tenant> {
+						Feature =
+				                                	Feature.
+				                                	TestFeatureA,
+						FeatureState =
+				                                	FeatureState.
+				                                	Previewable,
+					},
+				});
 
 			var request = new Mock<HttpRequestBase>();
 			request.Setup(
 				s =>
-				s.Cookies).Returns(new HttpCookieCollection
-				                   	{
-				                   		new HttpCookie(
-				                   			ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>.
-				                   				FeaturePreviewCookieName)
-				                   	});
+				s.Cookies).Returns(new HttpCookieCollection {
+					new HttpCookie(
+				                   	ManifestCreationStrategyConsideringStateCookieTenantAndTime
+				                   		<Feature, Tenant>.
+				                   		FeaturePreviewCookieName)
+				});
 
 			var httpContext = new Mock<HttpContextBase>();
 			httpContext.Setup(
@@ -383,43 +421,51 @@ namespace NFeature.Test.Fast
 				s =>
 				s.CurrentTenant).Returns(Tenant.TenantA);
 
-			var m =
+			IFeatureManifest<Feature> m =
 				new FeatureManifestService<Feature>(
-					new ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>(fsSvc.Object,
-					                                                                                 fsRepo.Object,
-					                                                                                 httpContext.Object,
-					                                                                                 tenancyContext.Object,
-					                                                                                 new ApplicationClock())).
+					new ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>(
+						fsSvc.Object,
+						fsRepo.Object,
+						httpContext.Object,
+						tenancyContext.Object,
+						new ApplicationClock())).
 					GetManifest();
 
 			Assert.That(Feature.TestFeatureA.IsAvailable(m));
 		}
 
 		[Test]
-		public void IsAvailable_PreviewableAndCookieAvailableAndDependencySettingsMissing_ThrowsException()
-		{
+		public void
+			IsAvailable_PreviewableAndCookieAvailableAndDependencySettingsMissing_ThrowsException() {
 			var fsRepo = new Mock<IFeatureSettingRepository<Feature, Tenant>>();
 			fsRepo.Setup(
 				s =>
-				s.GetFeatureSettings()).Returns(new[]
-				                                	{
-				                                		new FeatureSetting<Feature, Tenant>
-				                                			{
-				                                				Feature = Feature.TestFeatureA,
-				                                				FeatureState = FeatureState.Previewable,
-				                                				Dependencies = new[] {Feature.TestFeatureE}
-				                                			},
-				                                	});
+				s.GetFeatureSettings()).Returns(new[] {
+					new FeatureSetting<Feature, Tenant> {
+						Feature =
+				                                	Feature.
+				                                	TestFeatureA,
+						FeatureState =
+				                                	FeatureState.
+				                                	Previewable,
+						Dependencies =
+				                                	new[] {
+				                                		Feature
+				                                	.
+				                                	TestFeatureE
+				                                	}
+					},
+				});
 
 			var request = new Mock<HttpRequestBase>();
 			request.Setup(
 				s =>
-				s.Cookies).Returns(new HttpCookieCollection
-				                   	{
-				                   		new HttpCookie(
-				                   			ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>.
-				                   				FeaturePreviewCookieName)
-				                   	});
+				s.Cookies).Returns(new HttpCookieCollection {
+					new HttpCookie(
+				                   	ManifestCreationStrategyConsideringStateCookieTenantAndTime
+				                   		<Feature, Tenant>.
+				                   		FeaturePreviewCookieName)
+				});
 
 			var httpContext = new Mock<HttpContextBase>();
 			httpContext.Setup(
@@ -432,50 +478,65 @@ namespace NFeature.Test.Fast
 				s.CurrentTenant).Returns(Tenant.TenantA);
 
 			var fsSvc =
-				new FeatureSettingService<Feature, Tenant, TArgs>(new FeatureSettingAvailabilityChecker<Feature, TArgs, Tenant>
-				                                                  	(DefaultFunctions.AvailabilityCheckFunction), fsRepo.Object);
+				new FeatureSettingService<Feature, Tenant, TArgs>(
+					new FeatureSettingAvailabilityChecker<Feature, TArgs, Tenant>
+						(DefaultFunctions.AvailabilityCheckFunction),
+					fsRepo.Object);
 
 			var manifestService =
 				new FeatureManifestService<Feature>(
 					new ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>(fsSvc,
-					                                                                                 fsRepo.Object,
-					                                                                                 httpContext.Object,
-					                                                                                 tenancyContext.Object,
-					                                                                                 new ApplicationClock()));
+					                                                                                 fsRepo.
+					                                                                                 	Object,
+					                                                                                 httpContext
+					                                                                                 	.Object,
+					                                                                                 tenancyContext
+					                                                                                 	.Object,
+					                                                                                 new ApplicationClock
+					                                                                                 	()));
 
 			Assert.Throws<FeatureNotConfiguredException<Feature>>(() => manifestService.GetManifest());
 		}
 
 		[Test]
-		public void IsAvailable_PreviewableAndCookieAvailableAndDependencySettingsOK_ReturnsTrue()
-		{
+		public void IsAvailable_PreviewableAndCookieAvailableAndDependencySettingsOK_ReturnsTrue() {
 			var fsRepo = new Mock<IFeatureSettingRepository<Feature, Tenant>>();
 			fsRepo.Setup(
 				s =>
-				s.GetFeatureSettings()).Returns(new[]
-				                                	{
-				                                		new FeatureSetting<Feature, Tenant>
-				                                			{
-				                                				Feature = Feature.TestFeatureA,
-				                                				FeatureState = FeatureState.Previewable,
-				                                				Dependencies = new[] {Feature.TestFeatureE}
-				                                			},
-				                                		new FeatureSetting<Feature, Tenant>
-				                                			{
-				                                				Feature = Feature.TestFeatureE,
-				                                				FeatureState = FeatureState.Previewable,
-				                                			}
-				                                	});
+				s.GetFeatureSettings()).Returns(new[] {
+					new FeatureSetting<Feature, Tenant> {
+						Feature =
+				                                	Feature.
+				                                	TestFeatureA,
+						FeatureState =
+				                                	FeatureState.
+				                                	Previewable,
+						Dependencies =
+				                                	new[] {
+				                                		Feature
+				                                	.
+				                                	TestFeatureE
+				                                	}
+					},
+					new FeatureSetting<Feature, Tenant> {
+						Feature =
+				                                	Feature.
+				                                	TestFeatureE,
+						FeatureState =
+				                                	FeatureState.
+				                                	Previewable,
+					}
+				});
 
 			var request = new Mock<HttpRequestBase>();
 			request.Setup(
 				s =>
-				s.Cookies).Returns(new HttpCookieCollection
-				                   	{
-				                   		new HttpCookie(
-				                   			ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>.
-				                   				FeaturePreviewCookieName)
-				                   	});
+				s.Cookies).Returns(new HttpCookieCollection {
+					new HttpCookie(
+				                   	ManifestCreationStrategyConsideringStateCookieTenantAndTime
+				                   		<Feature, Tenant>.
+				                   		FeaturePreviewCookieName)
+				});
 
 			var httpContext = new Mock<HttpContextBase>();
 			httpContext.Setup(
@@ -488,16 +549,22 @@ namespace NFeature.Test.Fast
 				s.CurrentTenant).Returns(Tenant.TenantA);
 
 			var fsSvc =
-				new FeatureSettingService<Feature, Tenant, TArgs>(new FeatureSettingAvailabilityChecker<Feature, TArgs, Tenant>
-				                                                  	(DefaultFunctions.AvailabilityCheckFunction), fsRepo.Object);
+				new FeatureSettingService<Feature, Tenant, TArgs>(
+					new FeatureSettingAvailabilityChecker<Feature, TArgs, Tenant>
+						(DefaultFunctions.AvailabilityCheckFunction),
+					fsRepo.Object);
 
-			var m =
+			IFeatureManifest<Feature> m =
 				new FeatureManifestService<Feature>(
 					new ManifestCreationStrategyConsideringStateCookieTenantAndTime<Feature, Tenant>(fsSvc,
-					                                                                                 fsRepo.Object,
-					                                                                                 httpContext.Object,
-					                                                                                 tenancyContext.Object,
-					                                                                                 new ApplicationClock())).
+					                                                                                 fsRepo.
+					                                                                                 	Object,
+					                                                                                 httpContext
+					                                                                                 	.Object,
+					                                                                                 tenancyContext
+					                                                                                 	.Object,
+					                                                                                 new ApplicationClock
+					                                                                                 	())).
 					GetManifest();
 
 			Assert.That(Feature.TestFeatureA.IsAvailable(m));

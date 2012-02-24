@@ -25,7 +25,8 @@ namespace NFeature
 		where TFeatureEnum : struct
 	{
 		public FeatureSettingAvailabilityChecker(
-			Func<FeatureSetting<TFeatureEnum, DefaultTenantEnum>, TAvailabilityCheckArgs, bool> availabilityCheckFunction)
+			Func<FeatureSetting<TFeatureEnum, DefaultTenantEnum>, TAvailabilityCheckArgs, bool>
+				availabilityCheckFunction)
 			: base(availabilityCheckFunction) {}
 	}
 }

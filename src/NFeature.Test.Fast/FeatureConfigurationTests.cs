@@ -24,16 +24,14 @@ namespace NFeature.Test.Fast
 	public class FeatureConfigurationTests
 	{
 		[Test]
-		public void IsEnabledInFeatureManifest_ReturnsTrue_WhenFeatureIsAvailable()
-		{
-			var m = new FeatureManifest<Feature>
-			        	{
-			        		{
-			        			Feature.TestFeatureA,
-			        			new FeatureDescriptor<Feature>(Feature.TestFeatureA)
-			        				{IsAvailable = true,}
-			        			}
-			        	};
+		public void IsEnabledInFeatureManifest_ReturnsTrue_WhenFeatureIsAvailable() {
+			var m = new FeatureManifest<Feature> {
+				{
+					Feature.TestFeatureA,
+					new FeatureDescriptor<Feature>(Feature.TestFeatureA)
+					{IsAvailable = true,}
+					}
+			};
 
 			Assert.That(Feature.TestFeatureA.IsAvailable(m));
 		}

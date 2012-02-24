@@ -28,8 +28,7 @@ namespace NFeature
 	{
 		private bool _isAvailable;
 
-		public FeatureDescriptor(TFeatureEnum feature)
-		{
+		public FeatureDescriptor(TFeatureEnum feature) {
 			Feature = feature;
 		}
 
@@ -37,12 +36,9 @@ namespace NFeature
 
 		public bool IsEstablished { get; set; }
 
-		public bool IsAvailable
-		{
-			get
-			{
-				if (IsEstablished)
-				{
+		public bool IsAvailable {
+			get {
+				if (IsEstablished) {
 					throw new EstablishedFeatureAvailabilityCheckException<TFeatureEnum>(Feature);
 				}
 
