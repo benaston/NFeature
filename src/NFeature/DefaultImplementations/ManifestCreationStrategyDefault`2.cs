@@ -24,34 +24,38 @@ namespace NFeature.DefaultImplementations
 		where TFeatureEnum : struct
 		where TTenantEnum : struct
 	{
-		private readonly IFeatureSettingRepository<TFeatureEnum, TTenantEnum> _featureSettingRepository;
-		private readonly IFeatureSettingService<TFeatureEnum, TTenantEnum, EmptyArgs> _featureSettingService;
+		private readonly IFeatureSettingRepository<TFeatureEnum, TTenantEnum>
+			_featureSettingRepository;
 
-		public ManifestCreationStrategyDefault(IFeatureSettingRepository<TFeatureEnum, TTenantEnum> featureSettingRepository,
-		                                       IFeatureSettingService<TFeatureEnum, TTenantEnum, EmptyArgs>
-		                                       	featureSettingService)
-		{
+		private readonly IFeatureSettingService<TFeatureEnum, TTenantEnum, EmptyArgs>
+			_featureSettingService;
+
+		public ManifestCreationStrategyDefault(
+			IFeatureSettingRepository<TFeatureEnum, TTenantEnum> featureSettingRepository,
+			IFeatureSettingService<TFeatureEnum, TTenantEnum, EmptyArgs>
+				featureSettingService) {
 			_featureSettingRepository = featureSettingRepository;
 			_featureSettingService = featureSettingService;
 		}
 
-		public IFeatureManifest<TFeatureEnum> CreateFeatureManifest()
-		{
-			var featureSettings = _featureSettingRepository.GetFeatureSettings();
+		public IFeatureManifest<TFeatureEnum> CreateFeatureManifest() {
+			FeatureSetting<TFeatureEnum, TTenantEnum>[] featureSettings =
+				_featureSettingRepository.GetFeatureSettings();
 			var manifest = new FeatureManifest<TFeatureEnum>();
 
-			foreach (var setting in featureSettings)
-			{
-				var isAvailable = _featureSettingService
+			foreach (var setting in featureSettings) {
+				bool isAvailable = _featureSettingService
 					.AllDependenciesAreSatisfiedForTheFeatureSetting(setting, new EmptyArgs());
 
 				manifest.Add(setting.Feature,
-				             new FeatureDescriptor<TFeatureEnum>(setting.Feature)
-				             	{
-				             		Dependencies = setting.Dependencies,
-				             		IsAvailable = isAvailable,
-				             		Settings = setting.Settings,
-				             	});
+				             new FeatureDescriptor<TFeatureEnum>(setting.Feature) {
+				                                                                  	Dependencies =
+				                                                                  		setting.Dependencies,
+				                                                                  	IsAvailable =
+				                                                                  		isAvailable,
+				                                                                  	Settings =
+				                                                                  		setting.Settings,
+				                                                                  });
 			}
 
 			return manifest;

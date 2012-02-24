@@ -6,7 +6,7 @@ setlocal enabledelayedexpansion
 set fastTestSuffix=Test.Fast.dll
 set slowTestSuffix=Test.Slow.dll
 set repositoryRoot=%CD%\..\
-set nunitConsoleLocation=!repositoryroot!src\packages\NUnit.2.5.10.11092\tools\nunit-console-x86.exe
+set nunitConsoleLocation=!repositoryroot!src\packages\NUnit.Runners.2.6.0.12051\tools\nunit-console-x86.exe
 set slowTestCategories=Slow
 set fastTestCategories=Fast
 set teststorun=%1
