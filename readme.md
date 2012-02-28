@@ -18,6 +18,9 @@ Example of use:
 
 ```
 
+If NFeature helps you or your team develop great software please [let me know](mailto:ben@bj.ma "Ben's email address")! It will help motivate me to develop and improve NFeature.
+
+
 How to use:
 --------
 **-1. Check the target framework of your application**
