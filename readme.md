@@ -10,13 +10,16 @@ Example of use:
 ```C#
 
 
-	if(Feature.MyCoolFeature.IsAvailable(manifest))
+  if(Feature.MyCoolFeature.IsAvailable(manifest))
 	{
 		//do some cool stuff
 	}
 
 
 ```
+
+If NFeature helps you or your team develop great software please [let me know](mailto:ben@bj.ma "Ben's email address")! It will help motivate me to develop and improve NFeature.
+
 
 How to use:
 --------
@@ -58,9 +61,9 @@ In your configuration: (see also footnote 1)
   	<configSections>
 		...
 		<!-- note that if you are using your own tenant enum then you will have 
-		to replace "Configuration.DefaultTenantEnum,  NFeature.Configuration"
+		to replace "Your.Feature.Type, Your.Feature.Type.Assembly"
 		with your type -->
-		<section name="features" type="NFeature.Configuration.FeatureConfigurationSection`2[[Your.Feature.Type, Your.Feature.Type.Assembly],[NFeature.Configuration.DefaultTenantEnum,  NFeature.Configuration]], NFeature.Configuration" />
+		<section name="features" type="NFeature.Configuration.FeatureConfigurationSection`1[[Your.Feature.Type, Your.Feature.Type.Assembly]], NFeature.Configuration" />
 		...
 	</configSections>
 	
@@ -95,9 +98,9 @@ In your configuration: (see also footnote 1)
 
 	//NOTE: I suggest hiding this ugly initialization logic away in the IOC container configuration	
 	var featureSettingRepo = new AppConfigFeatureSettingRepository<Feature>();
-	var availabilityChecker = new FeatureSettingAvailabilityChecker<Feature, EmptyArgs, DefaultTenantEnum>(fn); //from step 2
-	var featureSettingService = new FeatureSettingService<Feature, DefaultTenantEnum, EmptyArgs>(availabilityChecker, featureSettingRepo);
-	var manifestCreationStrategy = new NFeature.DefaultImplementations.ManifestCreationStrategyDefault<Feature, DefaultTenantEnum>(featureSettingRepo, featureSettingService); //we use the default for this example
+	var availabilityChecker = new FeatureSettingAvailabilityChecker<Feature>(fn); //from step 2
+	var featureSettingService = new FeatureSettingService<Feature>(availabilityChecker, featureSettingRepo);
+	var manifestCreationStrategy = new NFeature.DefaultImplementations.ManifestCreationStrategyDefault<Feature>(featureSettingRepo, featureSettingService); //we use the default for this example
 	var featureManifestService = new FeatureManifestService<Feature>(manifestCreationStrategy);
 	var featureManifest = featureManifestService.GetManifest();
 
