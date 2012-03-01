@@ -86,13 +86,9 @@ namespace NFeature
 			where TFeatureEnum : struct
 			where TTenantEnum : struct {
 			try {
-				FeatureSetting<TFeatureEnum, TTenantEnum>[] featureSettings =
-					featureSettingRepository.GetFeatureSettings();
-				FeatureSetting<TFeatureEnum, TTenantEnum> featureSetting =
-					featureSettings.First(s => s.Feature.Equals(feature)); //was ==
-				Ensure.That<FeatureConfigurationException<TFeatureEnum>>(
-					featureSetting.IsRequiredByFeatureSubsystem,
-					"Specified feature not marked as being required by the feature subsystem.");
+				FeatureSetting<TFeatureEnum, TTenantEnum>[] featureSettings = featureSettingRepository.GetFeatureSettings();
+				FeatureSetting<TFeatureEnum, TTenantEnum> featureSetting = featureSettings.First(s => s.Feature.Equals(feature)); //was ==
+				Ensure.That<FeatureConfigurationException<TFeatureEnum>>(featureSetting.IsRequiredByFeatureSubsystem, "Specified feature not marked as being required by the feature subsystem.");
 
 				return featureSetting.Settings[Enum.GetName(settingName.GetType(), settingName)];
 			} catch (Exception e) {

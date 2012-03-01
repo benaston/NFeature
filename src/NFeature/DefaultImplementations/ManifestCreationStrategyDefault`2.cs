@@ -24,28 +24,22 @@ namespace NFeature.DefaultImplementations
 		where TFeatureEnum : struct
 		where TTenantEnum : struct
 	{
-		private readonly IFeatureSettingRepository<TFeatureEnum, TTenantEnum>
-			_featureSettingRepository;
-
-		private readonly IFeatureSettingService<TFeatureEnum, TTenantEnum, EmptyArgs>
-			_featureSettingService;
+		private readonly IFeatureSettingRepository<TFeatureEnum, TTenantEnum> _featureSettingRepository;
+		private readonly IFeatureSettingService<TFeatureEnum, TTenantEnum, EmptyArgs> _featureSettingService;
 
 		public ManifestCreationStrategyDefault(
 			IFeatureSettingRepository<TFeatureEnum, TTenantEnum> featureSettingRepository,
-			IFeatureSettingService<TFeatureEnum, TTenantEnum, EmptyArgs>
-				featureSettingService) {
+			IFeatureSettingService<TFeatureEnum, TTenantEnum, EmptyArgs> featureSettingService) {
 			_featureSettingRepository = featureSettingRepository;
 			_featureSettingService = featureSettingService;
 		}
 
 		public IFeatureManifest<TFeatureEnum> CreateFeatureManifest() {
-			FeatureSetting<TFeatureEnum, TTenantEnum>[] featureSettings =
-				_featureSettingRepository.GetFeatureSettings();
+			FeatureSetting<TFeatureEnum, TTenantEnum>[] featureSettings = _featureSettingRepository.GetFeatureSettings();
 			var manifest = new FeatureManifest<TFeatureEnum>();
 
 			foreach (var setting in featureSettings) {
-				bool isAvailable = _featureSettingService
-					.AllDependenciesAreSatisfiedForTheFeatureSetting(setting, new EmptyArgs());
+				var isAvailable = _featureSettingService.AllDependenciesAreSatisfiedForTheFeatureSetting(setting, new EmptyArgs());
 
 				manifest.Add(setting.Feature,
 				             new FeatureDescriptor<TFeatureEnum>(setting.Feature) {

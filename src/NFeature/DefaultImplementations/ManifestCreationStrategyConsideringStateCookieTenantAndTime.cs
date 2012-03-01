@@ -34,22 +34,13 @@ namespace NFeature.DefaultImplementations
 	{
 		public const string FeaturePreviewCookieName = "FeaturePreviewCookie";
 		private readonly IApplicationClock _clock;
-
-		private readonly
-			IFeatureSettingService
-				<TFeatureEnum, TTenantEnum, Tuple<FeatureVisibilityMode, TTenantEnum, DateTime>>
-			_featureSettingService;
-
-		private readonly IFeatureSettingRepository<TFeatureEnum, TTenantEnum>
-			_featureSettingsRepository;
-
+		private readonly IFeatureSettingService<TFeatureEnum, TTenantEnum, Tuple<FeatureVisibilityMode, TTenantEnum, DateTime>> _featureSettingService;
+		private readonly IFeatureSettingRepository<TFeatureEnum, TTenantEnum> _featureSettingsRepository;
 		private readonly HttpContextBase _httpContext;
 		private readonly ITenancyContext<TTenantEnum> _tenancyContext;
 
 		public ManifestCreationStrategyConsideringStateCookieTenantAndTime(
-			IFeatureSettingService
-				<TFeatureEnum, TTenantEnum, Tuple<FeatureVisibilityMode, TTenantEnum, DateTime>>
-				featureSettingService,
+			IFeatureSettingService<TFeatureEnum, TTenantEnum, Tuple<FeatureVisibilityMode, TTenantEnum, DateTime>> featureSettingService,
 			IFeatureSettingRepository<TFeatureEnum, TTenantEnum> featureSettingsRepository,
 			HttpContextBase httpContext,
 			ITenancyContext<TTenantEnum> tenancyContext,
@@ -62,15 +53,13 @@ namespace NFeature.DefaultImplementations
 		}
 
 		public IFeatureManifest<TFeatureEnum> CreateFeatureManifest() {
-			FeatureSetting<TFeatureEnum, TTenantEnum>[] featureSettings =
-				_featureSettingsRepository.GetFeatureSettings();
+			FeatureSetting<TFeatureEnum, TTenantEnum>[] featureSettings = _featureSettingsRepository.GetFeatureSettings();
 			var manifest = new FeatureManifest<TFeatureEnum>();
 
 			foreach (var setting in featureSettings) {
-				FeatureVisibilityMode featureVisibilityMode =
-					_httpContext.Request.Cookies[FeaturePreviewCookieName].IsNotNull()
-						? FeatureVisibilityMode.Preview
-						: FeatureVisibilityMode.Normal;
+				FeatureVisibilityMode featureVisibilityMode = _httpContext.Request.Cookies[FeaturePreviewCookieName].IsNotNull()
+				                                              	? FeatureVisibilityMode.Preview
+				                                              	: FeatureVisibilityMode.Normal;
 
 				bool isAvailable = _featureSettingService
 					.AllDependenciesAreSatisfiedForTheFeatureSetting(setting,
