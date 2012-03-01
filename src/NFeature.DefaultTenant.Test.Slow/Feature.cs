@@ -15,23 +15,15 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with NFeature.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace NFeature.Exceptions
+namespace NFeature.DefaultTenant.Test.Slow
 {
-	using NHelpfulException;
-
-	public class EstablishedFeatureDependencyException<TFeature> : HelpfulException
-		where TFeature : struct
+	public enum Feature
 	{
-		private const string DefaultProblemDescription =
-			@"Dependencies of established features must be established themselves. Established feature '{0}' depends upon non-established feature '{1}'.";
-
-		private static readonly string[] ResolutionSuggestions = new[] {
-			"Check feature configuration."
-			,
-		};
-
-		public EstablishedFeatureDependencyException(TFeature feature, TFeature dependency)
-			: base(
-				string.Format(DefaultProblemDescription, feature, dependency), ResolutionSuggestions, null) {}
+		TestFeatureA = 1,
+		TestFeatureB,
+		TestFeatureC,
+		TestFeatureD,
+		TestFeatureE,
+		TestFeatureF,
 	}
 }

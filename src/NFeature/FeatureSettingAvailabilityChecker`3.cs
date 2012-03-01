@@ -1,4 +1,4 @@
-﻿// Copyright 2011, Ben Aston (ben@bj.ma).
+﻿// Copyright 2012, Ben Aston (ben@bj.ma).
 // 
 // This file is part of NFeature.
 // 
@@ -27,16 +27,7 @@ namespace NFeature
 	using ArgumentNullException = NHelpfulException.FrameworkExceptions.ArgumentNullException;
 
 	/// <remarks>
-	/// 	NOTE 1: BA; we maintain a list of features we have met 
-	/// 	and not yet resolved the dependencies for. If we come 
-	/// 	across a feature and find it in the 
-	/// 	featuresUnderAnalysis list then we realise that 
-	/// 	resolution of a feature's dependency graph depends on 
-	/// 	resolution of it's graph and hence we cannot complete, 
-	/// 	and we throw an exception. 
-	/// 	NOTE 2: BA; the dependencies of established features 
-	/// 		must themselves all be established. 
-	/// 	NOTE 3: BA; required due to recursive invocation.
+	/// 	NOTE 1: BA; we maintain a list of features we have met and not yet resolved the dependencies for. If we come across a feature and find it in the featuresUnderAnalysis list then we realise that resolution of a feature's dependency graph depends on resolution of it's graph and hence we cannot complete, and we throw an exception. NOTE 2: BA; the dependencies of established features must themselves all be established. NOTE 3: BA; required due to recursive invocation.
 	/// </remarks>
 	public class FeatureSettingAvailabilityChecker<TFeatureEnum, TAvailabilityCheckArgs, TTenant> :
 		IFeatureSettingAvailabilityChecker<TFeatureEnum, TTenant, TAvailabilityCheckArgs>
@@ -53,10 +44,7 @@ namespace NFeature
 		}
 
 		/// <summary>
-		/// 	Responsible for checking whether the dependencies 
-		/// 	for a feature are met. TODO: review use of tuple 
-		/// 	for params for custom availability checking 
-		/// 	fucntionality.
+		/// 	Responsible for checking whether the dependencies for a feature are met. TODO: review use of tuple for params for custom availability checking fucntionality.
 		/// </summary>
 		public bool RecursivelyCheckAvailability(
 			FeatureSetting<TFeatureEnum, TTenant> featureSettingToCheck,

@@ -1,4 +1,4 @@
-﻿// Copyright 2011, Ben Aston (ben@bj.ma).
+﻿// Copyright 2012, Ben Aston (ben@bj.ma).
 // 
 // This file is part of NFeature.
 // 
@@ -18,9 +18,7 @@
 namespace NFeature
 {
 	/// <summary>
-	/// 	Responsible for encapsulating functionality 
-	/// 	related to FeatureManifests that makes more 
-	/// 	sense to be placed on a service type.
+	/// 	Responsible for encapsulating functionality related to FeatureManifests that makes more sense to be placed on a service type.
 	/// </summary>
 	public interface IFeatureManifestService<TFeatureEnum>
 		where TFeatureEnum : struct

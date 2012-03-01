@@ -22,12 +22,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("NFeature.Test.Slow")]
+[assembly: AssemblyTitle("NFeature.DefaultTenant.Test.Slow")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("NFeature.Test.Slow")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2011")]
+[assembly: AssemblyProduct("NFeature.DefaultTenant.Test.Slow")]
+[assembly: AssemblyCopyright("Copyright © Microsoft 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -39,7 +39,7 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 
-[assembly: Guid("8fd2a2d7-71ab-4412-a17a-e5863f131c6c")]
+[assembly: Guid("2c6deab6-20dd-487a-81c2-8ff0193eb430")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -1,4 +1,4 @@
-﻿// Copyright 2011, Ben Aston (ben@bj.ma).
+﻿// Copyright 2012, Ben Aston (ben@bj.ma).
 // 
 // This file is part of NFeature.
 // 
@@ -15,20 +15,19 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with NFeature.  If not, see <http://www.gnu.org/licenses/>.
 
-//uncomment to test with App.config-no-tenancy
-// ReSharper disable InconsistentNaming
-
-namespace NFeature.Test.Slow
+namespace NFeature.DefaultTenant.Test.Slow
 {
 	using System;
 	using Configuration;
 	using DefaultImplementations;
 	using NUnit.Framework;
 
-	[TestFixture(Ignore = true)]
+	[TestFixture]
 	[Category("Slow")]
-	public class FeatureEnumExtensionsTestsWithoutTenancy
+	public class FeatureEnumExtensionsTests
 	{
+		#region Setup/Teardown
+
 		[SetUp]
 		public void Setup() {
 			var availabilityChecker =
@@ -42,10 +41,12 @@ namespace NFeature.Test.Slow
 			_featureManifest = featureManifestService.GetManifest();
 		}
 
+		#endregion
+
 		private IFeatureManifest<Feature> _featureManifest;
 
 		/// <summary>
-		/// A function to test the availability checking behavior.
+		/// 	A function to test the availability checking behavior.
 		/// </summary>
 		private static bool MyAvailabilityCheckFunction(FeatureSetting<Feature, DefaultTenantEnum> s,
 		                                                EmptyArgs args) {

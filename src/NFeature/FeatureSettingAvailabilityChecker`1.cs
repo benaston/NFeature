@@ -1,4 +1,4 @@
-﻿// Copyright 2011, Ben Aston (ben@bj.ma).
+﻿// Copyright 2012, Ben Aston (ben@bj.ma).
 // 
 // This file is part of NFeature.
 // 
@@ -21,13 +21,13 @@ namespace NFeature
 	using Configuration;
 
 	public class FeatureSettingAvailabilityChecker<TFeatureEnum> :
-		FeatureSettingAvailabilityChecker<TFeatureEnum, EmptyArgs, DefaultTenantEnum>,
+		FeatureSettingAvailabilityChecker<TFeatureEnum, EmptyArgs>,
 		IFeatureSettingAvailabilityChecker<TFeatureEnum>
 		where TFeatureEnum : struct
 	{
 		public FeatureSettingAvailabilityChecker(
-			Func<FeatureSetting<TFeatureEnum, DefaultTenantEnum>,
-				EmptyArgs, bool> availabilityCheckFunction)
+			Func<FeatureSetting<TFeatureEnum, DefaultTenantEnum>, EmptyArgs, bool>
+				availabilityCheckFunction)
 			: base(availabilityCheckFunction) {}
 	}
 }

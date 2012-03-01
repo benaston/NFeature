@@ -1,4 +1,4 @@
-﻿// Copyright 2011, Ben Aston (ben@bj.ma).
+﻿// Copyright 2012, Ben Aston (ben@bj.ma).
 // 
 // This file is part of NFeature.
 // 
@@ -23,10 +23,7 @@ namespace NFeature.DefaultImplementations
 	using NBasicExtensionMethod;
 
 	/// <summary>
-	/// 	Constructs the feature manifest according to the 
-	/// 	tenancy context, the existence of the preview cookie 
-	/// 	and feature configuration. This provides an example 
-	/// 	manifest creation strategy, and is replaceable.
+	/// 	Constructs the feature manifest according to the tenancy context, the existence of the preview cookie and feature configuration. This provides an example manifest creation strategy, and is replaceable.
 	/// </summary>
 	public class ManifestCreationStrategyConsideringStateCookieTenantAndTime<TFeatureEnum,
 	                                                                         TTenantEnum> :

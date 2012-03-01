@@ -1,4 +1,4 @@
-﻿// Copyright 2011, Ben Aston (ben@bj.ma).
+﻿// Copyright 2012, Ben Aston (ben@bj.ma).
 // 
 // This file is part of NFeature.
 // 
@@ -25,22 +25,17 @@ namespace NFeature.DefaultImplementations
 	{
 		public static bool AvailabilityCheckFunction<TFeatureEnum>(
 			FeatureSetting<TFeatureEnum, DefaultTenantEnum> s,
-			Tuple<FeatureVisibilityMode, DefaultTenantEnum, DateTime> args)
+			Tuple<FeatureVisibilityMode, DateTime> args)
 			where TFeatureEnum : struct {
 			return ((s.FeatureState == FeatureState.Enabled ||
 			         (s.FeatureState == FeatureState.Previewable &&
 			          args.Item1 == FeatureVisibilityMode.Preview)) &&
-			        s.StartDtg <= args.Item3 &&
-			        s.EndDtg > args.Item3);
+			        s.StartDtg <= args.Item2 &&
+			        s.EndDtg > args.Item2);
 		}
 
 		/// <summary>
-		/// 	The default implementation of the availability 
-		/// 	checker. Checks the tenancy, feature state and 
-		/// 	date/time. Can of course be substituted for by 
-		/// 	your own function. For example, your own function 
-		/// 	might take into consideration a number indicating 
-		/// 	site load or user role.
+		/// 	The default implementation of the availability checker. Checks the tenancy, feature state and date/time. Can of course be substituted for by your own function. For example, your own function might take into consideration a number indicating site load or user role.
 		/// </summary>
 		public static bool AvailabilityCheckFunction<TFeatureEnum, TTenantEnum>(
 			FeatureSetting<TFeatureEnum, TTenantEnum> s,

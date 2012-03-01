@@ -1,4 +1,4 @@
-﻿// Copyright 2011, Ben Aston (ben@bj.ma).
+﻿// Copyright 2012, Ben Aston (ben@bj.ma).
 // 
 // This file is part of NFeature.
 // 
@@ -23,14 +23,15 @@ namespace NFeature
 		IFeatureSettingService<TFeatureEnum, DefaultTenantEnum, TAvailabilityCheckArgs>
 		where TFeatureEnum : struct
 	{
-		private readonly IFeatureSettingAvailabilityChecker<TFeatureEnum, TAvailabilityCheckArgs>
+		private readonly
+			IFeatureSettingAvailabilityChecker<TFeatureEnum, DefaultTenantEnum, TAvailabilityCheckArgs>
 			_featureSettingAvailabilityChecker;
 
 		private readonly IFeatureSettingRepository<TFeatureEnum, DefaultTenantEnum>
 			_featureSettingRepository;
 
 		public FeatureSettingService(
-			IFeatureSettingAvailabilityChecker<TFeatureEnum, TAvailabilityCheckArgs>
+			IFeatureSettingAvailabilityChecker<TFeatureEnum, DefaultTenantEnum, TAvailabilityCheckArgs>
 				featureSettingAvailabilityChecker,
 			IFeatureSettingRepository<TFeatureEnum, DefaultTenantEnum> featureSettingRepository) {
 			_featureSettingAvailabilityChecker = featureSettingAvailabilityChecker;

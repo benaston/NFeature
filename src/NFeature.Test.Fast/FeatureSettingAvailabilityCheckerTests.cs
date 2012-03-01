@@ -1,4 +1,4 @@
-// Copyright 2011, Ben Aston (ben@bj.ma).
+// Copyright 2012, Ben Aston (ben@bj.ma).
 // 
 // This file is part of NFeature.
 // 
@@ -24,8 +24,7 @@ namespace NFeature.Test.Fast
 	using NUnit.Framework;
 
 	/// <summary>
-	/// Please accept my apologies for the indentation of this file.
-	/// I am slowly correcting an earlier ReSharper-ism.
+	/// 	Please accept my apologies for the indentation of this file. I am slowly correcting an earlier ReSharper-ism.
 	/// </summary>
 	[TestFixture]
 	[Category("Fast")]

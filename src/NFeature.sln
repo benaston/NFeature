@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFeature.Test.Slow", "NFeat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFeature.Example.Console", "NFeature.Example.Console\NFeature.Example.Console.csproj", "{F20A8857-26F2-4212-9663-91C8823942BE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFeature.DefaultTenant.Test.Slow", "NFeature.DefaultTenant.Test.Slow\NFeature.DefaultTenant.Test.Slow.csproj", "{9782F64B-9236-4D95-B9AE-6FACCC915DEA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +84,21 @@ Global
 		{F20A8857-26F2-4212-9663-91C8823942BE}.Staging|Mixed Platforms.Build.0 = Staging|x86
 		{F20A8857-26F2-4212-9663-91C8823942BE}.Staging|x86.ActiveCfg = Release|x86
 		{F20A8857-26F2-4212-9663-91C8823942BE}.Staging|x86.Build.0 = Release|x86
+		{9782F64B-9236-4D95-B9AE-6FACCC915DEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9782F64B-9236-4D95-B9AE-6FACCC915DEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9782F64B-9236-4D95-B9AE-6FACCC915DEA}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{9782F64B-9236-4D95-B9AE-6FACCC915DEA}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{9782F64B-9236-4D95-B9AE-6FACCC915DEA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9782F64B-9236-4D95-B9AE-6FACCC915DEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9782F64B-9236-4D95-B9AE-6FACCC915DEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9782F64B-9236-4D95-B9AE-6FACCC915DEA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9782F64B-9236-4D95-B9AE-6FACCC915DEA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{9782F64B-9236-4D95-B9AE-6FACCC915DEA}.Release|x86.ActiveCfg = Release|Any CPU
+		{9782F64B-9236-4D95-B9AE-6FACCC915DEA}.Staging|Any CPU.ActiveCfg = Release|Any CPU
+		{9782F64B-9236-4D95-B9AE-6FACCC915DEA}.Staging|Any CPU.Build.0 = Release|Any CPU
+		{9782F64B-9236-4D95-B9AE-6FACCC915DEA}.Staging|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9782F64B-9236-4D95-B9AE-6FACCC915DEA}.Staging|Mixed Platforms.Build.0 = Release|Any CPU
+		{9782F64B-9236-4D95-B9AE-6FACCC915DEA}.Staging|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

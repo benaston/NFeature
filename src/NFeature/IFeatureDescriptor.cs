@@ -1,4 +1,4 @@
-﻿// Copyright 2011, Ben Aston (ben@bj.ma).
+﻿// Copyright 2012, Ben Aston (ben@bj.ma).
 // 
 // This file is part of NFeature.
 // 
@@ -20,9 +20,7 @@ namespace NFeature
 	using System.Collections.Generic;
 
 	/// <summary>
-	/// 	A description of the state of a feature. 
-	/// 	Metadata for members of the Feature 
-	/// 	enumeration.
+	/// 	A description of the state of a feature. Metadata for members of the Feature enumeration.
 	/// </summary>
 	public interface IFeatureDescriptor<TFeatureEnum>
 	{

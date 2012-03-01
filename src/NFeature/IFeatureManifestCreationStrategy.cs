@@ -1,4 +1,4 @@
-﻿// Copyright 2011, Ben Aston (ben@bj.ma).
+﻿// Copyright 2012, Ben Aston (ben@bj.ma).
 // 
 // This file is part of NFeature.
 // 
@@ -18,18 +18,10 @@
 namespace NFeature
 {
 	///<summary>
-	///	Responsible for defining the interface for types 
-	/// that provide functionality for feature manifest 
-	/// creation. These strategies might for example, 
-	/// take into account cookie configuration, domain 
-	/// configuration and user role.
+	///	Responsible for defining the interface for types that provide functionality for feature manifest creation. These strategies might for example, take into account cookie configuration, domain configuration and user role.
 	///</summary>
 	///<example>
-	///	Suggested implementation is to inject the 
-	/// FeatureSettingService and 
-	/// FeatureSetttingRepository via the constructor 
-	/// along with whatever other services you need to 
-	/// determine availability.
+	///	Suggested implementation is to inject the FeatureSettingService and FeatureSetttingRepository via the constructor along with whatever other services you need to determine availability.
 	///</example>
 	///<code>
 	///	<![CDATA[

@@ -15,11 +15,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with NFeature.  If not, see <http://www.gnu.org/licenses/>.
 
-//The following program takes the example given 
-//in the readme.md file on GitHub 
-//(https://github.com/benaston/NFeature) and 
-//turns it into an executable example.
-
 namespace NFeature.Example.Console
 {
 	using System;
@@ -43,11 +38,7 @@ namespace NFeature.Example.Console
 	}
 
 	/// <summary>
-	/// Demonstration of NFeature basics. Uses the default 
-	/// availability check function, and some minimal 
-	/// settings in the app.config to demonstrate the 
-	/// checking of feature availability and the reading 
-	/// of a feature setting.
+	/// 	Demonstration of NFeature basics. Uses the default availability check function, and some minimal settings in the app.config to demonstrate the checking of feature availability and the reading of a feature setting.
 	/// </summary>
 	internal class Program
 	{
@@ -57,24 +48,22 @@ namespace NFeature.Example.Console
 				(f, args) =>
 				DefaultFunctions.AvailabilityCheckFunction(f,
 				                                           Tuple.Create(FeatureVisibilityMode.Normal,
-				                                                        DefaultTenantEnum.All,
 				                                                        DateTime.Now));
 
 			//3. Take care of feature manifest initialization
 			//NOTE: I suggest hiding this ugly initialization logic away in the IOC container configuration	
 			var featureSettingRepo = new AppConfigFeatureSettingRepository<Feature>();
-			var availabilityChecker =
-				new FeatureSettingAvailabilityChecker<Feature, EmptyArgs, DefaultTenantEnum>(fn);
+			var availabilityChecker = new FeatureSettingAvailabilityChecker<Feature>(fn);
 			//from step 2
 			var featureSettingService =
-				new FeatureSettingService<Feature, DefaultTenantEnum, EmptyArgs>(availabilityChecker,
-				                                                                 featureSettingRepo);
+				new FeatureSettingService<Feature>(availabilityChecker,
+				                                   featureSettingRepo);
 			var manifestCreationStrategy =
-				new ManifestCreationStrategyDefault<Feature, DefaultTenantEnum>(featureSettingRepo,
-				                                                                featureSettingService);
+				new ManifestCreationStrategyDefault<Feature>(featureSettingRepo,
+				                                             featureSettingService);
 			//we use the default for this example
 			var featureManifestService = new FeatureManifestService<Feature>(manifestCreationStrategy);
-			IFeatureManifest<Feature> featureManifest = featureManifestService.GetManifest();
+			var featureManifest = featureManifestService.GetManifest();
 
 			//4. Configure feature dependencies (see the web.config - we do not specify any dependencies for this demo)
 

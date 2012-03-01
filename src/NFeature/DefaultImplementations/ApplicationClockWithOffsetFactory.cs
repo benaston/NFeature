@@ -1,4 +1,4 @@
-﻿// Copyright 2011, Ben Aston (ben@bj.ma).
+﻿// Copyright 2012, Ben Aston (ben@bj.ma).
 // 
 // This file is part of NFeature.
 // 
@@ -22,11 +22,7 @@ namespace NFeature.DefaultImplementations
 	using System.Web;
 
 	/// <summary>
-	/// 	Can be used to instantiate an instance of 
-	/// 	ApplicationClockWithOffset. Checks the 
-	/// 	querystring and if it matches the 
-	/// 	requirement for performing an offset, 
-	/// 	applies it to the clock.
+	/// 	Can be used to instantiate an instance of ApplicationClockWithOffset. Checks the querystring and if it matches the requirement for performing an offset, applies it to the clock.
 	/// </summary>
 	public static class ApplicationClockWithOffsetFactory
 	{
