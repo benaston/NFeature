@@ -10,10 +10,10 @@ Example of use:
 ```C#
 
 
-  if(Feature.MyCoolFeature.IsAvailable(manifest))
-	{
-		//do some cool stuff
-	}
+    if(Feature.MyCoolFeature.IsAvailable(manifest))
+    {
+        //do some cool stuf
+    }
 
 
 ```
