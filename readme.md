@@ -12,7 +12,7 @@ Example of use:
 
     if(Feature.MyCoolFeature.IsAvailable(manifest))
     {
-        //do some cool stuf
+        //do some cool stuff
     }
 
 
