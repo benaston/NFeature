@@ -1,6 +1,8 @@
 NFeature
 ====
 
+![NFeature](http://bj.ma/nfeature.png "NFeature")
+
 A simple feature configuration system (or feature toggle / flipper / whatever you want to call it.)
 
 Feature configuration walls enable you to integrate your code earlier, which brings lots of goodness (such as helping to avoid branch merge problems.)
