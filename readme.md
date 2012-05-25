@@ -193,9 +193,9 @@ Please note that the logic to determine whether a feature is available is specif
 Two concrete implementations of ```IFeatureManifestCreationStrategy``` are provided of-the-box: ```ManifestCreationStrategyDefault``` and ```ManifestCreationStrategyConsideringStateCookieTenantAndTime```. A single default availability checker function is provided out of the box ```DefaultFunctions.AvailabilityCheckFunction```, which may be used when the feature state, tenant, feature visibility mode and system time are known.
 
 **Footnote 2:**
-Marking a feature as established changes the behavior of the feature in the following way:
+Marking a feature as ```Established``` changes the behavior of the feature in the following way:
 
- - all dependencies must be established
+ - all dependencies must be ```Established```
  - checking the feature's availability will throw an exception (because it is now always available by definition)
 
 
