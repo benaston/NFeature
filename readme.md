@@ -10,8 +10,7 @@ Example of use:
 ```C#
 
 
-    if(Feature.MyCoolFeature.IsAvailable(manifest))
-    {
+    if(Feature.MyCoolFeature.IsAvailable(manifest)) {
         //do some cool stuff
     }
 
@@ -42,8 +41,7 @@ In your code:
 ```C#
 
 	
-	public enum Feature
-	{
+	public enum Feature {
 		MyFeature,
 		MyOtherFeature,
 		MyOtherOtherFeature,
@@ -124,9 +122,8 @@ In your configuration: (see also footnote 1)
 	
 ```C#
 
-
-	if(Feature.MyFeature.IsAvailable(featureManifest)) //featureManifest ideally supplied via IOC container
-	{
+	//featureManifest ideally supplied via IOC container
+	if(Feature.MyFeature.IsAvailable(featureManifest)) {
 		//do some cool stuff
 	}
 	
