@@ -10,9 +10,8 @@ Example of use:
 ```C#
 
 
-    if(Feature.MyCoolFeature.IsAvailable(manifest))
-    {
-        //do some cool stuf
+    if(Feature.MyCoolFeature.IsAvailable(manifest)) {
+        //do some cool stuff
     }
 
 
@@ -42,8 +41,7 @@ In your code:
 ```C#
 
 	
-	public enum Feature
-	{
+	public enum Feature {
 		MyFeature,
 		MyOtherFeature,
 		MyOtherOtherFeature,
@@ -124,9 +122,8 @@ In your configuration: (see also footnote 1)
 	
 ```C#
 
-
-	if(Feature.MyFeature.IsAvailable(featureManifest)) //featureManifest ideally supplied via IOC container
-	{
+	//featureManifest ideally supplied via IOC container
+	if(Feature.MyFeature.IsAvailable(featureManifest)) {
 		//do some cool stuff
 	}
 	
@@ -193,9 +190,9 @@ Please note that the logic to determine whether a feature is available is specif
 Two concrete implementations of ```IFeatureManifestCreationStrategy``` are provided of-the-box: ```ManifestCreationStrategyDefault``` and ```ManifestCreationStrategyConsideringStateCookieTenantAndTime```. A single default availability checker function is provided out of the box ```DefaultFunctions.AvailabilityCheckFunction```, which may be used when the feature state, tenant, feature visibility mode and system time are known.
 
 **Footnote 2:**
-Marking a feature as established changes the behavior of the feature in the following way:
+Marking a feature as ```Established``` changes the behavior of the feature in the following way:
 
- - all dependencies must be established
+ - all dependencies must be ```Established```
  - checking the feature's availability will throw an exception (because it is now always available by definition)
 
 
@@ -206,3 +203,9 @@ License & Copyright
 --------
 
 This software is released under the GNU Lesser GPL. It is Copyright 2011, Ben Aston. I may be contacted at ben@bj.ma.
+
+
+How to Contribute
+--------
+
+Pull requests including bug fixes, new features and improved test coverage are welcomed. Please do your best, where possible, to follow the style of code found in the existing codebase.
