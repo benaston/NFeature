@@ -3,7 +3,7 @@ NFeature
 
 A simple feature configuration system (or feature toggle / flipper / whatever you want to call it.)
 
-Please <a href="https://twitter.com/share?text=Check%20out%20NFeature%2C%20a%20simple%20.NET%20feature%20configuration%20system.%20%23nfeature%20%40benastontweet" target="_blank">send a tweet to let other people know about NFeature</a> (opens a form in a new window to send a tweet).
+If you like NFeature, please let others know by <a href="https://twitter.com/share?text=Check%20out%20NFeature%2C%20a%20simple%20.NET%20feature%20configuration%20system.%20%23nfeature%20%40benastontweet&url=https%3A%2F%2Fgithub.com%2Fbenaston%2FNFeature" target="_blank">sending a tweet</a> (opens a form in a new window to send a tweet).
 
 Feature configuration walls enable you to integrate your code earlier, which brings lots of goodness (such as helping to avoid branch merge problems.)
 
