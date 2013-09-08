@@ -211,3 +211,5 @@ How to Contribute
 --------
 
 Pull requests including bug fixes, new features and improved test coverage are welcomed. Please do your best, where possible, to follow the style of code found in the existing codebase.
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/benaston/NFeature/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
